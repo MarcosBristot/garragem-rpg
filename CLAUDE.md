@@ -19,7 +19,9 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 - Rodar local: `npm run dev` (http://localhost:3000)
 - Testes: `npm test` (modo watch: `npm run test:watch`)
 - Lint/format: `npm run lint`, `npm run typecheck`, `npm run format`
-- Migrações: `[preencher no passo 1 — Supabase CLI local]`
+- Supabase local (precisa do Docker Desktop aberto): `npx supabase start` / `npx supabase stop`
+- Migrações: `npx supabase migration new <nome>`; aplicar do zero: `npx supabase db reset`
+- Testes de RLS (pgTAP): `npx supabase test db`
 
 ## Modelo de dados
 
