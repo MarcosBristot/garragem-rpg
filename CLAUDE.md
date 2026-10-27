@@ -63,7 +63,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: repositório + regra de visibilidade. Próximo: schema e RLS.
+**Fase atual:** 1 — garagem e diário. Feito: repositório, regra de visibilidade, schema + RLS (29 testes pgTAP). Próximo: login por código no e-mail e cadastro de perfil.
 
 ## Identidade visual
 
