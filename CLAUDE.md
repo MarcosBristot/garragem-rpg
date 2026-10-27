@@ -63,7 +63,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: repositório, regra de visibilidade, schema + RLS (29 testes pgTAP). Próximo: login por código no e-mail e cadastro de perfil.
+**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS (29 testes pgTAP), login por código no e-mail e perfil. Próximo: cadastro de carros.
 
 ## Identidade visual
 
@@ -79,6 +79,13 @@ Tema escuro: fundo `#121316`, superfícies `#1B1D22`, bordas `#2A2D34`, texto `#
 - Não invente APIs ou bibliotecas; se não tiver certeza, diga e verifique.
 - Ao fim de cada tarefa: o que foi feito, o que falta e o próximo passo.
 - Responda em português.
+
+## Convenções do código
+
+- Sessão no servidor: `usuarioLogado()` / `exigirPerfil()` em `src/lib/sessao.ts` (usam `getClaims()`, nunca `getSession()`).
+- `cacheComponents` está ligado: componente que lê sessão ou cookies fica dentro de `<Suspense>`; o resto da página vira casca estática.
+- Formulários: Server Action + `useActionState`; a ação devolve os valores digitados (o React limpa o form após o envio).
+- Tipos do banco: `npm run db:tipos` depois de cada migração.
 
 ## Next.js
 
