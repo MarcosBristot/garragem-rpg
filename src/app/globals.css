@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Tokens da identidade visual (CLAUDE.md). Tema escuro único. */
+@theme {
+  --color-fundo: #121316;
+  --color-superficie: #1b1d22;
+  --color-borda: #2a2d34;
+  --color-texto: #ecedef;
+  --color-texto-secundario: #a3a7b0;
+  --color-destaque: #f5a524;
+  --color-condicao: #4ade80;
+
+  --font-sans: var(--font-inter);
+  --font-titulo: var(--font-chakra-petch);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-fundo);
+  color: var(--color-texto);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-titulo), system-ui, sans-serif;
+}
