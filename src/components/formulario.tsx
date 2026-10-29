@@ -25,19 +25,131 @@ export function Campo({
         id={id}
         aria-invalid={erro ? true : undefined}
         aria-describedby={idDescricao}
-        className="min-h-11 rounded-lg border border-borda bg-fundo px-3 text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-red-400"
+        className={`min-h-11 px-3 ${ESTILO_ENTRADA}`}
         {...input}
       />
-      {erro ? (
-        <p id={`${id}-erro`} className="text-sm text-red-300">
-          {erro}
-        </p>
-      ) : dica ? (
-        <p id={`${id}-dica`} className="text-sm text-texto-secundario">
-          {dica}
-        </p>
-      ) : null}
+      <Mensagem id={id} erro={erro} dica={dica} />
     </div>
+  );
+}
+
+const ESTILO_ENTRADA =
+  "rounded-lg border border-borda bg-fundo text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-red-400";
+
+/** Erro tem prioridade sobre a dica; os ids batem com aria-describedby. */
+function Mensagem({
+  id,
+  erro,
+  dica,
+}: {
+  id: string;
+  erro?: string;
+  dica?: string;
+}) {
+  if (erro) {
+    return (
+      <p id={`${id}-erro`} className="text-sm text-red-300">
+        {erro}
+      </p>
+    );
+  }
+  if (dica) {
+    return (
+      <p id={`${id}-dica`} className="text-sm text-texto-secundario">
+        {dica}
+      </p>
+    );
+  }
+  return null;
+}
+
+export function AreaTexto({
+  rotulo,
+  erro,
+  dica,
+  id,
+  ...textarea
+}: ComponentProps<"textarea"> & {
+  id: string;
+  rotulo: string;
+  erro?: string;
+  dica?: string;
+}) {
+  const idDescricao = erro ? `${id}-erro` : dica ? `${id}-dica` : undefined;
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-sm font-medium">
+        {rotulo}
+      </label>
+      <textarea
+        id={id}
+        rows={4}
+        aria-invalid={erro ? true : undefined}
+        aria-describedby={idDescricao}
+        className={`px-3 py-2 ${ESTILO_ENTRADA}`}
+        {...textarea}
+      />
+      <Mensagem id={id} erro={erro} dica={dica} />
+    </div>
+  );
+}
+
+/** Grupo de rádio: <fieldset> + <legend> é o que o leitor de tela anuncia. */
+export function GrupoOpcoes({
+  legenda,
+  name,
+  opcoes,
+  valor,
+  erro,
+}: {
+  legenda: string;
+  name: string;
+  opcoes: { valor: string; rotulo: string; descricao?: string }[];
+  valor: string;
+  erro?: string;
+}) {
+  return (
+    <fieldset
+      className="flex flex-col gap-2"
+      aria-describedby={erro ? `${name}-erro` : undefined}
+    >
+      <legend className="mb-1.5 text-sm font-medium">{legenda}</legend>
+      {opcoes.map((opcao) => {
+        const id = `${name}-${opcao.valor}`;
+        return (
+          <label
+            key={opcao.valor}
+            htmlFor={id}
+            className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-borda p-3 has-checked:border-destaque has-focus-visible:ring-2 has-focus-visible:ring-destaque/40"
+          >
+            <input
+              id={id}
+              type="radio"
+              name={name}
+              value={opcao.valor}
+              defaultChecked={valor === opcao.valor}
+              aria-labelledby={`${id}-rotulo`}
+              aria-describedby={opcao.descricao ? `${id}-descricao` : undefined}
+              className="mt-0.5 size-5 shrink-0 accent-destaque"
+            />
+            <span className="flex flex-col gap-0.5">
+              <span id={`${id}-rotulo`} className="text-sm font-medium">
+                {opcao.rotulo}
+              </span>
+              {opcao.descricao ? (
+                <span
+                  id={`${id}-descricao`}
+                  className="text-sm text-texto-secundario"
+                >
+                  {opcao.descricao}
+                </span>
+              ) : null}
+            </span>
+          </label>
+        );
+      })}
+      <Mensagem id={name} erro={erro} />
+    </fieldset>
   );
 }
 

@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
 import { Cartao } from "@/components/formulario";
+import { carroDoDonoOu404 } from "@/lib/carros";
 import { exigirPerfil } from "@/lib/sessao";
-import { ehUuid } from "@/lib/uuid";
 import { apagarCarro, salvarCarro } from "../../acoes";
 import { FormularioCarro } from "../../formulario-carro";
-import { ExcluirCarro } from "./excluir-carro";
 
 export const metadata: Metadata = { title: "Editar carro · Garagem RPG" };
 
@@ -29,17 +28,7 @@ export default function PaginaEditarCarro({
 
 async function Conteudo({ id }: { id: string }) {
   const { supabase, perfil } = await exigirPerfil();
-  if (!ehUuid(id)) notFound();
-
-  // Filtra pelo dono: a RLS deixa ler carros públicos de outras pessoas,
-  // mas aqui só faz sentido editar os seus.
-  const { data: carro } = await supabase
-    .from("carros")
-    .select("id, marca, modelo, ano, apelido, publico")
-    .eq("id", id)
-    .eq("dono_id", perfil.id)
-    .maybeSingle();
-  if (!carro) notFound();
+  const carro = await carroDoDonoOu404(supabase, perfil.id, id);
 
   return (
     <div className="flex flex-col gap-8">
@@ -53,8 +42,13 @@ async function Conteudo({ id }: { id: string }) {
           publico: carro.publico,
         }}
         rotuloEnviar="Salvar alterações"
+        voltarPara={`/garagem/carros/${carro.id}`}
       />
-      <ExcluirCarro acao={apagarCarro.bind(null, carro.id)} />
+      <ExcluirComConfirmacao
+        acao={apagarCarro.bind(null, carro.id)}
+        rotulo="Excluir carro"
+        aviso="Isso apaga o carro e todos os registros do diário dele."
+      />
     </div>
   );
 }

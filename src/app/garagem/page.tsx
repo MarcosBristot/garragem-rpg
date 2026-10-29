@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Botao } from "@/components/formulario";
+import { nomeDoCarro } from "@/lib/carros";
 import { exigirPerfil } from "@/lib/sessao";
 import { sair } from "./acoes";
 
@@ -62,28 +63,27 @@ async function Conteudo() {
           </div>
           <ul className="flex flex-col gap-3">
             {carros.map((carro) => (
-              <li
-                key={carro.id}
-                className="flex items-center justify-between gap-4 rounded-xl border border-borda bg-superficie p-4"
-              >
-                <div className="min-w-0">
-                  <p className="truncate font-semibold">
-                    {carro.apelido ?? `${carro.marca} ${carro.modelo}`}
-                  </p>
-                  <p className="truncate text-sm text-texto-secundario">
-                    {[carro.marca, carro.modelo, carro.ano]
-                      .filter(Boolean)
-                      .join(" · ")}
-                    {" · "}
-                    {carro.publico ? "Público" : "Privado"}
-                  </p>
-                </div>
+              <li key={carro.id}>
+                {/* O cartão inteiro é o link: alvo de toque grande. */}
                 <Link
-                  href={`/garagem/carros/${carro.id}/editar`}
-                  aria-label={`Editar ${carro.apelido ?? `${carro.marca} ${carro.modelo}`}`}
-                  className="inline-flex min-h-11 shrink-0 items-center rounded-lg border border-borda px-4 text-sm font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+                  href={`/garagem/carros/${carro.id}`}
+                  className="flex items-center justify-between gap-4 rounded-xl border border-borda bg-superficie p-4 hover:border-destaque/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
                 >
-                  Editar
+                  <span className="min-w-0">
+                    <span className="block truncate font-semibold">
+                      {nomeDoCarro(carro)}
+                    </span>
+                    <span className="block truncate text-sm text-texto-secundario">
+                      {[carro.marca, carro.modelo, carro.ano]
+                        .filter(Boolean)
+                        .join(" · ")}
+                      {" · "}
+                      {carro.publico ? "Público" : "Privado"}
+                    </span>
+                  </span>
+                  <span aria-hidden="true" className="text-texto-secundario">
+                    →
+                  </span>
                 </Link>
               </li>
             ))}

@@ -11,10 +11,12 @@ export function FormularioCarro({
   acao,
   valores,
   rotuloEnviar,
+  voltarPara = "/garagem",
 }: {
   acao: Acao;
   valores: ValoresCarro;
   rotuloEnviar: string;
+  voltarPara?: string;
 }) {
   const [estado, enviar, enviando] = useActionState(acao, {
     valores,
@@ -74,7 +76,7 @@ export function FormularioCarro({
       ) : null}
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
         <Link
-          href="/garagem"
+          href={voltarPara}
           className="inline-flex min-h-11 items-center justify-center rounded-lg border border-borda px-4 font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
         >
           Cancelar
