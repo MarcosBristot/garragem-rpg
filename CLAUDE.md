@@ -63,7 +63,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS (29 testes pgTAP), login por código no e-mail e perfil. Próximo: cadastro de carros.
+**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS (29 testes pgTAP), login por código, perfil e cadastro de carros. Próximo: registros do diário.
 
 ## Identidade visual
 
@@ -86,6 +86,9 @@ Tema escuro: fundo `#121316`, superfícies `#1B1D22`, bordas `#2A2D34`, texto `#
 - `cacheComponents` está ligado: componente que lê sessão ou cookies fica dentro de `<Suspense>`; o resto da página vira casca estática.
 - Formulários: Server Action + `useActionState`; a ação devolve os valores digitados (o React limpa o form após o envio).
 - Tipos do banco: `npm run db:tipos` depois de cada migração.
+- Telas do dono filtram por `dono_id`: a RLS também libera linhas públicas de outras pessoas.
+- Ids da URL passam por `ehUuid()`; "não existe" e "não é seu" dão o mesmo 404.
+- Mutação: Server Action confere a sessão, depois `revalidatePath` + `redirect`.
 
 ## Next.js
 

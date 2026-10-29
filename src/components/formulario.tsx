@@ -41,15 +41,57 @@ export function Campo({
   );
 }
 
+export function CaixaMarcacao({
+  rotulo,
+  dica,
+  id,
+  ...input
+}: Omit<ComponentProps<"input">, "type"> & {
+  id: string;
+  rotulo: string;
+  dica?: string;
+}) {
+  // O <label> inteiro é clicável: alvo de toque bem maior que a caixinha.
+  return (
+    <label
+      htmlFor={id}
+      className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-borda p-3 has-focus-visible:border-destaque"
+    >
+      <input
+        id={id}
+        type="checkbox"
+        // Nome = só o rótulo; a dica vira descrição (sem repetir na leitura).
+        aria-labelledby={`${id}-rotulo`}
+        aria-describedby={dica ? `${id}-dica` : undefined}
+        className="mt-0.5 size-5 shrink-0 accent-destaque"
+        {...input}
+      />
+      <span className="flex flex-col gap-0.5">
+        <span id={`${id}-rotulo`} className="text-sm font-medium">
+          {rotulo}
+        </span>
+        {dica ? (
+          <span id={`${id}-dica`} className="text-sm text-texto-secundario">
+            {dica}
+          </span>
+        ) : null}
+      </span>
+    </label>
+  );
+}
+
+const ESTILOS_BOTAO = {
+  primario: "bg-destaque text-fundo hover:bg-destaque/90",
+  secundario: "border border-borda text-texto hover:bg-borda/50",
+  perigo: "border border-red-400/60 text-red-300 hover:bg-red-400/10",
+};
+
 export function Botao({
   variante = "primario",
   className = "",
   ...props
-}: ComponentProps<"button"> & { variante?: "primario" | "secundario" }) {
-  const estilo =
-    variante === "primario"
-      ? "bg-destaque text-fundo hover:bg-destaque/90"
-      : "border border-borda text-texto hover:bg-borda/50";
+}: ComponentProps<"button"> & { variante?: keyof typeof ESTILOS_BOTAO }) {
+  const estilo = ESTILOS_BOTAO[variante];
   return (
     <button
       className={`min-h-11 rounded-lg px-4 font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque disabled:opacity-60 ${estilo} ${className}`}
