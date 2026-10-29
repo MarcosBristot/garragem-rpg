@@ -22,6 +22,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 - Supabase local (precisa do Docker Desktop aberto): `npx supabase start` / `npx supabase stop`
 - Migrações: `npx supabase migration new <nome>`; aplicar do zero: `npx supabase db reset`
 - Testes de RLS (pgTAP): `npx supabase test db`
+- Bucket local de fotos (depois de `supabase start` num banco novo): `npx supabase seed buckets --local`
 
 ## Modelo de dados
 
@@ -103,6 +104,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Estilos de elemento (body, h1, h2) ficam em `@layer base`: fora de camada eles venceriam as utilitárias do Tailwind.
 - Legal/LGPD: dados da empresa e provedores em `src/lib/empresa.ts` (páginas legais mostram "Rascunho" enquanto houver `[preencher`). Mudou o tratamento de dados? Atualize `/privacidade`, `/cookies` e `VERSAO_TERMOS`.
 - Perfil só é criado com aceite (`termos_aceitos_em` + `versao_termos`), exigido pela RLS. Exclusão de conta pela função `excluir_minha_conta()`; exportação em `/conta/dados`.
+- Fotos: `src/lib/fotos/` — `processar.ts` (sharp: remove EXIF/GPS, 3 tamanhos WebP; testado), `chaves.ts` (caminhos `u/<usuário>/c/<carro>/…`), `armazenamento.ts` (S3: R2 em produção, Supabase local em dev; bucket privado, URLs assinadas de 1 h). Banco guarda a chave, nunca a URL. Excluiu carro/registro/conta? Apague também o prefixo no armazenamento.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

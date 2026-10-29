@@ -40,6 +40,7 @@ export type Database = {
           apelido: string | null;
           criado_em: string;
           dono_id: string;
+          foto_capa: string | null;
           id: string;
           marca: string;
           modelo: string;
@@ -51,6 +52,7 @@ export type Database = {
           apelido?: string | null;
           criado_em?: string;
           dono_id?: string;
+          foto_capa?: string | null;
           id?: string;
           marca: string;
           modelo: string;
@@ -61,6 +63,7 @@ export type Database = {
           apelido?: string | null;
           criado_em?: string;
           dono_id?: string;
+          foto_capa?: string | null;
           id?: string;
           marca?: string;
           modelo?: string;
@@ -72,6 +75,62 @@ export type Database = {
             columns: ["dono_id"];
             isOneToOne: false;
             referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      fotos_registro: {
+        Row: {
+          altura: number;
+          chave: string;
+          criado_em: string;
+          descricao: string | null;
+          dono_id: string;
+          id: string;
+          largura: number;
+          registro_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          altura: number;
+          chave: string;
+          criado_em?: string;
+          descricao?: string | null;
+          dono_id?: string;
+          id?: string;
+          largura: number;
+          registro_id: string;
+        };
+        Update: {
+          altura?: number;
+          chave?: string;
+          criado_em?: string;
+          descricao?: string | null;
+          dono_id?: string;
+          id?: string;
+          largura?: number;
+          registro_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "fotos_registro_dono_id_fkey";
+            columns: ["dono_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "fotos_registro_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "fotos_registro_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros_publicos";
             referencedColumns: ["id"];
           },
         ];
