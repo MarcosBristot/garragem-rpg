@@ -1,5 +1,6 @@
 // Silhueta lateral de um esportivo genérico, desenhada para o projeto
 // (sem marca, sem traços de um modelo real). Decorativa: aria-hidden.
+// Sem <defs>/ids: várias silhuetas na mesma página não podem colidir.
 export function SilhuetaCarro({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -8,16 +9,10 @@ export function SilhuetaCarro({ className = "" }: { className?: string }) {
       focusable="false"
       className={className}
     >
-      <defs>
-        <linearGradient id="pintura" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="currentColor" stopOpacity="0.95" />
-          <stop offset="1" stopColor="currentColor" stopOpacity="0.55" />
-        </linearGradient>
-      </defs>
       {/* Carroceria */}
       <path
         d="M12 92 C10 82 18 75 34 72 L118 63 C146 47 176 40 210 39 C240 39 262 45 286 57 L356 66 C380 69 392 78 391 90 L389 98 L346 99 A30 30 0 0 0 290 99 L118 99 A30 30 0 0 0 62 99 L16 98 Z"
-        fill="url(#pintura)"
+        fill="currentColor"
       />
       {/* Vidros */}
       <path

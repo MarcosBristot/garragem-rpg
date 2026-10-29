@@ -97,6 +97,9 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Formulário com `<select>`: recriar com `key` a cada resposta da ação (o reset do React 19 volta o select ao padrão).
 - Dinheiro: `reaisParaCentavos` / `formatarReais` em `src/dominio/dinheiro.ts`; nunca float.
 - Testes pgTAP filtram pelos dados fictícios deles: o banco local pode ter outros dados.
+- Landing (`src/app/page.tsx`): estática; o 3D (`src/components/landing/`) carrega com `dynamic(..., { ssr: false })`. Carro modelado em código em `carro-3d.tsx` (trocável por .glb licenciado); trajetória da câmera em `trajetoria.ts` (testada). Iluminação só com `Lightformer` (presets do drei baixam arquivos de terceiros).
+- Honestidade na landing: sem depoimentos, números ou avaliações inventadas; o que não existe leva selo "Em breve"/"Exemplo".
+- SVG reutilizável não usa `id` interno (colide quando há várias cópias na página).
 
 ## Next.js
 
