@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { Botao, Campo } from "@/components/formulario";
 import { criarPerfil, type EstadoPerfil } from "./acoes";
@@ -45,6 +46,46 @@ export function FormularioPerfil() {
         erro={estado.erros.cidade}
         dica="Só a cidade. Nunca mostramos onde o carro fica."
       />
+      <div className="flex flex-col gap-1.5">
+        <label
+          htmlFor="aceite"
+          className="flex min-h-11 cursor-pointer items-start gap-3 text-sm"
+        >
+          <input
+            id="aceite"
+            name="aceite"
+            type="checkbox"
+            required
+            aria-invalid={estado.erros.aceite ? true : undefined}
+            aria-describedby={estado.erros.aceite ? "aceite-erro" : undefined}
+            className="mt-0.5 size-5 shrink-0 accent-destaque"
+          />
+          <span>
+            Tenho 18 anos ou mais e li e aceito os{" "}
+            <Link
+              href="/termos"
+              target="_blank"
+              className="text-destaque underline"
+            >
+              Termos de Serviço
+            </Link>{" "}
+            e a{" "}
+            <Link
+              href="/privacidade"
+              target="_blank"
+              className="text-destaque underline"
+            >
+              Política de Privacidade
+            </Link>
+            <span className="sr-only"> (abrem em nova aba)</span>.
+          </span>
+        </label>
+        {estado.erros.aceite ? (
+          <p id="aceite-erro" className="text-sm text-red-300">
+            {estado.erros.aceite}
+          </p>
+        ) : null}
+      </div>
       {estado.erroGeral ? (
         <p role="alert" className="text-sm text-red-300">
           {estado.erroGeral}

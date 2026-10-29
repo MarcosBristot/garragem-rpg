@@ -2,12 +2,13 @@
 
 import { redirect } from "next/navigation";
 import { validarPerfil, type ErrosPerfil } from "@/dominio/perfil";
+import { VERSAO_TERMOS } from "@/lib/empresa";
 import { usuarioLogado } from "@/lib/sessao";
 
 // `valores` volta para o formulário: o React limpa os campos após o envio.
 export type EstadoPerfil = {
   valores: Record<"nome_usuario" | "nome_exibicao" | "cidade", string>;
-  erros: ErrosPerfil;
+  erros: ErrosPerfil & { aceite?: string };
   erroGeral?: string;
 };
 
@@ -28,7 +29,20 @@ export async function criarPerfil(
     nomeExibicao: valores.nome_exibicao,
     cidade: valores.cidade,
   });
-  if (!resultado.ok) return { valores, erros: resultado.erros };
+  // Aceite dos Termos e da Política (com declaração de 18+). Sem ele, o
+  // banco também recusa o perfil (política RLS).
+  const aceitou = form.get("aceite") === "on";
+  if (!resultado.ok || !aceitou) {
+    return {
+      valores,
+      erros: {
+        ...(resultado.ok ? {} : resultado.erros),
+        ...(aceitou
+          ? {}
+          : { aceite: "Para criar o perfil, aceite os termos e a política." }),
+      },
+    };
+  }
 
   // O id vem da sessão validada, nunca do formulário. A RLS também
   // recusaria um id diferente de auth.uid().
@@ -37,6 +51,8 @@ export async function criarPerfil(
     nome_usuario: resultado.dados.nomeUsuario,
     nome_exibicao: resultado.dados.nomeExibicao,
     cidade: resultado.dados.cidade,
+    termos_aceitos_em: new Date().toISOString(),
+    versao_termos: VERSAO_TERMOS,
   });
 
   if (error) {

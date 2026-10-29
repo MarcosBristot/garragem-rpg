@@ -188,6 +188,8 @@ export type Database = {
           id: string;
           nome_exibicao: string | null;
           nome_usuario: string;
+          termos_aceitos_em: string | null;
+          versao_termos: string | null;
         };
         ComputedFields: never;
         Insert: {
@@ -196,6 +198,8 @@ export type Database = {
           id: string;
           nome_exibicao?: string | null;
           nome_usuario: string;
+          termos_aceitos_em?: string | null;
+          versao_termos?: string | null;
         };
         Update: {
           cidade?: string | null;
@@ -203,6 +207,8 @@ export type Database = {
           id?: string;
           nome_exibicao?: string | null;
           nome_usuario?: string;
+          termos_aceitos_em?: string | null;
+          versao_termos?: string | null;
         };
         Relationships: [];
       };
@@ -312,7 +318,10 @@ export type Database = {
       };
     };
     Functions: {
-      [_ in never]: never;
+      excluir_minha_conta: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
     };
     Enums: {
       espaco_equipamento:

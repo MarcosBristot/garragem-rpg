@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Instrument_Serif } from "next/font/google";
+import { AvisoCookies } from "@/components/aviso-cookies";
+import { Rodape } from "@/components/rodape";
 import "./globals.css";
 
 // next/font baixa as fontes no build e serve do próprio domínio:
@@ -38,6 +40,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Pular para o conteúdo
         </a>
         {children}
+        <Rodape />
+        <AvisoCookies />
       </body>
     </html>
   );

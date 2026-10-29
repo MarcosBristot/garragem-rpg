@@ -28,19 +28,26 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  background: var(--color-fundo);
-  color: var(--color-texto);
-  font-family: var(--font-sans), system-ui, sans-serif;
-}
+/*
+ * Estilos de elemento ficam em @layer base: fora de uma camada, eles
+ * venceriam as classes utilitárias (ex.: um h2 com "font-sans rotulo"
+ * continuaria serifado e apertado).
+ */
+@layer base {
+  body {
+    background: var(--color-fundo);
+    color: var(--color-texto);
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
 
-/* Títulos de destaque em serifada; títulos menores ficam na Geist. */
-h1,
-h2 {
-  font-family: var(--font-titulo), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  /* Títulos de destaque em serifada; títulos menores ficam na Geist. */
+  h1,
+  h2 {
+    font-family: var(--font-titulo), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
 }
 
 /* Foco visível em tudo que recebe teclado (navegação por teclado). */
@@ -70,4 +77,58 @@ h2 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Textos longos (políticas e termos): leitura confortável. */
+.texto-legal {
+  max-width: 68ch;
+  line-height: 1.7;
+  color: var(--color-texto-secundario);
+}
+.texto-legal h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 2rem;
+  color: var(--color-texto);
+}
+.texto-legal h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+.texto-legal p,
+.texto-legal ul,
+.texto-legal table {
+  margin-bottom: 1rem;
+}
+.texto-legal ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+.texto-legal li {
+  margin-bottom: 0.35rem;
+}
+.texto-legal a {
+  color: var(--color-destaque);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.texto-legal strong {
+  color: var(--color-texto);
+}
+.texto-legal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.texto-legal th,
+.texto-legal td {
+  border: 1px solid var(--color-borda);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.texto-legal th {
+  color: var(--color-texto);
 }

@@ -100,6 +100,10 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Landing (`src/app/page.tsx`): estática; o 3D (`src/components/landing/`) carrega com `dynamic(..., { ssr: false })`. Carro modelado em código em `carro-3d.tsx` (trocável por .glb licenciado); trajetória da câmera em `trajetoria.ts` (testada). Iluminação só com `Lightformer` (presets do drei baixam arquivos de terceiros).
 - Honestidade na landing: sem depoimentos, números ou avaliações inventadas; o que não existe leva selo "Em breve"/"Exemplo".
 - SVG reutilizável não usa `id` interno (colide quando há várias cópias na página).
+- Estilos de elemento (body, h1, h2) ficam em `@layer base`: fora de camada eles venceriam as utilitárias do Tailwind.
+- Legal/LGPD: dados da empresa e provedores em `src/lib/empresa.ts` (páginas legais mostram "Rascunho" enquanto houver `[preencher`). Mudou o tratamento de dados? Atualize `/privacidade`, `/cookies` e `VERSAO_TERMOS`.
+- Perfil só é criado com aceite (`termos_aceitos_em` + `versao_termos`), exigido pela RLS. Exclusão de conta pela função `excluir_minha_conta()`; exportação em `/conta/dados`.
+- Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js
 
