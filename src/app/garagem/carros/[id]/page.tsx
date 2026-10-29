@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { formatarReais } from "@/dominio/dinheiro";
+import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
@@ -39,7 +41,9 @@ async function Conteudo({ carroId }: { carroId: string }) {
 
   const { data: registros } = await supabase
     .from("registros")
-    .select("id, tipo, titulo, data, km, visibilidade")
+    .select(
+      "id, tipo, titulo, data, km, visibilidade, itens_registro(valor_centavos)",
+    )
     .eq("carro_id", carro.id)
     .eq("dono_id", perfil.id)
     .order("data", { ascending: false })
@@ -97,6 +101,15 @@ async function Conteudo({ carroId }: { carroId: string }) {
                     {" · "}
                     {VISIBILIDADES[r.visibilidade].rotulo}
                   </p>
+                  {r.itens_registro.length > 0 ? (
+                    <p className="text-sm text-texto-secundario">
+                      {r.itens_registro.length}{" "}
+                      {r.itens_registro.length === 1 ? "item" : "itens"}
+                      {totalCentavos(r.itens_registro) > 0
+                        ? ` · ${formatarReais(totalCentavos(r.itens_registro))}`
+                        : null}
+                    </p>
+                  ) : null}
                 </div>
                 <Link
                   href={`/garagem/carros/${carro.id}/registros/${r.id}/editar`}

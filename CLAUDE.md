@@ -63,7 +63,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS (29 testes pgTAP), login por código, perfil, carros e registros do diário. Próximo: itens do registro (peças e mão de obra).
+**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS, login, perfil, carros, registros e itens. Em andamento: nova identidade visual (Geist + Instrument Serif), landing com carro 3D e páginas legais/LGPD.
 
 ## Identidade visual
 
@@ -92,6 +92,10 @@ Tema escuro: fundo `#121316`, superfícies `#1B1D22`, bordas `#2A2D34`, texto `#
 - Datas do diário são só dia (AAAA-MM-DD): use `hojeEmSaoPaulo()` e `formatarData()` de `src/lib/datas.ts`, nunca `new Date(texto)` para exibir.
 - Listas de opções: `Object.hasOwn`, não `in` (evita aceitar "toString").
 - `logging.serverFunctions: false` no next.config: argumentos de Server Actions (notas) não vão para o log.
+- Arquivos `"use server"` só exportam funções async (tipos podem); constantes ficam em outro arquivo.
+- Formulário com `<select>`: recriar com `key` a cada resposta da ação (o reset do React 19 volta o select ao padrão).
+- Dinheiro: `reaisParaCentavos` / `formatarReais` em `src/dominio/dinheiro.ts`; nunca float.
+- Testes pgTAP filtram pelos dados fictícios deles: o banco local pode ter outros dados.
 
 ## Next.js
 

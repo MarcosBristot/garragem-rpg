@@ -135,6 +135,7 @@ export type Database = {
       itens_registro: {
         Row: {
           categoria: string;
+          criado_em: string;
           descricao: string;
           espaco: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id: string;
@@ -145,6 +146,7 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           categoria: string;
+          criado_em?: string;
           descricao: string;
           espaco?: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id?: string;
@@ -154,6 +156,7 @@ export type Database = {
         };
         Update: {
           categoria?: string;
+          criado_em?: string;
           descricao?: string;
           espaco?: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id?: string;

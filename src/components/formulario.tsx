@@ -63,6 +63,45 @@ function Mensagem({
   return null;
 }
 
+export function Selecao({
+  rotulo,
+  erro,
+  id,
+  opcoes,
+  vazio,
+  ...select
+}: ComponentProps<"select"> & {
+  id: string;
+  rotulo: string;
+  erro?: string;
+  opcoes: Record<string, string>;
+  /** Texto da opção vazia, quando o campo é opcional. */
+  vazio?: string;
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-sm font-medium">
+        {rotulo}
+      </label>
+      <select
+        id={id}
+        aria-invalid={erro ? true : undefined}
+        aria-describedby={erro ? `${id}-erro` : undefined}
+        className={`min-h-11 px-3 ${ESTILO_ENTRADA}`}
+        {...select}
+      >
+        {vazio !== undefined ? <option value="">{vazio}</option> : null}
+        {Object.entries(opcoes).map(([valor, texto]) => (
+          <option key={valor} value={valor}>
+            {texto}
+          </option>
+        ))}
+      </select>
+      <Mensagem id={id} erro={erro} />
+    </div>
+  );
+}
+
 export function AreaTexto({
   rotulo,
   erro,

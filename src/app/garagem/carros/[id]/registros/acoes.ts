@@ -74,7 +74,12 @@ export async function salvarRegistro(
   if (data.length === 0) return naoEncontrado;
 
   revalidatePath(`/garagem/carros/${carroId}`);
-  redirect(`/garagem/carros/${carroId}`);
+  // Registro novo: segue para a tela dele, direto na parte de itens.
+  redirect(
+    registroId === null
+      ? `/garagem/carros/${carroId}/registros/${data[0].id}/editar#itens`
+      : `/garagem/carros/${carroId}`,
+  );
 }
 
 export async function apagarRegistro(carroId: string, registroId: string) {

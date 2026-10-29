@@ -3,12 +3,16 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
 import { Cartao } from "@/components/formulario";
+import { RolarParaAncora } from "@/components/rolar-para-ancora";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
 import { hojeEmSaoPaulo } from "@/lib/datas";
 import { exigirPerfil } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 import { apagarRegistro, salvarRegistro } from "../../acoes";
 import { FormularioRegistro } from "../../formulario-registro";
+import { adicionarItem } from "../itens/acoes";
+import { FormularioItem } from "../itens/formulario-item";
+import { ListaItens } from "../itens/lista-itens";
 
 export const metadata: Metadata = { title: "Editar registro · Garagem RPG" };
 
@@ -42,10 +46,13 @@ async function Conteudo({
 
   const { data: registro } = await supabase
     .from("registros")
-    .select("id, tipo, titulo, data, km, notas, visibilidade")
+    .select(
+      "id, tipo, titulo, data, km, notas, visibilidade, itens_registro(id, descricao, categoria, quantidade, valor_centavos, espaco, criado_em)",
+    )
     .eq("id", registroId)
     .eq("carro_id", carro.id)
     .eq("dono_id", perfil.id)
+    .order("criado_em", { referencedTable: "itens_registro" })
     .maybeSingle();
   if (!registro) notFound();
 
@@ -68,6 +75,24 @@ async function Conteudo({
           voltarPara={`/garagem/carros/${carro.id}`}
         />
       </div>
+      <section
+        id="itens"
+        aria-labelledby="titulo-itens"
+        className="flex scroll-mt-6 flex-col gap-4"
+      >
+        <RolarParaAncora id="itens" />
+        <h2 id="titulo-itens" className="text-xl font-bold">
+          Itens
+        </h2>
+        <ListaItens
+          carroId={carro.id}
+          registroId={registro.id}
+          itens={registro.itens_registro}
+        />
+        <FormularioItem
+          acao={adicionarItem.bind(null, carro.id, registro.id)}
+        />
+      </section>
       <ExcluirComConfirmacao
         acao={apagarRegistro.bind(null, carro.id, registro.id)}
         rotulo="Excluir registro"

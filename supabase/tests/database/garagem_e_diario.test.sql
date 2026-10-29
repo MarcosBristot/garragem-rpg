@@ -1,5 +1,6 @@
 -- Testes de RLS e regras da fase 1. Rodar: npx supabase test db
 -- Dados 100% fictícios. Tudo roda numa transação desfeita no fim.
+-- Contagens filtram pelos dados da Ana: o banco local pode ter outros dados.
 --
 -- IDs fixos para ler os testes com facilidade:
 --   Ana (dona) ...0a   Beto (outro usuário) ...0b
@@ -46,13 +47,13 @@ select set_config('request.jwt.claims', '{"role":"anon"}', true);
 
 select is((select count(*) from public.registros), 0::bigint, 'anon: não lê registros direto');
 select is((select count(*) from public.itens_registro), 0::bigint, 'anon: não lê itens direto');
-select is((select count(*) from public.carros), 1::bigint, 'anon: vê só o carro público');
+select is((select count(*) from public.carros where dono_id = '00000000-0000-0000-0000-00000000000a'), 1::bigint, 'anon: vê só o carro público');
 select results_eq(
-  'select titulo from public.registros_publicos order by data',
+  $$select titulo from public.registros_publicos where dono_id = '00000000-0000-0000-0000-00000000000a' order by data$$,
   array['Sem valor', 'Público'],
   'anon: view mostra só registros não privados de carros públicos'
 );
-select is((select count(*) from public.itens_publicos), 2::bigint, 'anon: itens só dos registros visíveis');
+select is((select count(*) from public.itens_publicos where registro_id::text like 'd0000000-%'), 2::bigint, 'anon: itens só dos registros visíveis');
 select is(
   (select valor_centavos from public.itens_publicos where registro_id = 'd0000000-0000-0000-0000-000000000002'),
   null::integer,
@@ -133,7 +134,7 @@ set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-00000000000b","role":"authenticated"}', true);
 
 select is((select count(*) from public.registros), 0::bigint, 'outro: não vê registros alheios');
-select is((select count(*) from public.carros), 1::bigint, 'outro: vê só o carro público alheio');
+select is((select count(*) from public.carros where dono_id = '00000000-0000-0000-0000-00000000000a'), 1::bigint, 'outro: vê só o carro público alheio');
 select throws_ok(
   $$insert into public.registros (carro_id, tipo, titulo, data)
     values ('c0000000-0000-0000-0000-000000000001', 'manutencao', 'invasão', '2026-02-01')$$,
@@ -169,7 +170,11 @@ select is(
   (select (select count(*) from public.perfis where id = '00000000-0000-0000-0000-00000000000a')
         + (select count(*) from public.carros where dono_id = '00000000-0000-0000-0000-00000000000a')
         + (select count(*) from public.registros where dono_id = '00000000-0000-0000-0000-00000000000a')
-        + (select count(*) from public.itens_registro)
+        -- Só os itens dos registros da Ana: o banco local pode ter dados de
+        -- outros usuários criados no navegador.
+        + (select count(*) from public.itens_registro where registro_id in (
+            'd0000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000002',
+            'd0000000-0000-0000-0000-000000000003', 'd0000000-0000-0000-0000-000000000004'))
         + (select count(*) from public.historico_edicoes where dono_id = '00000000-0000-0000-0000-00000000000a')),
   0::bigint,
   'excluir a conta remove perfil, carros, registros, itens e histórico'
