@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { ValoresPerfil } from "@/components/campos-perfil";
 import { validarPerfil, type ErrosPerfil } from "@/dominio/perfil";
+import { apagarPrefixo } from "@/lib/fotos/armazenamento";
+import { prefixoUsuario } from "@/lib/fotos/chaves";
 import { usuarioLogado } from "@/lib/sessao";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 
@@ -34,6 +36,14 @@ export async function excluirConta(
     .toLowerCase();
   if (!perfil || digitado !== perfil.nome_usuario) {
     return { erro: "Digite seu nome de usuário exatamente como aparece." };
+  }
+
+  // LGPD: as fotos também são dados pessoais. Apaga os arquivos antes;
+  // se falhar, a conta fica intacta e a pessoa pode tentar de novo.
+  try {
+    await apagarPrefixo(prefixoUsuario(usuarioId));
+  } catch {
+    return { erro: "Não foi possível excluir agora. Tente de novo." };
   }
 
   // A função do banco apaga auth.users; o resto vai em cascata.

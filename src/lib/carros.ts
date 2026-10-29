@@ -16,7 +16,7 @@ export async function carroDoDonoOu404(
   if (!ehUuid(carroId)) notFound();
   const { data: carro } = await supabase
     .from("carros")
-    .select("id, marca, modelo, ano, apelido, publico")
+    .select("id, marca, modelo, ano, apelido, publico, foto_capa")
     .eq("id", carroId)
     .eq("dono_id", donoId)
     .maybeSingle();

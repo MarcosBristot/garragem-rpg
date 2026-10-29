@@ -13,12 +13,14 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-10-29";
+export const VERSAO_TERMOS = "2026-10-29b";
 export const VIGENCIA = "29/10/2026";
 
 export const PROVEDORES = {
   infraestrutura:
     "Supabase (banco de dados, autenticação e armazenamento) — região de hospedagem: [preencher]",
+  fotos:
+    "Cloudflare R2 (armazenamento das fotos) — jurisdição dos dados: [preencher]",
   email: "[preencher: provedor de envio de e-mail, quando contratado]",
 };
 

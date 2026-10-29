@@ -1,3 +1,4 @@
+import { urlDaFoto } from "@/lib/fotos/armazenamento";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 
 // Portabilidade (LGPD art. 18, V): tudo o que é seu, num arquivo JSON.
@@ -14,13 +15,32 @@ export async function GET() {
     );
   }
 
-  const [perfil, carros, registros, itens, historico] = await Promise.all([
-    supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
-    supabase.from("carros").select("*").eq("dono_id", usuarioId),
-    supabase.from("registros").select("*").eq("dono_id", usuarioId),
-    supabase.from("itens_registro").select("*"),
-    supabase.from("historico_edicoes").select("*").eq("dono_id", usuarioId),
-  ]);
+  const [perfil, carros, registros, itens, historico, fotos] =
+    await Promise.all([
+      supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
+      supabase.from("carros").select("*").eq("dono_id", usuarioId),
+      supabase.from("registros").select("*").eq("dono_id", usuarioId),
+      supabase.from("itens_registro").select("*"),
+      supabase.from("historico_edicoes").select("*").eq("dono_id", usuarioId),
+      supabase.from("fotos_registro").select("*").eq("dono_id", usuarioId),
+    ]);
+
+  // Fotos: link temporário (24 h) do tamanho maior de cada uma.
+  const comLink = async (chave: string) => ({
+    chave,
+    baixar_ate_24h: await urlDaFoto(chave, "cheia", 24 * 3600),
+  });
+  const capas = await Promise.all(
+    (carros.data ?? []).flatMap((c) =>
+      c.foto_capa ? [comLink(c.foto_capa)] : [],
+    ),
+  );
+  const fotosRegistros = await Promise.all(
+    (fotos.data ?? []).map(async (f) => ({
+      ...f,
+      ...(await comLink(f.chave)),
+    })),
+  );
 
   const arquivo = {
     exportado_em: new Date().toISOString(),
@@ -32,6 +52,8 @@ export async function GET() {
     registros: registros.data ?? [],
     itens_registro: itens.data ?? [],
     historico_edicoes: historico.data ?? [],
+    fotos_capa: capas,
+    fotos_registros: fotosRegistros,
   };
 
   return new Response(JSON.stringify(arquivo, null, 2), {

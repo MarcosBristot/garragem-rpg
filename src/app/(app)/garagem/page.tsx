@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { FotoAssinada } from "@/components/foto-assinada";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
@@ -35,7 +36,9 @@ async function Conteudo() {
   // de outras pessoas, que não pertencem à "minha" garagem.
   const { data } = await supabase
     .from("carros")
-    .select("id, marca, modelo, ano, apelido, publico, registros(data)")
+    .select(
+      "id, marca, modelo, ano, apelido, publico, foto_capa, registros(data)",
+    )
     .eq("dono_id", perfil.id)
     .order("criado_em");
   const carros = data ?? [];
@@ -108,9 +111,18 @@ async function Conteudo() {
                     href={`/garagem/carros/${carro.id}`}
                     className="group flex flex-col overflow-hidden rounded-3xl border border-borda bg-superficie transition-colors hover:border-destaque/60"
                   >
-                    <div className="relative grid h-40 place-items-center bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.18),transparent_70%)]">
-                      <SilhuetaCarro className="w-4/5 text-destaque transition-transform duration-500 group-hover:translate-x-2" />
-                      <span className="rotulo absolute top-4 left-4 rounded-full bg-fundo/70 px-3 py-1 text-[0.65rem]">
+                    <div className="relative grid h-40 place-items-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.18),transparent_70%)]">
+                      {carro.foto_capa ? (
+                        <FotoAssinada
+                          chave={carro.foto_capa}
+                          alt=""
+                          sizes="(min-width: 640px) 480px, 92vw"
+                          className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <SilhuetaCarro className="w-4/5 text-destaque transition-transform duration-500 group-hover:translate-x-2" />
+                      )}
+                      <span className="rotulo absolute top-4 left-4 z-10 rounded-full bg-fundo/80 px-3 py-1 text-[0.65rem]">
                         {carro.publico ? "Público" : "Privado"}
                       </span>
                     </div>

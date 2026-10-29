@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { formatarReais } from "@/dominio/dinheiro";
 import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
+import { FotoAssinada } from "@/components/foto-assinada";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
@@ -47,7 +48,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
   const { data: registros } = await supabase
     .from("registros")
     .select(
-      "id, tipo, titulo, data, km, visibilidade, itens_registro(valor_centavos)",
+      "id, tipo, titulo, data, km, visibilidade, itens_registro(valor_centavos), fotos_registro(count)",
     )
     .eq("carro_id", carro.id)
     .eq("dono_id", perfil.id)
@@ -59,9 +60,19 @@ async function Conteudo({ carroId }: { carroId: string }) {
   return (
     <>
       <header className="flex flex-col gap-4">
-        <div className="grid h-44 place-items-center rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.22),transparent_70%)]">
-          <SilhuetaCarro className="w-3/4 max-w-md text-destaque" />
-        </div>
+        {carro.foto_capa ? (
+          <FotoAssinada
+            chave={carro.foto_capa}
+            alt={`Foto de capa de ${nomeDoCarro(carro)}`}
+            sizes="(min-width: 672px) 640px, 92vw"
+            className="aspect-video w-full rounded-3xl border border-borda object-cover"
+            prioridade
+          />
+        ) : (
+          <div className="grid h-44 place-items-center rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.22),transparent_70%)]">
+            <SilhuetaCarro className="w-3/4 max-w-md text-destaque" />
+          </div>
+        )}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
             <p className="rotulo">
@@ -113,6 +124,12 @@ async function Conteudo({ carroId }: { carroId: string }) {
                     {" · "}
                     {VISIBILIDADES[r.visibilidade].rotulo}
                   </p>
+                  {r.fotos_registro[0]?.count ? (
+                    <p className="text-sm text-texto-secundario">
+                      {r.fotos_registro[0].count}{" "}
+                      {r.fotos_registro[0].count === 1 ? "foto" : "fotos"}
+                    </p>
+                  ) : null}
                   {r.itens_registro.length > 0 ? (
                     <p className="text-sm text-texto-secundario">
                       {r.itens_registro.length}{" "}

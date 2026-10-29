@@ -62,6 +62,11 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>Fotos do carro e dos registros, com descrição opcional</td>
+            <td>Ilustrar a garagem e o diário</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
             <td>Data e versão do aceite destes termos</td>
             <td>Comprovar o aceite</td>
             <td>
@@ -80,6 +85,12 @@ export default function PaginaPrivacidade() {
         fica, placa, CPF, dados de pagamento, contatos do celular nem dados de
         navegação para publicidade. Não pedimos mais do que o necessário
         (princípio da necessidade, art. 6º, III).
+      </p>
+      <p>
+        <strong>Fotos sem localização:</strong> antes de salvar, removemos todos
+        os metadados da foto (EXIF), incluindo coordenadas de GPS, modelo da
+        câmera e data. As fotos ficam em armazenamento privado e só são exibidas
+        por links temporários.
       </p>
       <p>
         <strong>Cuidado com as notas:</strong> elas são sempre privadas, mas
@@ -110,6 +121,7 @@ export default function PaginaPrivacidade() {
       </p>
       <ul>
         <li>{PROVEDORES.infraestrutura}.</li>
+        <li>{PROVEDORES.fotos}.</li>
         <li>{PROVEDORES.email}.</li>
       </ul>
       <p>

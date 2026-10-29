@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   // O dev server registra os argumentos de cada Server Action no terminal
   // e em .next/dev/logs. Notas podem ter CPF/endereço: nunca em logs (LGPD).
   logging: { serverFunctions: false },
+  // Fotos chegam já reduzidas pelo navegador (~0,5–2 MB); 5 MB dá folga
+  // para o multipart sem abrir espaço para abuso (o padrão é 1 MB).
+  experimental: { serverActions: { bodySizeLimit: "5mb" } },
   // Cabeçalhos de segurança em todas as páginas.
   headers() {
     return [

@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { validarCarro, type ErrosCarro } from "@/dominio/carro";
+import { apagarPrefixo } from "@/lib/fotos/armazenamento";
+import { prefixoCarro } from "@/lib/fotos/chaves";
 import { usuarioLogado } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 
@@ -79,7 +81,11 @@ export async function apagarCarro(id: string) {
   if (!usuarioId) redirect("/entrar");
 
   if (ehUuid(id)) {
-    // Registros, itens e histórico do carro vão junto (ON DELETE CASCADE).
+    // Fotos primeiro (capa e registros): se falhar, nada é apagado e dá
+    // para tentar de novo, sem arquivos órfãos. O prefixo usa o id da
+    // sessão, então nunca alcança arquivos de outra pessoa.
+    await apagarPrefixo(prefixoCarro(usuarioId, id));
+    // Registros, itens, fotos e histórico do carro vão junto (CASCADE).
     await supabase
       .from("carros")
       .delete()

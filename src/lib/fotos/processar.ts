@@ -10,7 +10,8 @@ export const TAMANHOS = { mini: 320, feed: 1080, cheia: 2048 } as const;
 export type Tamanho = keyof typeof TAMANHOS;
 
 export const TIPOS_ACEITOS = ["image/jpeg", "image/png", "image/webp"];
-export const BYTES_MAX = 8 * 1024 * 1024;
+/** Igual ao bodySizeLimit das Server Actions (next.config.ts), com folga. */
+export const BYTES_MAX = 4.8 * 1024 * 1024;
 
 export type FotoProcessada = {
   largura: number;

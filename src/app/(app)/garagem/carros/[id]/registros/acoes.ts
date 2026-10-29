@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { validarRegistro, type ErrosRegistro } from "@/dominio/registro";
 import { hojeEmSaoPaulo } from "@/lib/datas";
+import { apagarPrefixo } from "@/lib/fotos/armazenamento";
+import { prefixoRegistro } from "@/lib/fotos/chaves";
 import { usuarioLogado } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 
@@ -87,6 +89,8 @@ export async function apagarRegistro(carroId: string, registroId: string) {
   if (!usuarioId) redirect("/entrar");
 
   if (ehUuid(carroId) && ehUuid(registroId)) {
+    // Fotos do registro primeiro (ver apagarCarro).
+    await apagarPrefixo(prefixoRegistro(usuarioId, carroId, registroId));
     await supabase
       .from("registros")
       .delete()
