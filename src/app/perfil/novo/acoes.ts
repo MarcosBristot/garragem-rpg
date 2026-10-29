@@ -1,13 +1,14 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import type { ValoresPerfil } from "@/components/campos-perfil";
 import { validarPerfil, type ErrosPerfil } from "@/dominio/perfil";
 import { VERSAO_TERMOS } from "@/lib/empresa";
 import { usuarioLogado } from "@/lib/sessao";
 
 // `valores` volta para o formulário: o React limpa os campos após o envio.
 export type EstadoPerfil = {
-  valores: Record<"nome_usuario" | "nome_exibicao" | "cidade", string>;
+  valores: ValoresPerfil;
   erros: ErrosPerfil & { aceite?: string };
   erroGeral?: string;
 };

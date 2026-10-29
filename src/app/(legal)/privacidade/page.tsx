@@ -139,11 +139,11 @@ export default function PaginaPrivacidade() {
       </ul>
       <p>
         Na página <Link href="/conta">Conta</Link> você mesmo{" "}
-        <strong>baixa seus dados</strong> (arquivo JSON) e{" "}
-        <strong>exclui a conta</strong>. Para os demais pedidos, escreva para o
-        encarregado ({EMPRESA.emailEncarregado}); respondemos em até 15 dias.
-        Você também pode reclamar à Autoridade Nacional de Proteção de Dados
-        (ANPD).
+        <strong>corrige seu perfil</strong>, <strong>baixa seus dados</strong>{" "}
+        (arquivo JSON) e <strong>exclui a conta</strong>. Para os demais
+        pedidos, escreva para o encarregado ({EMPRESA.emailEncarregado});
+        respondemos em até 15 dias. Você também pode reclamar à Autoridade
+        Nacional de Proteção de Dados (ANPD).
       </p>
 
       <h2>7. Segurança</h2>

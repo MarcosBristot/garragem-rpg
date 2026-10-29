@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Botao } from "@/components/formulario";
 import { exigirPerfil } from "@/lib/sessao";
 import { sair } from "./acoes";
+import { EditarPerfil } from "./editar-perfil";
 import { ExcluirConta } from "./excluir-conta";
 
 export const metadata: Metadata = { title: "Conta · Garagem RPG" };
@@ -35,16 +36,13 @@ async function Conteudo() {
         <h2 id="titulo-perfil" className="rotulo font-sans">
           Seu perfil
         </h2>
-        <dl className="grid gap-3 sm:grid-cols-2">
-          <div>
-            <dt className="text-sm text-texto-secundario">Nome de usuário</dt>
-            <dd>@{perfil.nome_usuario}</dd>
-          </div>
-          <div>
-            <dt className="text-sm text-texto-secundario">Cidade</dt>
-            <dd>{perfil.cidade ?? "Não informada"}</dd>
-          </div>
-        </dl>
+        <EditarPerfil
+          valores={{
+            nome_usuario: perfil.nome_usuario,
+            nome_exibicao: perfil.nome_exibicao ?? "",
+            cidade: perfil.cidade ?? "",
+          }}
+        />
       </section>
 
       <section
