@@ -15,7 +15,7 @@ export default function PaginaNovoRegistro({
 }: PageProps<"/garagem/carros/[id]/registros/novo">) {
   return (
     <Cartao>
-      <h1 className="text-2xl font-bold">Novo registro</h1>
+      <h1 className="text-4xl">Novo registro</h1>
       <Suspense
         fallback={<p className="mt-6 text-texto-secundario">Carregando…</p>}
       >

@@ -21,7 +21,7 @@ export default function PaginaEditarRegistro({
 }: PageProps<"/garagem/carros/[id]/registros/[registroId]/editar">) {
   return (
     <Cartao>
-      <h1 className="text-2xl font-bold">Editar registro</h1>
+      <h1 className="text-4xl">Editar registro</h1>
       <Suspense
         fallback={<p className="mt-6 text-texto-secundario">Carregando…</p>}
       >
@@ -81,7 +81,7 @@ async function Conteudo({
         className="flex scroll-mt-6 flex-col gap-4"
       >
         <RolarParaAncora id="itens" />
-        <h2 id="titulo-itens" className="text-xl font-bold">
+        <h2 id="titulo-itens" className="text-xl">
           Itens
         </h2>
         <ListaItens

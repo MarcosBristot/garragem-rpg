@@ -4,8 +4,12 @@ import Link from "next/link";
 // carro de outra pessoa existe.
 export default function NaoEncontrado() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center">
-      <h1 className="text-3xl font-bold">Página não encontrada</h1>
+    <main
+      id="conteudo"
+      tabIndex={-1}
+      className="flex flex-1 flex-col items-center justify-center gap-4 px-4 text-center"
+    >
+      <h1 className="text-3xl">Página não encontrada</h1>
       <p className="max-w-md text-texto-secundario">
         Ela não existe ou você não tem acesso a ela.
       </p>

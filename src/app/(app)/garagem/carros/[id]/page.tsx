@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { formatarReais } from "@/dominio/dinheiro";
 import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
+import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
 import { exigirPerfil } from "@/lib/sessao";
@@ -19,7 +20,11 @@ export default function PaginaCarro({
   params,
 }: PageProps<"/garagem/carros/[id]">) {
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-4 py-10">
+    <main
+      id="conteudo"
+      tabIndex={-1}
+      className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 px-4 py-10"
+    >
       <Link
         href="/garagem"
         className="inline-flex min-h-11 w-fit items-center text-sm text-texto-secundario hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque"
@@ -53,26 +58,33 @@ async function Conteudo({ carroId }: { carroId: string }) {
 
   return (
     <>
-      <header className="flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h1 className="text-3xl font-bold">{nomeDoCarro(carro)}</h1>
-          <p className="text-texto-secundario">
-            {[carro.marca, carro.modelo, carro.ano].filter(Boolean).join(" · ")}
-            {" · "}
-            {carro.publico ? "Público" : "Privado"}
-          </p>
+      <header className="flex flex-col gap-4">
+        <div className="grid h-44 place-items-center rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.22),transparent_70%)]">
+          <SilhuetaCarro className="w-3/4 max-w-md text-destaque" />
         </div>
-        <Link
-          href={`/garagem/carros/${carro.id}/editar`}
-          className={estiloLinkSecundario}
-        >
-          Editar carro
-        </Link>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0">
+            <p className="rotulo">
+              {[carro.marca, carro.modelo, carro.ano]
+                .filter(Boolean)
+                .join(" · ")}
+              {" · "}
+              {carro.publico ? "Público" : "Privado"}
+            </p>
+            <h1 className="text-5xl">{nomeDoCarro(carro)}</h1>
+          </div>
+          <Link
+            href={`/garagem/carros/${carro.id}/editar`}
+            className={estiloLinkSecundario}
+          >
+            Editar carro
+          </Link>
+        </div>
       </header>
 
       <section aria-labelledby="titulo-diario" className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
-          <h2 id="titulo-diario" className="text-xl font-bold">
+          <h2 id="titulo-diario" className="text-3xl">
             Diário
           </h2>
           {registros && registros.length > 0 ? (
@@ -87,7 +99,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
             {registros.map((r) => (
               <li
                 key={r.id}
-                className="flex items-center justify-between gap-4 rounded-xl border border-borda bg-superficie p-4"
+                className="flex items-center justify-between gap-4 rounded-2xl border border-borda bg-superficie p-4"
               >
                 <div className="min-w-0">
                   <p className="truncate font-semibold">{r.titulo}</p>

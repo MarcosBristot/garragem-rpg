@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Criar perfil · Garagem RPG" };
 export default function PaginaNovoPerfil() {
   return (
     <Cartao>
-      <h1 className="mb-2 text-2xl font-bold">Crie seu perfil</h1>
+      <h1 className="mb-2 text-4xl">Crie seu perfil</h1>
       <p className="mb-6 text-texto-secundario">
         Falta pouco para abrir sua garagem.
       </p>

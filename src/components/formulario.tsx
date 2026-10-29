@@ -34,7 +34,7 @@ export function Campo({
 }
 
 const ESTILO_ENTRADA =
-  "rounded-lg border border-borda bg-fundo text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-red-400";
+  "rounded-lg border border-borda-campo bg-fundo text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-red-400";
 
 /** Erro tem prioridade sobre a dica; os ids batem com aria-describedby. */
 function Mensagem({
@@ -253,7 +253,11 @@ export function Botao({
 
 export function Cartao({ children }: { children: React.ReactNode }) {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10">
+    <main
+      id="conteudo"
+      tabIndex={-1}
+      className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10"
+    >
       <div className="rounded-xl border border-borda bg-superficie p-6">
         {children}
       </div>

@@ -16,7 +16,7 @@ export default function PaginaEditarCarro({
 }: PageProps<"/garagem/carros/[id]/editar">) {
   return (
     <Cartao>
-      <h1 className="mb-6 text-2xl font-bold">Editar carro</h1>
+      <h1 className="mb-6 text-4xl">Editar carro</h1>
       <Suspense fallback={<p className="text-texto-secundario">Carregando…</p>}>
         {params.then(({ id }) => (
           <Conteudo id={id} />

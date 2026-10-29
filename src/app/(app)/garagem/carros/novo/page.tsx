@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Novo carro · Garagem RPG" };
 export default function PaginaNovoCarro() {
   return (
     <Cartao>
-      <h1 className="mb-6 text-2xl font-bold">Novo carro</h1>
+      <h1 className="mb-6 text-4xl">Novo carro</h1>
       <Suspense fallback={<p className="text-texto-secundario">Carregando…</p>}>
         <Conteudo />
       </Suspense>

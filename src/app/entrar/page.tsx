@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Entrar · Garagem RPG" };
 export default function PaginaEntrar() {
   return (
     <Cartao>
-      <h1 className="mb-6 text-2xl font-bold">Entrar</h1>
+      <h1 className="mb-6 text-4xl">Entrar</h1>
       <FormularioEntrar />
     </Cartao>
   );

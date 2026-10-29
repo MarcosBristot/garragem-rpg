@@ -67,7 +67,7 @@ Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app 
 
 ## Identidade visual
 
-Tema escuro: fundo `#121316`, superfícies `#1B1D22`, bordas `#2A2D34`, texto `#ECEDEF`, texto secundário `#A3A7B0`, destaque âmbar `#F5A524`, Condição verde `#4ADE80`. Títulos em Chakra Petch, texto em Inter. Componentes acessíveis (contraste mínimo 4.5:1, alvos de toque de 44 px, elementos semânticos).
+Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#16171B` / `#1E1F24`, bordas decorativas `#2A2C33`, bordas de campo `#6B6F79` (3:1), texto `#ECEDEF`, secundário `#A3A7B0`, apagado `#8A8F99`, destaque âmbar `#F5A524`, Condição verde `#4ADE80`. Títulos (h1/h2) em Instrument Serif (só peso 400 — nunca `font-bold`), texto em Geist, rótulos com a utilidade `rotulo` (caixa alta espaçada). Ambas OFL. Componentes acessíveis (contraste mínimo 4.5:1 em texto e 3:1 em contornos de campo, alvos de toque de 44 px, elementos semânticos, foco visível, link "Pular para o conteúdo" mirando `<main id="conteudo">`).
 
 ## Como trabalhar comigo
 
@@ -83,7 +83,8 @@ Tema escuro: fundo `#121316`, superfícies `#1B1D22`, bordas `#2A2D34`, texto `#
 ## Convenções do código
 
 - Sessão no servidor: `usuarioLogado()` / `exigirPerfil()` em `src/lib/sessao.ts` (usam `getClaims()`, nunca `getSession()`).
-- `cacheComponents` está ligado: componente que lê sessão ou cookies fica dentro de `<Suspense>`; o resto da página vira casca estática.
+- `cacheComponents` está ligado: componente que lê sessão ou cookies fica dentro de `<Suspense>`; o resto da página vira casca estática. `usePathname` também suspende em rotas com `[id]`.
+- Área logada fica no grupo `src/app/(app)` (menu do topo + barra inferior no celular).
 - Formulários: Server Action + `useActionState`; a ação devolve os valores digitados (o React limpa o form após o envio).
 - Tipos do banco: `npm run db:tipos` depois de cada migração.
 - Telas do dono filtram por `dono_id`: a RLS também libera linhas públicas de outras pessoas.
