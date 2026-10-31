@@ -37,6 +37,12 @@ Estado em 29/10/2026. Legenda: ✅ feito e testado · ⚠️ feito, com pendênc
 7. **Cobrança (fase posterior).** Preço total claro antes do pagamento, arrependimento de 7 dias e cancelamento fácil (CDC); nota fiscal.
 8. **"Condição" e atributos (fase 4).** Não podem parecer avaliação técnica ou de preço do veículo: manter o aviso "informação, não laudo".
 
+## Moderação (regra 5)
+
+- ✅ Denúncia de carro e perfil públicos (`/denunciar`): exige conta, até 10 por dia, sem repetição; ninguém lê pela API.
+- ⏳ Tela de moderação: hoje as denúncias são vistas no painel do Supabase. Defina quem analisa e em quanto tempo.
+- ⏳ Bloquear usuário: entra com o feed e os comentários (Fase 3), quando houver conteúdo de outras pessoas na sua tela.
+
 ## Pendências técnicas conhecidas
 
 - O perfil de teste local criado antes da migração de aceite não tem `termos_aceitos_em` (só dados de desenvolvimento).

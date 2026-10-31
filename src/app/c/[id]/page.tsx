@@ -187,6 +187,14 @@ async function Conteudo({ id }: { id: string }) {
           </ol>
         )}
       </section>
+      <p className="border-t border-borda pt-6 text-sm">
+        <Link
+          href={`/denunciar?tipo=carro&id=${carro.id}`}
+          className="inline-flex min-h-11 items-center text-texto-secundario underline hover:text-texto"
+        >
+          Denunciar este carro
+        </Link>
+      </p>
     </>
   );
 }

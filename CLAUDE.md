@@ -64,7 +64,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: contas, perfil, carros, registros, itens, fotos (sem EXIF), visibilidade, histórico, visual novo, landing 3D, páginas legais/LGPD. Falta: páginas públicas com Open Graph, card 9:16, denúncia.
+**Fase atual:** 1 — garagem e diário. Feito: contas, perfil, carros, registros, itens, fotos (sem EXIF), visibilidade, histórico, visual novo, landing 3D, páginas legais/LGPD. páginas públicas com Open Graph, card 9:16 e denúncia. Fase 1 concluída no código; falta só o que depende de conta/empresa para publicar.
 
 ## Identidade visual
 
@@ -105,6 +105,8 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Legal/LGPD: dados da empresa e provedores em `src/lib/empresa.ts` (páginas legais mostram "Rascunho" enquanto houver `[preencher`). Mudou o tratamento de dados? Atualize `/privacidade`, `/cookies` e `VERSAO_TERMOS`.
 - Perfil só é criado com aceite (`termos_aceitos_em` + `versao_termos`), exigido pela RLS. Exclusão de conta pela função `excluir_minha_conta()`; exportação em `/conta/dados`.
 - Fotos: `src/lib/fotos/` — `processar.ts` (sharp: remove EXIF/GPS, 3 tamanhos WebP; testado), `chaves.ts` (caminhos `u/<usuário>/c/<carro>/…`), `armazenamento.ts` (S3: R2 em produção, Supabase local em dev; bucket privado, URLs assinadas de 1 h). Banco guarda a chave, nunca a URL. Excluiu carro/registro/conta? Apague também o prefixo no armazenamento.
+- Páginas públicas (`/c/[id]`, `/u/[usuario]`, card, OG) leem SEMPRE pelo `clientePublico()` (anônimo, sem cookies) via `src/lib/publico.ts`: assim o dono não vê dado privado na própria página pública. Imagens geradas (`next/og`) recebem fotos como data URL (`fotoParaImagem`), nunca por URL.
+- Denúncias: só INSERT pela API (RLS); moderação pelo painel do Supabase por enquanto.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

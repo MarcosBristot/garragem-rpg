@@ -13,8 +13,8 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-10-29b";
-export const VIGENCIA = "29/10/2026";
+export const VERSAO_TERMOS = "2026-10-31";
+export const VIGENCIA = "31/10/2026";
 
 export const PROVEDORES = {
   infraestrutura:

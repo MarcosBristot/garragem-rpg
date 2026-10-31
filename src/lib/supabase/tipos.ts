@@ -79,6 +79,45 @@ export type Database = {
           },
         ];
       };
+      denuncias: {
+        Row: {
+          alvo_id: string;
+          alvo_tipo: Database["public"]["Enums"]["alvo_denuncia"];
+          criado_em: string;
+          denunciante_id: string | null;
+          detalhes: string | null;
+          id: string;
+          motivo: Database["public"]["Enums"]["motivo_denuncia"];
+        };
+        ComputedFields: never;
+        Insert: {
+          alvo_id: string;
+          alvo_tipo: Database["public"]["Enums"]["alvo_denuncia"];
+          criado_em?: string;
+          denunciante_id?: string | null;
+          detalhes?: string | null;
+          id?: string;
+          motivo: Database["public"]["Enums"]["motivo_denuncia"];
+        };
+        Update: {
+          alvo_id?: string;
+          alvo_tipo?: Database["public"]["Enums"]["alvo_denuncia"];
+          criado_em?: string;
+          denunciante_id?: string | null;
+          detalhes?: string | null;
+          id?: string;
+          motivo?: Database["public"]["Enums"]["motivo_denuncia"];
+        };
+        Relationships: [
+          {
+            foreignKeyName: "denuncias_denunciante_id_fkey";
+            columns: ["denunciante_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       fotos_registro: {
         Row: {
           altura: number;
@@ -411,8 +450,11 @@ export type Database = {
       };
     };
     Enums: {
+      alvo_denuncia: "carro" | "perfil" | "registro";
       espaco_equipamento:
         "motor" | "suspensao" | "rodas" | "freios" | "estetica" | "som";
+      motivo_denuncia:
+        "dados_pessoais" | "ofensivo" | "direitos" | "golpe" | "outro";
       tipo_registro: "manutencao" | "modificacao";
       visibilidade: "privado" | "publico_sem_valor" | "publico";
     };
@@ -545,6 +587,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      alvo_denuncia: ["carro", "perfil", "registro"],
       espaco_equipamento: [
         "motor",
         "suspensao",
@@ -552,6 +595,13 @@ export const Constants = {
         "freios",
         "estetica",
         "som",
+      ],
+      motivo_denuncia: [
+        "dados_pessoais",
+        "ofensivo",
+        "direitos",
+        "golpe",
+        "outro",
       ],
       tipo_registro: ["manutencao", "modificacao"],
       visibilidade: ["privado", "publico_sem_valor", "publico"],

@@ -67,6 +67,13 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>Denúncias que você envia (motivo e detalhes)</td>
+            <td>Moderar conteúdo e proteger a comunidade</td>
+            <td>
+              Legítimo interesse (IX) e cumprimento de obrigação legal (II)
+            </td>
+          </tr>
+          <tr>
             <td>Data e versão do aceite destes termos</td>
             <td>Comprovar o aceite</td>
             <td>
@@ -134,9 +141,10 @@ export default function PaginaPrivacidade() {
       <h2>5. Por quanto tempo guardamos</h2>
       <p>
         Enquanto sua conta existir. Ao excluir a conta, apagamos na hora perfil,
-        carros, registros, itens, notas e histórico. Cópias de segurança do
-        provedor de infraestrutura são sobrescritas em até [preencher: prazo de
-        retenção dos backups].
+        carros, registros, itens, notas, fotos e histórico. Denúncias que você
+        enviou ficam para a moderação, mas sem identificar você. Cópias de
+        segurança do provedor de infraestrutura são sobrescritas em até
+        [preencher: prazo de retenção dos backups].
       </p>
 
       <h2>6. Seus direitos</h2>
