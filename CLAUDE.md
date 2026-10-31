@@ -64,7 +64,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: repositório, visibilidade, schema + RLS, login, perfil, carros, registros e itens. Em andamento: nova identidade visual (Geist + Instrument Serif), landing com carro 3D e páginas legais/LGPD.
+**Fase atual:** 1 — garagem e diário. Feito: contas, perfil, carros, registros, itens, fotos (sem EXIF), visibilidade, histórico, visual novo, landing 3D, páginas legais/LGPD. Falta: páginas públicas com Open Graph, card 9:16, denúncia.
 
 ## Identidade visual
 

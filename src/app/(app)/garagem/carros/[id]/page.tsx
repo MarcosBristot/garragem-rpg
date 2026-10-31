@@ -84,12 +84,19 @@ async function Conteudo({ carroId }: { carroId: string }) {
             </p>
             <h1 className="text-5xl">{nomeDoCarro(carro)}</h1>
           </div>
-          <Link
-            href={`/garagem/carros/${carro.id}/editar`}
-            className={estiloLinkSecundario}
-          >
-            Editar carro
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            {carro.publico ? (
+              <Link href={`/c/${carro.id}`} className={estiloLinkSecundario}>
+                Ver página pública
+              </Link>
+            ) : null}
+            <Link
+              href={`/garagem/carros/${carro.id}/editar`}
+              className={estiloLinkSecundario}
+            >
+              Editar carro
+            </Link>
+          </div>
         </div>
       </header>
 

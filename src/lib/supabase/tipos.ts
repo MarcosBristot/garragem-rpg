@@ -324,6 +324,34 @@ export type Database = {
       };
     };
     Views: {
+      fotos_publicas: {
+        Row: {
+          altura: number;
+          chave: string;
+          criado_em: string;
+          descricao: string | null;
+          id: string;
+          largura: number;
+          registro_id: string;
+        };
+        ComputedFields: never;
+        Relationships: [
+          {
+            foreignKeyName: "fotos_registro_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "fotos_registro_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros_publicos";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       itens_publicos: {
         Row: {
           categoria: string;
