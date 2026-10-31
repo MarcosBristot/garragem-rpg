@@ -131,3 +131,18 @@ export async function apagarFoto(chave: string): Promise<void> {
     }),
   );
 }
+
+/** Baixa um tamanho da foto (uso interno do servidor, ex.: gerar imagens). */
+export async function baixarFoto(
+  chave: string,
+  tamanho: Tamanho,
+): Promise<Buffer> {
+  const resposta = await s3().send(
+    new GetObjectCommand({
+      Bucket: bucket(),
+      Key: arquivoDaChave(chave, tamanho),
+    }),
+  );
+  if (!resposta.Body) throw new Error("Foto vazia.");
+  return Buffer.from(await resposta.Body.transformToByteArray());
+}
