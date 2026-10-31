@@ -2,7 +2,7 @@
 -- Dados 100% fictícios; transação desfeita no fim.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(9);
+select plan(12);
 
 insert into auth.users (id, email) values
   ('10000000-0000-0000-0000-00000000000a', 'ana@exemplo.test'),
@@ -41,6 +41,19 @@ select throws_ok(
   $$update public.perfis set termos_aceitos_em = null where id = '10000000-0000-0000-0000-00000000000a'$$,
   '42501', null, 'não pode apagar o registro do aceite'
 );
+reset role;
+
+-- ---------------------------------------- novo aceite dos termos
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"10000000-0000-0000-0000-00000000000a","role":"authenticated"}', true);
+select lives_ok($$select public.aceitar_termos('v2')$$, 'aceita a nova versão');
+reset role;
+select is(
+  (select versao_termos from public.perfis where id = '10000000-0000-0000-0000-00000000000a'),
+  'v2', 'versão do aceite atualizada só no próprio perfil'
+);
+set local role anon;
+select throws_ok($$select public.aceitar_termos('v2')$$, '42501', null, 'anônimo não aceita termos');
 reset role;
 
 -- --------------------------------------------- exclusão da conta

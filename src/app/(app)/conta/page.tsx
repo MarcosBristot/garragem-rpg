@@ -25,7 +25,8 @@ export default function PaginaConta() {
 }
 
 async function Conteudo() {
-  const { perfil } = await exigirPerfil();
+  // Conta continua acessível sem o novo aceite (baixar dados, excluir).
+  const { perfil } = await exigirPerfil({ aceiteOpcional: true });
 
   return (
     <>

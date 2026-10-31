@@ -444,6 +444,7 @@ export type Database = {
       };
     };
     Functions: {
+      aceitar_termos: { Args: { p_versao: string }; Returns: undefined };
       excluir_minha_conta: {
         Args: Record<PropertyKey, never>;
         Returns: undefined;

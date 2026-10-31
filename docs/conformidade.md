@@ -43,7 +43,10 @@ Estado em 29/10/2026. Legenda: ✅ feito e testado · ⚠️ feito, com pendênc
 - ⏳ Tela de moderação: hoje as denúncias são vistas no painel do Supabase. Defina quem analisa e em quanto tempo.
 - ⏳ Bloquear usuário: entra com o feed e os comentários (Fase 3), quando houver conteúdo de outras pessoas na sua tela.
 
+## Novo aceite
+
+- ✅ Quando `VERSAO_TERMOS` muda, quem aceitou a versão antiga vê o resumo das mudanças e aceita de novo; a página Conta continua livre para baixar dados ou excluir a conta.
+
 ## Pendências técnicas conhecidas
 
-- O perfil de teste local criado antes da migração de aceite não tem `termos_aceitos_em` (só dados de desenvolvimento).
 - Produção: configurar SMTP próprio (o e-mail padrão do Supabase é limitado) e citar o provedor em `PROVEDORES.email`.

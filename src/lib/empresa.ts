@@ -16,6 +16,13 @@ export const EMPRESA = {
 export const VERSAO_TERMOS = "2026-10-31";
 export const VIGENCIA = "31/10/2026";
 
+/** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
+export const MUDANCAS_TERMOS = [
+  "Fotos: agora você pode enviar fotos do carro e dos registros. Removemos a localização (GPS) e outros metadados antes de salvar, e as fotos ficam no Cloudflare R2.",
+  "Páginas públicas: carros marcados como públicos ganham uma página com link para compartilhar e um card para stories.",
+  "Denúncias: é possível denunciar conteúdo público. Guardamos as denúncias para a moderação.",
+];
+
 export const PROVEDORES = {
   infraestrutura:
     "Supabase (banco de dados, autenticação e armazenamento) — região de hospedagem: [preencher]",
