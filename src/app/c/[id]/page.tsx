@@ -89,6 +89,13 @@ async function Conteudo({ id }: { id: string }) {
             </Link>
             {dono.cidade ? ` · ${dono.cidade}` : null}
           </p>
+          <a
+            href={`/c/${carro.id}/card`}
+            download
+            className="mt-4 inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+          >
+            Baixar card para stories
+          </a>
         </div>
       </header>
 

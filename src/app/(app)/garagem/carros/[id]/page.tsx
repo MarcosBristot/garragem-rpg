@@ -86,9 +86,19 @@ async function Conteudo({ carroId }: { carroId: string }) {
           </div>
           <div className="flex flex-wrap gap-2">
             {carro.publico ? (
-              <Link href={`/c/${carro.id}`} className={estiloLinkSecundario}>
-                Ver página pública
-              </Link>
+              <>
+                <Link href={`/c/${carro.id}`} className={estiloLinkSecundario}>
+                  Ver página pública
+                </Link>
+                {/* <a download>: é um arquivo (PNG 9:16), não uma página. */}
+                <a
+                  href={`/c/${carro.id}/card`}
+                  download
+                  className={estiloLinkSecundario}
+                >
+                  Baixar card para stories
+                </a>
+              </>
             ) : null}
             <Link
               href={`/garagem/carros/${carro.id}/editar`}
