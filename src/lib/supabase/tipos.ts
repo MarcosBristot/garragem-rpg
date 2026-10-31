@@ -279,6 +279,68 @@ export type Database = {
           },
         ];
       };
+      ordens_servico: {
+        Row: {
+          atualizado_em: string;
+          criado_em: string;
+          data: string | null;
+          dono_id: string;
+          foto_chave: string | null;
+          id: string;
+          km: number | null;
+          oficina: string | null;
+          registro_id: string;
+          total_centavos: number | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          atualizado_em?: string;
+          criado_em?: string;
+          data?: string | null;
+          dono_id?: string;
+          foto_chave?: string | null;
+          id?: string;
+          km?: number | null;
+          oficina?: string | null;
+          registro_id: string;
+          total_centavos?: number | null;
+        };
+        Update: {
+          atualizado_em?: string;
+          criado_em?: string;
+          data?: string | null;
+          dono_id?: string;
+          foto_chave?: string | null;
+          id?: string;
+          km?: number | null;
+          oficina?: string | null;
+          registro_id?: string;
+          total_centavos?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "ordens_servico_dono_id_fkey";
+            columns: ["dono_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ordens_servico_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: true;
+            referencedRelation: "registros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "ordens_servico_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: true;
+            referencedRelation: "registros_publicos";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       perfis: {
         Row: {
           cidade: string | null;

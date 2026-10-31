@@ -48,6 +48,17 @@ export function chaveFotoRegistro(
   return `${prefixoRegistro(usuarioId, carroId, registroId)}${fotoId}`;
 }
 
+/** Foto da ordem de serviço: privada, dentro do registro. */
+export function chaveFotoOS(
+  usuarioId: string,
+  carroId: string,
+  registroId: string,
+  fotoId: string,
+) {
+  exigirUuid(fotoId);
+  return `${prefixoRegistro(usuarioId, carroId, registroId)}os/${fotoId}`;
+}
+
 /** Arquivo de um tamanho: "<chave>-feed.webp". */
 export function arquivoDaChave(chave: string, tamanho: Tamanho): string {
   return `${chave}-${tamanho}.webp`;

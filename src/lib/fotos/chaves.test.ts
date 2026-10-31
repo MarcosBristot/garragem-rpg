@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   arquivoDaChave,
   chaveCapa,
+  chaveFotoOS,
   chaveFotoRegistro,
   prefixoCarro,
   prefixoUsuario,
@@ -19,6 +20,10 @@ describe("chaves das fotos", () => {
     expect(arquivoDaChave(chaveCapa(U, C, F), "mini")).toBe(
       `u/${U}/c/${C}/capa/${F}-mini.webp`,
     );
+  });
+
+  it("foto da OS fica dentro do registro (apagar o registro leva junto)", () => {
+    expect(chaveFotoOS(U, C, R, F)).toBe(`u/${U}/c/${C}/r/${R}/os/${F}`);
   });
 
   it("tudo do carro fica sob o prefixo do carro, e tudo sob o do usuário", () => {

@@ -17,6 +17,7 @@ import {
   removerFotoRegistro,
 } from "../../../fotos-acoes";
 import { adicionarItem } from "../itens/acoes";
+import { SecaoOS } from "../os/secao-os";
 import { FormularioItem } from "../itens/formulario-item";
 import { ListaItens } from "../itens/lista-itens";
 
@@ -53,7 +54,7 @@ async function Conteudo({
   const { data: registro } = await supabase
     .from("registros")
     .select(
-      "id, tipo, titulo, data, km, notas, visibilidade, itens_registro(id, descricao, categoria, quantidade, valor_centavos, espaco, criado_em), fotos_registro(id, chave, descricao, criado_em)",
+      "id, tipo, titulo, data, km, notas, visibilidade, itens_registro(id, descricao, categoria, quantidade, valor_centavos, espaco, criado_em), fotos_registro(id, chave, descricao, criado_em), ordens_servico(oficina, data, km, total_centavos, foto_chave)",
     )
     .eq("id", registroId)
     .eq("carro_id", carro.id)
@@ -131,6 +132,11 @@ async function Conteudo({
           </p>
         )}
       </section>
+      <SecaoOS
+        carroId={carro.id}
+        registroId={registro.id}
+        os={registro.ordens_servico}
+      />
       <section
         id="itens"
         aria-labelledby="titulo-itens"
@@ -152,7 +158,7 @@ async function Conteudo({
       <ExcluirComConfirmacao
         acao={apagarRegistro.bind(null, carro.id, registro.id)}
         rotulo="Excluir registro"
-        aviso="Isso apaga o registro, as fotos e o histórico de edições dele."
+        aviso="Isso apaga o registro, as fotos, a ordem de serviço e o histórico de edições dele."
       />
     </div>
   );

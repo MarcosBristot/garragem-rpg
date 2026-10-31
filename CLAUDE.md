@@ -64,7 +64,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 1 — garagem e diário. Feito: contas, perfil, carros, registros, itens, fotos (sem EXIF), visibilidade, histórico, visual novo, landing 3D, páginas legais/LGPD. páginas públicas com Open Graph, card 9:16 e denúncia. Fase 1 concluída no código; falta só o que depende de conta/empresa para publicar.
+**Fase atual:** 2 — leitura de OS. Feito: Fase 1 completa; OS anexada ao registro (foto privada + oficina, data, km, total à mão). Próximo: leitura por IA (Claude) — só com aprovação de custo do usuário; até lá, sem chamadas pagas.
 
 ## Identidade visual
 
@@ -107,6 +107,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Fotos: `src/lib/fotos/` — `processar.ts` (sharp: remove EXIF/GPS, 3 tamanhos WebP; testado), `chaves.ts` (caminhos `u/<usuário>/c/<carro>/…`), `armazenamento.ts` (S3: R2 em produção, Supabase local em dev; bucket privado, URLs assinadas de 1 h). Banco guarda a chave, nunca a URL. Excluiu carro/registro/conta? Apague também o prefixo no armazenamento.
 - Páginas públicas (`/c/[id]`, `/u/[usuario]`, card, OG) leem SEMPRE pelo `clientePublico()` (anônimo, sem cookies) via `src/lib/publico.ts`: assim o dono não vê dado privado na própria página pública. Imagens geradas (`next/og`) recebem fotos como data URL (`fotoParaImagem`), nunca por URL.
 - Denúncias: só INSERT pela API (RLS); moderação pelo painel do Supabase por enquanto.
+- Ordem de serviço (`ordens_servico`): sempre privada, nunca em view pública, card ou OG; foto em `u/…/r/<registro>/os/`. IA para ler OS: não fazer chamadas pagas sem aprovação explícita do usuário (ele pediu custo zero no início).
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

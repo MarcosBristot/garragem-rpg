@@ -4,8 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { apagarFoto, enviarFoto } from "@/lib/fotos/armazenamento";
 import { chaveCapa, chaveFotoRegistro } from "@/lib/fotos/chaves";
-import { processarFoto } from "@/lib/fotos/processar";
-import { lerFotoDoFormulario } from "@/lib/fotos/receber";
+import { prepararFoto } from "@/lib/fotos/preparar";
 import { usuarioLogado } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 
@@ -13,19 +12,6 @@ type Resultado = { erro?: string };
 
 const NAO_ENCONTRADO = { erro: "Não encontrado." };
 const FALHA = { erro: "Não foi possível enviar a foto. Tente de novo." };
-
-async function prepararFoto(form: FormData) {
-  const recebida = await lerFotoDoFormulario(form);
-  if (!recebida.ok) return recebida;
-  try {
-    return { ok: true as const, foto: await processarFoto(recebida.conteudo) };
-  } catch {
-    return {
-      ok: false as const,
-      erro: "Esse arquivo não parece uma foto válida.",
-    };
-  }
-}
 
 // ---------------------------------------------------------------- capa
 
