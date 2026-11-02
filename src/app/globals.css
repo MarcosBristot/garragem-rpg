@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
 /*
- * Identidade visual (CLAUDE.md). Tema escuro único, inspirado em estúdios
- * automotivos: fundo quase preto, títulos em serifada fina, rótulos em
- * caixa alta espaçada. Contrastes conferidos (WCAG AA):
- *   texto 16,8:1 · secundário 8,2:1 · apagado 6,1:1 · destaque 9,6:1
- *   borda-campo 3,9:1 (contorno de componente exige 3:1)
+ * Identidade visual (CLAUDE.md). Tema escuro único: névoa ao entardecer
+ * (azul-esverdeado quase preto) com o vermelho da lanterna como destaque.
+ * Títulos em serifada fina, rótulos em caixa alta espaçada. Os mesmos
+ * valores estão em src/lib/paleta.ts (um teste confere que batem e que os
+ * contrastes passam). Contrastes (WCAG AA, sobre o fundo):
+ *   texto 16,1:1 · secundário 8,7:1 · apagado 6,3:1 · destaque 6,3:1
+ *   borda-campo 4,1:1 (contorno de componente exige 3:1)
  */
 @theme {
-  --color-fundo: #0b0b0d;
-  --color-superficie: #16171b;
-  --color-superficie-2: #1e1f24;
-  --color-borda: #2a2c33; /* decorativa: cartões e divisórias */
-  --color-borda-campo: #6b6f79; /* campos de formulário */
-  --color-texto: #ecedef;
-  --color-texto-secundario: #a3a7b0;
-  --color-texto-apagado: #8a8f99;
-  --color-destaque: #f5a524;
+  --color-fundo: #0a0f10;
+  --color-superficie: #111a1c;
+  --color-superficie-2: #182326;
+  --color-borda: #26353a; /* decorativa: cartões e divisórias */
+  --color-borda-campo: #64777c; /* campos de formulário */
+  --color-texto: #e6ecec;
+  --color-texto-secundario: #a2b1b3;
+  --color-texto-apagado: #86979a;
+  --color-destaque: #ff5a4a;
   --color-condicao: #4ade80;
 
   --font-sans: var(--font-geist);

@@ -1,3 +1,4 @@
+import { PALETA } from "@/lib/paleta";
 // Silhueta lateral de um esportivo genérico, desenhada para o projeto
 // (sem marca, sem traços de um modelo real). Decorativa: aria-hidden.
 // Sem <defs>/ids: várias silhuetas na mesma página não podem colidir.
@@ -17,7 +18,7 @@ export function SilhuetaCarro({ className = "" }: { className?: string }) {
       {/* Vidros */}
       <path
         d="M134 62 C154 51 178 46 206 45 L210 62 Z M220 45 C244 46 262 51 278 59 L222 62 Z"
-        fill="#0b0b0d"
+        fill={PALETA.fundo}
         opacity="0.75"
       />
       {/* Luzes */}
@@ -26,16 +27,16 @@ export function SilhuetaCarro({ className = "" }: { className?: string }) {
       {/* Rodas */}
       {[90, 318].map((cx) => (
         <g key={cx}>
-          <circle cx={cx} cy={98} r={25} fill="#0b0b0d" />
+          <circle cx={cx} cy={98} r={25} fill={PALETA.fundo} />
           <circle
             cx={cx}
             cy={98}
             r={15}
             fill="none"
-            stroke="#8a8f99"
+            stroke={PALETA.textoApagado}
             strokeWidth={4}
           />
-          <circle cx={cx} cy={98} r={4} fill="#8a8f99" />
+          <circle cx={cx} cy={98} r={4} fill={PALETA.textoApagado} />
         </g>
       ))}
     </svg>

@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { nomeDoCarro } from "@/lib/carros";
 import { fontesOg } from "@/lib/og/fontes";
 import { fotoParaImagem } from "@/lib/og/foto";
+import { comAlfa, PALETA } from "@/lib/paleta";
 import { carroPublico } from "@/lib/publico";
 
 // Imagem de prévia quando o link do carro é compartilhado (WhatsApp,
@@ -36,8 +37,8 @@ export default async function Imagem({
         width: "100%",
         height: "100%",
         display: "flex",
-        background: "#0b0b0d",
-        color: "#ecedef",
+        background: PALETA.fundo,
+        color: PALETA.texto,
         fontFamily: "Geist",
       }}
     >
@@ -64,7 +65,7 @@ export default async function Imagem({
             style={{
               width: 16,
               height: 16,
-              background: "#f5a524",
+              background: PALETA.destaque,
               transform: "rotate(45deg)",
             }}
           />
@@ -76,7 +77,7 @@ export default async function Imagem({
               fontSize: 20,
               fontWeight: 600,
               letterSpacing: 4,
-              color: "#a3a7b0",
+              color: PALETA.textoSecundario,
               textTransform: "uppercase",
             }}
           >
@@ -92,7 +93,7 @@ export default async function Imagem({
             {nome}
           </div>
           {dados ? (
-            <div style={{ fontSize: 28, color: "#f5a524" }}>
+            <div style={{ fontSize: 28, color: PALETA.destaque }}>
               {`@${dados.dono.nome_usuario}`}
             </div>
           ) : null}
@@ -104,8 +105,7 @@ export default async function Imagem({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background:
-            "radial-gradient(ellipse at 50% 100%, rgba(245,165,36,0.35), #0b0b0d 70%)",
+          background: `radial-gradient(ellipse at 50% 100%, ${comAlfa(PALETA.destaque, 0.35)}, ${PALETA.fundo} 70%)`,
         }}
       >
         {capa ? (
@@ -122,7 +122,7 @@ export default async function Imagem({
             style={{
               fontFamily: "Instrument Serif",
               fontSize: 64,
-              color: "#f5a524",
+              color: PALETA.destaque,
             }}
           >
             ◆

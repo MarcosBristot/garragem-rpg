@@ -5,6 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import type * as THREE from "three";
 import { coresDoPersonagem, type Personagem } from "@/dominio/personagem";
+import { PALETA } from "@/lib/paleta";
 
 // Boneco de blocos montado só com caixas (sem modelo baixado, design
 // próprio). Medidas em metros "de brinquedo": chão em y = 0, ~2,4 de altura.
@@ -291,7 +292,7 @@ export default function CenaBoneco({
       <directionalLight
         position={[-4, 2, -3]}
         intensity={0.6}
-        color="#F5A524"
+        color={PALETA.destaque}
       />
       <Boneco personagem={personagem} semMovimento={semMovimento} />
       <ContactShadows

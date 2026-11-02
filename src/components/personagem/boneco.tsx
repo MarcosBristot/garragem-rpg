@@ -29,7 +29,7 @@ export function Boneco({
     <div
       role="img"
       aria-label={rotulo}
-      className={`relative touch-pan-y overflow-hidden rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_85%,rgb(245_165_36/0.18),transparent_65%)] ${className}`}
+      className={`relative touch-pan-y overflow-hidden rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_85%,color-mix(in_srgb,var(--color-destaque)_18%,transparent),transparent_65%)] ${className}`}
     >
       {pronto ? null : (
         <AvatarPersonagem

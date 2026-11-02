@@ -2,10 +2,12 @@
 
 import { ContactShadows, Environment, Lightformer } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { Carro3D } from "./carro-3d";
+import { Cavalo3D } from "./cavalo-3d";
+import { Cenario, COR_NEVOA } from "./cenario";
 import { quadroEm, type Quadro } from "./trajetoria";
 
 // Posições da câmera ao longo da rolagem (0 = topo, 1 = fim da página).
@@ -67,6 +69,8 @@ function Camera({
 export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
   const progresso = useRef(0);
   const giroRodas = useRef(0);
+  // Celular: menos capim e resolução menor (o 3D é só fundo).
+  const [leve] = useState(() => window.innerWidth < 640);
 
   useEffect(() => {
     const atualizar = () => {
@@ -83,9 +87,8 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
 
   return (
     <Canvas
-      shadows
-      dpr={[1, 1.75]}
-      camera={{ position: [6.4, 1.4, 5.2], fov: 34, near: 0.1, far: 60 }}
+      dpr={leve ? [1, 1.25] : [1, 1.75]}
+      camera={{ position: [6.4, 1.4, 5.2], fov: 34, near: 0.1, far: 120 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       frameloop={semMovimento ? "demand" : "always"}
       // Sem WebGL: mostra a silhueta em SVG no lugar.
@@ -95,8 +98,9 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
         </div>
       }
     >
-      <color attach="background" args={["#0b0b0d"]} />
-      <fog attach="fog" args={["#0b0b0d", 9, 22]} />
+      <color attach="background" args={[COR_NEVOA]} />
+      {/* Névoa exponencial: o carro fica nítido, o fundo some no cinza. */}
+      <fogExp2 attach="fog" args={[COR_NEVOA, 0.06]} />
 
       <Camera
         progressoRef={progresso}
@@ -104,59 +108,52 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
         semMovimento={semMovimento}
       />
       <Carro3D giroRodasRef={giroRodas} />
+      <group position={[-5.4, 0, -2.2]} rotation-y={-0.2}>
+        <Cavalo3D semMovimento={semMovimento} />
+      </group>
+      <Cenario semMovimento={semMovimento} leve={leve} />
 
-      {/* Chão da cor do fundo (sem luz) + sombra de contato para "assentar" o carro. */}
-      <mesh rotation-x={-Math.PI / 2}>
-        <circleGeometry args={[30, 64]} />
-        <meshBasicMaterial color="#0b0b0d" />
-      </mesh>
       <ContactShadows
         position={[0, 0.005, 0]}
         scale={9}
-        blur={2.4}
-        opacity={0.85}
+        blur={2.6}
+        opacity={0.8}
         far={2}
       />
 
-      <ambientLight intensity={0.15} />
-      <spotLight
-        position={[3, 8, 4]}
-        angle={0.45}
-        penumbra={0.8}
-        intensity={14}
-        castShadow
+      {/* Entardecer: luz fria e difusa do céu, quase sem sombra dura. */}
+      <hemisphereLight args={["#7d979c", "#0b120e", 0.9]} />
+      <directionalLight
+        position={[-6, 9, -4]}
+        intensity={0.9}
+        color="#a9bec2"
       />
 
-      {/* Reflexos da pintura: estúdio montado com Lightformers, gerado
+      {/* Reflexos da pintura: céu enevoado montado com Lightformers, gerado
           localmente (os presets do drei baixariam arquivos de terceiros). */}
       <Environment resolution={256} frames={1}>
         <Lightformer
           form="rect"
-          intensity={4}
-          position={[0, 6, 0]}
+          intensity={1.6}
+          color="#9db3b8"
+          position={[0, 7, 0]}
           rotation-x={Math.PI / 2}
-          scale={[10, 4, 1]}
+          scale={[14, 8, 1]}
         />
         <Lightformer
           form="rect"
-          intensity={2}
-          position={[6, 2, 0]}
-          rotation-y={-Math.PI / 2}
-          scale={[8, 1, 1]}
+          intensity={0.9}
+          color="#6f878c"
+          position={[0, 1.5, -9]}
+          scale={[20, 2.5, 1]}
         />
         <Lightformer
           form="rect"
-          intensity={2}
-          position={[-6, 2, 0]}
-          rotation-y={Math.PI / 2}
-          scale={[8, 1, 1]}
-        />
-        <Lightformer
-          form="ring"
-          color="#f5a524"
-          intensity={3}
-          position={[0, 2, -8]}
-          scale={4}
+          intensity={0.6}
+          color="#6f878c"
+          position={[0, 1.5, 9]}
+          rotation-y={Math.PI}
+          scale={[20, 2.5, 1]}
         />
       </Environment>
     </Canvas>

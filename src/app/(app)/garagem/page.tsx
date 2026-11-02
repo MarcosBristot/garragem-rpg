@@ -51,7 +51,7 @@ async function Conteudo() {
       <section aria-labelledby="titulo-perfil" className="flex flex-col">
         <div
           aria-hidden="true"
-          className="-mx-4 h-36 bg-[radial-gradient(ellipse_at_70%_120%,rgb(245_165_36/0.35),transparent_60%),linear-gradient(to_bottom,#16171b,#0b0b0d)] sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
+          className="-mx-4 h-36 bg-[radial-gradient(ellipse_at_70%_120%,color-mix(in_srgb,var(--color-destaque)_35%,transparent),transparent_60%),linear-gradient(to_bottom,#16171b,#0b0b0d)] sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
         />
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">
@@ -111,7 +111,7 @@ async function Conteudo() {
                     href={`/garagem/carros/${carro.id}`}
                     className="group flex flex-col overflow-hidden rounded-3xl border border-borda bg-superficie transition-colors hover:border-destaque/60"
                   >
-                    <div className="relative grid h-40 place-items-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_100%,rgb(245_165_36/0.18),transparent_70%)]">
+                    <div className="relative grid h-40 place-items-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_100%,color-mix(in_srgb,var(--color-destaque)_18%,transparent),transparent_70%)]">
                       {carro.foto_capa ? (
                         <FotoAssinada
                           chave={carro.foto_capa}

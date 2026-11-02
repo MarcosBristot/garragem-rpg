@@ -4,6 +4,7 @@ import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
 import { fontesOg } from "@/lib/og/fontes";
 import { fotoParaImagem } from "@/lib/og/foto";
+import { comAlfa, PALETA } from "@/lib/paleta";
 import { carroPublico, diarioPublico } from "@/lib/publico";
 
 // Card 9:16 (1080x1920) para stories, só com dados públicos (cliente
@@ -36,8 +37,8 @@ export async function GET(
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        background: "#0b0b0d",
-        color: "#ecedef",
+        background: PALETA.fundo,
+        color: PALETA.texto,
         fontFamily: "Geist",
       }}
     >
@@ -56,7 +57,7 @@ export async function GET(
           style={{
             width: 22,
             height: 22,
-            background: "#f5a524",
+            background: PALETA.destaque,
             transform: "rotate(45deg)",
           }}
         />
@@ -70,15 +71,14 @@ export async function GET(
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background:
-            "radial-gradient(ellipse at 50% 100%, rgba(245,165,36,0.35), #0b0b0d 70%)",
+          background: `radial-gradient(ellipse at 50% 100%, ${comAlfa(PALETA.destaque, 0.35)}, ${PALETA.fundo} 70%)`,
         }}
       >
         {capa ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={capa} alt="" width={1080} height={1080} />
         ) : (
-          <div style={{ fontSize: 200, color: "#f5a524" }}>◆</div>
+          <div style={{ fontSize: 200, color: PALETA.destaque }}>◆</div>
         )}
       </div>
 
@@ -95,7 +95,7 @@ export async function GET(
             fontSize: 30,
             fontWeight: 600,
             letterSpacing: 6,
-            color: "#a3a7b0",
+            color: PALETA.textoSecundario,
             textTransform: "uppercase",
           }}
         >
@@ -110,14 +110,16 @@ export async function GET(
         >
           {nome}
         </div>
-        <div style={{ fontSize: 40, color: "#f5a524" }}>
+        <div style={{ fontSize: 40, color: PALETA.destaque }}>
           {`@${dono.nome_usuario}`}
         </div>
-        <div style={{ fontSize: 34, color: "#a3a7b0", marginTop: 20 }}>
+        <div
+          style={{ fontSize: 34, color: PALETA.textoSecundario, marginTop: 20 }}
+        >
           {`${diario.length} ${diario.length === 1 ? "registro público" : "registros públicos"} no diário`}
         </div>
         {ultimo?.titulo && ultimo.data ? (
-          <div style={{ fontSize: 34, color: "#a3a7b0" }}>
+          <div style={{ fontSize: 34, color: PALETA.textoSecundario }}>
             {`Último: ${ultimo.titulo} · ${formatarData(ultimo.data)}${ultimo.tipo ? ` · ${TIPOS[ultimo.tipo]}` : ""}`}
           </div>
         ) : null}
