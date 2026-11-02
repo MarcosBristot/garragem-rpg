@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { validarComentario } from "@/dominio/comentario";
 import { limparDescricao, MAX_FOTOS_POST, validarPost } from "@/dominio/post";
 import {
   apagarFoto,
@@ -144,4 +145,81 @@ export async function excluirPost(postId: string): Promise<void> {
   await supabase.from("posts").delete().eq("id", post.id);
   revalidatePath("/feed");
   redirect("/feed");
+}
+
+// ----------------------------------------------- curtidas e comentários
+
+function revalidarPost(postId: string) {
+  revalidatePath("/feed");
+  revalidatePath(`/feed/p/${postId}`);
+}
+
+/**
+ * Recebe o estado desejado (e não "inverta"): dois cliques rápidos não
+ * desfazem um ao outro. Próprio post, post invisível ou bloqueio: a RLS
+ * recusa e nada muda.
+ */
+export async function alternarCurtida(
+  postId: string,
+  curtir: boolean,
+): Promise<void> {
+  const { supabase, perfil } = await exigirPerfil();
+  if (!ehUuid(postId)) return;
+  if (curtir) {
+    await supabase.from("curtidas").insert({ post_id: postId });
+  } else {
+    await supabase
+      .from("curtidas")
+      .delete()
+      .eq("post_id", postId)
+      .eq("perfil_id", perfil.id);
+  }
+  revalidarPost(postId);
+}
+
+export type EstadoComentario = {
+  versao: number;
+  erro?: string;
+  texto?: string;
+};
+
+export async function comentar(
+  postId: string,
+  estado: EstadoComentario,
+  form: FormData,
+): Promise<EstadoComentario> {
+  const { supabase } = await exigirPerfil();
+  const versao = estado.versao + 1;
+  const digitado = String(form.get("texto") ?? "");
+  if (!ehUuid(postId)) return { versao, erro: "Post não encontrado." };
+
+  const validado = validarComentario(digitado);
+  if (!validado.ok) return { versao, erro: validado.erro, texto: digitado };
+
+  const { error } = await supabase
+    .from("comentarios")
+    .insert({ post_id: postId, texto: validado.texto });
+  if (error) {
+    return {
+      versao,
+      texto: digitado,
+      erro:
+        error.code === "23514"
+          ? "Você chegou ao limite de comentários de hoje."
+          : "Não foi possível comentar. Tente de novo.",
+    };
+  }
+  revalidarPost(postId);
+  return { versao };
+}
+
+/** Quem escreveu, ou o dono do post, apaga (a RLS decide). */
+export async function excluirComentario(
+  comentarioId: string,
+  postId: string,
+): Promise<void> {
+  const { supabase } = await exigirPerfil();
+  if (!ehUuid(comentarioId) || !ehUuid(postId)) return;
+  await supabase.from("comentarios").delete().eq("id", comentarioId);
+  revalidarPost(postId);
 }

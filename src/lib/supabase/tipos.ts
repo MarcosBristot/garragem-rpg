@@ -113,6 +113,80 @@ export type Database = {
           },
         ];
       };
+      comentarios: {
+        Row: {
+          autor_id: string;
+          criado_em: string;
+          id: string;
+          post_id: string;
+          texto: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          autor_id?: string;
+          criado_em?: string;
+          id?: string;
+          post_id: string;
+          texto: string;
+        };
+        Update: {
+          autor_id?: string;
+          criado_em?: string;
+          id?: string;
+          post_id?: string;
+          texto?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "comentarios_autor_id_fkey";
+            columns: ["autor_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "comentarios_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      curtidas: {
+        Row: {
+          criado_em: string;
+          perfil_id: string;
+          post_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          criado_em?: string;
+          perfil_id?: string;
+          post_id: string;
+        };
+        Update: {
+          criado_em?: string;
+          perfil_id?: string;
+          post_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "curtidas_perfil_id_fkey";
+            columns: ["perfil_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "curtidas_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       denuncias: {
         Row: {
           alvo_id: string;
@@ -737,7 +811,7 @@ export type Database = {
     };
     Enums: {
       acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";
-      alvo_denuncia: "carro" | "perfil" | "registro" | "post";
+      alvo_denuncia: "carro" | "perfil" | "registro" | "post" | "comentario";
       espaco_equipamento:
         "motor" | "suspensao" | "rodas" | "freios" | "estetica" | "som";
       motivo_denuncia:
@@ -875,7 +949,7 @@ export const Constants = {
   public: {
     Enums: {
       acao_xp: ["manutencao", "modificacao", "item", "foto", "ordem_servico"],
-      alvo_denuncia: ["carro", "perfil", "registro", "post"],
+      alvo_denuncia: ["carro", "perfil", "registro", "post", "comentario"],
       espaco_equipamento: [
         "motor",
         "suspensao",

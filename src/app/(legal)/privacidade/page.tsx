@@ -77,6 +77,11 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>Curtidas e comentários que você faz</td>
+            <td>Interagir com os posts e mostrar essas interações neles</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
             <td>Quem você segue</td>
             <td>Montar a aba Seguindo do feed</td>
             <td>Execução de contrato (V)</td>
@@ -137,9 +142,9 @@ export default function PaginaPrivacidade() {
           <em>público sem valores</em> ou <em>público</em>.
         </li>
         <li>
-          Posts do feed: só quem tem conta vê, e só enquanto o carro do post
-          estiver público. Pessoas que você bloquear (ou que bloquearem você)
-          não veem os posts de vocês.
+          Posts do feed, com os comentários e o total de curtidas: só quem tem
+          conta vê, e só enquanto o carro do post estiver público. Pessoas que
+          você bloquear (ou que bloquearem você) não veem os posts de vocês.
         </li>
       </ul>
       <p>
@@ -172,9 +177,10 @@ export default function PaginaPrivacidade() {
       <h2>5. Por quanto tempo guardamos</h2>
       <p>
         Enquanto sua conta existir. Ao excluir a conta, apagamos na hora perfil,
-        personagem, carros, registros, itens, notas, fotos, posts, quem você
-        segue, bloqueios e histórico. Denúncias que você enviou ficam para a
-        moderação, mas sem identificar você. Cópias de segurança do provedor de
+        personagem, carros, registros, itens, notas, fotos, posts, curtidas,
+        comentários (inclusive em posts de outras pessoas), quem você segue,
+        bloqueios e histórico. Denúncias que você enviou ficam para a moderação,
+        mas sem identificar você. Cópias de segurança do provedor de
         infraestrutura são sobrescritas em até [preencher: prazo de retenção dos
         backups].
       </p>

@@ -22,12 +22,15 @@ describe("validarDenuncia", () => {
     });
   });
 
-  it("aceita denúncia de post do feed", () => {
-    expect(validarDenuncia({ ...base, alvoTipo: "post" }).ok).toBe(true);
-  });
+  it.each(["post", "comentario"])(
+    "aceita denúncia de %s do feed",
+    (alvoTipo) => {
+      expect(validarDenuncia({ ...base, alvoTipo }).ok).toBe(true);
+    },
+  );
 
   it.each([
-    { alvoTipo: "comentario", alvoId: ID },
+    { alvoTipo: "curtida", alvoId: ID },
     { alvoTipo: "carro", alvoId: "../x" },
     { alvoTipo: "toString", alvoId: ID },
   ])("recusa alvo inválido %j", (alvo) => {

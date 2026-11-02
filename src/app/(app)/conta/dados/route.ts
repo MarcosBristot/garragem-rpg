@@ -26,6 +26,8 @@ export async function GET() {
     fotosPosts,
     seguindo,
     bloqueios,
+    curtidas,
+    comentarios,
   ] = await Promise.all([
     supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
     supabase.from("carros").select("*").eq("dono_id", usuarioId),
@@ -37,6 +39,8 @@ export async function GET() {
     supabase.from("fotos_post").select("*").eq("dono_id", usuarioId),
     supabase.from("seguidores").select("*").eq("seguidor_id", usuarioId),
     supabase.from("bloqueios").select("*").eq("bloqueador_id", usuarioId),
+    supabase.from("curtidas").select("*").eq("perfil_id", usuarioId),
+    supabase.from("comentarios").select("*").eq("autor_id", usuarioId),
   ]);
   // Itens não têm dono_id: filtra pelos registros da pessoa (a RLS também
   // libera itens de registros públicos de outras pessoas).
@@ -96,6 +100,8 @@ export async function GET() {
     fotos_posts: fotosDosPosts,
     seguindo: seguindo.data ?? [],
     bloqueios: bloqueios.data ?? [],
+    curtidas: curtidas.data ?? [],
+    comentarios: comentarios.data ?? [],
   };
 
   return new Response(JSON.stringify(arquivo, null, 2), {

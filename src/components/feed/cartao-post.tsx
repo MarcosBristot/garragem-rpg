@@ -2,6 +2,7 @@ import Link from "next/link";
 import { bloquear } from "@/app/(app)/pessoas-acoes";
 import { excluirPost } from "@/app/(app)/feed/acoes";
 import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
+import { BotaoCurtir } from "@/components/feed/botao-curtir";
 import { FotoAssinada } from "@/components/foto-assinada";
 import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
 import { personagemDoPerfil } from "@/dominio/personagem";
@@ -22,6 +23,7 @@ export function CartaoPost({
   const nome = autor.nome_exibicao ?? autor.nome_usuario;
   const meu = post.dono_id === usuarioId;
   const idTitulo = `post-${post.id}`;
+  const comentarios = post.comentarios[0]?.count ?? 0;
 
   return (
     <article
@@ -122,10 +124,36 @@ export function CartaoPost({
         </p>
       ) : null}
 
+      <div className="flex items-center gap-1 px-2 pt-2">
+        <BotaoCurtir
+          postId={post.id}
+          curtido={post.curtiu}
+          total={post.curtidas[0]?.count ?? 0}
+          proprio={meu}
+        />
+        <Link
+          href={`/feed/p/${post.id}#comentarios`}
+          className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className="size-6"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.5}
+            strokeLinejoin="round"
+          >
+            <path d="M4 5h16v11H9l-5 4z" />
+          </svg>
+          {comentarios} {comentarios === 1 ? "comentário" : "comentários"}
+        </Link>
+      </div>
+
       {post.legenda ? (
-        <p className="p-4 whitespace-pre-line">{post.legenda}</p>
+        <p className="px-4 pt-1 pb-4 whitespace-pre-line">{post.legenda}</p>
       ) : (
-        <div className="h-2" />
+        <div className="h-3" />
       )}
     </article>
   );

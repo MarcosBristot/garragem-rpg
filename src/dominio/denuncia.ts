@@ -22,6 +22,7 @@ export const ALVOS = {
   perfil: "perfil",
   registro: "registro",
   post: "post",
+  comentario: "comentario",
 };
 
 export type Motivo = keyof typeof MOTIVOS;
