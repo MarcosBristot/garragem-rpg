@@ -78,6 +78,7 @@ export type Database = {
           id: string;
           marca: string;
           modelo: string;
+          potencia_cv: number | null;
           publico: boolean;
         };
         ComputedFields: never;
@@ -90,6 +91,7 @@ export type Database = {
           id?: string;
           marca: string;
           modelo: string;
+          potencia_cv?: number | null;
           publico?: boolean;
         };
         Update: {
@@ -101,6 +103,7 @@ export type Database = {
           id?: string;
           marca?: string;
           modelo?: string;
+          potencia_cv?: number | null;
           publico?: boolean;
         };
         Relationships: [
@@ -458,6 +461,7 @@ export type Database = {
           espaco: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id: string;
           quantidade: number;
+          reaproveitada: boolean;
           registro_id: string;
           valor_centavos: number | null;
         };
@@ -469,6 +473,7 @@ export type Database = {
           espaco?: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id?: string;
           quantidade?: number;
+          reaproveitada?: boolean;
           registro_id: string;
           valor_centavos?: number | null;
         };
@@ -479,6 +484,7 @@ export type Database = {
           espaco?: Database["public"]["Enums"]["espaco_equipamento"] | null;
           id?: string;
           quantidade?: number;
+          reaproveitada?: boolean;
           registro_id?: string;
           valor_centavos?: number | null;
         };
@@ -642,6 +648,7 @@ export type Database = {
           criado_em: string;
           data: string;
           dono_id: string;
+          faca_voce_mesmo: boolean;
           id: string;
           km: number | null;
           notas: string | null;
@@ -656,6 +663,7 @@ export type Database = {
           criado_em?: string;
           data: string;
           dono_id?: string;
+          faca_voce_mesmo?: boolean;
           id?: string;
           km?: number | null;
           notas?: string | null;
@@ -669,6 +677,7 @@ export type Database = {
           criado_em?: string;
           data?: string;
           dono_id?: string;
+          faca_voce_mesmo?: boolean;
           id?: string;
           km?: number | null;
           notas?: string | null;
@@ -808,6 +817,7 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: undefined;
       };
+      ficha_do_carro: { Args: { p_carro: string }; Returns: Json };
     };
     Enums: {
       acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";

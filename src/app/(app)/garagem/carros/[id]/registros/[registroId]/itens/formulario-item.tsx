@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { Botao, Campo, Selecao } from "@/components/formulario";
+import { Botao, CaixaMarcacao, Campo, Selecao } from "@/components/formulario";
 import { CATEGORIAS, ESPACOS } from "@/dominio/item";
 import type { EstadoItem } from "./acoes";
 import { VALORES_ITEM_VAZIOS } from "./valores";
@@ -72,6 +72,13 @@ export function FormularioItem({ acao }: { acao: Acao }) {
           erro={estado.erros.valorCentavos}
         />
       </div>
+      <CaixaMarcacao
+        id="reaproveitada"
+        name="reaproveitada"
+        defaultChecked={v.reaproveitada}
+        rotulo="Peça reaproveitada ou usada"
+        dica="Garimpada, de desmanche ou reaproveitada de outro carro. Conta para a Engenhosidade."
+      />
       {estado.erroGeral ? (
         <p role="alert" className="text-sm text-red-300">
           {estado.erroGeral}

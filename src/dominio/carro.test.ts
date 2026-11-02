@@ -22,6 +22,7 @@ describe("validarCarro", () => {
         ano: null,
         apelido: null,
         publico: false,
+        potencia_cv: null,
       },
     });
   });
@@ -29,6 +30,15 @@ describe("validarCarro", () => {
   it('checkbox marcado ("on") torna o carro público', () => {
     const r = validarCarro({ ...base, publico: "on" }, ANO_ATUAL);
     expect(r.ok && r.dados.publico).toBe(true);
+  });
+
+  it("potência de fábrica: opcional, inteira, de 1 a 2000 cv", () => {
+    const ok = validarCarro({ ...base, potencia_cv: " 116 " }, ANO_ATUAL);
+    expect(ok.ok && ok.dados.potencia_cv).toBe(116);
+    for (const potencia_cv of ["0", "2001", "1,5", "muito"]) {
+      const r = validarCarro({ ...base, potencia_cv }, ANO_ATUAL);
+      expect(!r.ok && r.erros.potencia_cv).toBeTruthy();
+    }
   });
 
   it("converte o ano para número", () => {

@@ -24,6 +24,7 @@ describe("validarRegistro", () => {
         km: null,
         notas: null,
         visibilidade: "privado",
+        faca_voce_mesmo: false,
       },
     });
   });
@@ -55,6 +56,13 @@ describe("validarRegistro", () => {
       });
     },
   );
+
+  it('"fiz eu mesmo" vem do checkbox ("on") e é falso por padrão', () => {
+    const marcado = validarRegistro({ ...base, faca_voce_mesmo: "on" }, HOJE);
+    expect(marcado.ok && marcado.dados.faca_voce_mesmo).toBe(true);
+    const outro = validarRegistro({ ...base, faca_voce_mesmo: "sim" }, HOJE);
+    expect(outro.ok && outro.dados.faca_voce_mesmo).toBe(false);
+  });
 
   it("recusa tipo e visibilidade fora da lista (form adulterado)", () => {
     const r = validarRegistro(

@@ -33,6 +33,8 @@ export interface DadosRegistro {
   km: number | null;
   notas: string | null;
   visibilidade: Visibilidade;
+  /** "Fiz eu mesmo": entra no atributo Engenhosidade. */
+  faca_voce_mesmo: boolean;
 }
 
 export type ErrosRegistro = Partial<Record<keyof DadosRegistro, string>>;
@@ -66,6 +68,7 @@ export function validarRegistro(
     km: unknown;
     notas: unknown;
     visibilidade: unknown;
+    faca_voce_mesmo?: unknown;
   },
   hoje: string,
 ): ResultadoRegistro {
@@ -79,6 +82,9 @@ export function validarRegistro(
     km: kmTexto === "" ? null : Number(kmTexto),
     notas: texto(entrada.notas) || null,
     visibilidade,
+    // Checkbox HTML: "on" quando marcado, ausente quando não.
+    faca_voce_mesmo:
+      entrada.faca_voce_mesmo === "on" || entrada.faca_voce_mesmo === true,
   };
 
   const erros: ErrosRegistro = {};

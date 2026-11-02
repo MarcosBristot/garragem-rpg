@@ -10,7 +10,8 @@ import { CATEGORIAS } from "@/dominio/item";
 import { TIPOS } from "@/dominio/registro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
-import { carroPublico, diarioPublico } from "@/lib/publico";
+import { PainelAtributos } from "@/components/painel-atributos";
+import { carroPublico, diarioPublico, fichaPublica } from "@/lib/publico";
 
 // Página pública do carro. Só existe se o carro for público; mostra só
 // registros não privados (views do banco). Notas nunca aparecem aqui.
@@ -55,7 +56,10 @@ async function Conteudo({ id }: { id: string }) {
   const dados = await carroPublico(id);
   if (!dados) notFound();
   const { carro, dono } = dados;
-  const diario = await diarioPublico(carro.id);
+  const [diario, ficha] = await Promise.all([
+    diarioPublico(carro.id),
+    fichaPublica(carro.id),
+  ]);
   const nome = nomeDoCarro(carro);
 
   return (
@@ -98,6 +102,10 @@ async function Conteudo({ id }: { id: string }) {
           </a>
         </div>
       </header>
+
+      {ficha ? (
+        <PainelAtributos atributos={ficha.atributos} nivel={ficha.progresso} />
+      ) : null}
 
       <section aria-labelledby="titulo-diario" className="flex flex-col gap-4">
         <h2 id="titulo-diario" className="text-4xl">

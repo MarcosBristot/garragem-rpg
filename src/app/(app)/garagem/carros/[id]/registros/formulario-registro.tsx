@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { AreaTexto, Botao, Campo, GrupoOpcoes } from "@/components/formulario";
+import {
+  AreaTexto,
+  Botao,
+  CaixaMarcacao,
+  Campo,
+  GrupoOpcoes,
+} from "@/components/formulario";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
 import type { EstadoRegistro, ValoresRegistro } from "./acoes";
 
@@ -77,6 +83,13 @@ export function FormularioRegistro({
           dica="Quilometragem no dia."
         />
       </div>
+      <CaixaMarcacao
+        id="faca_voce_mesmo"
+        name="faca_voce_mesmo"
+        defaultChecked={v.faca_voce_mesmo}
+        rotulo="Fiz eu mesmo"
+        dica="Você mesmo fez o serviço. Com uma foto ou item como prova, conta para a Engenhosidade."
+      />
       <AreaTexto
         id="notas"
         name="notas"

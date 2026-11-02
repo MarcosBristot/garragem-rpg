@@ -39,6 +39,7 @@ export async function adicionarItem(
     quantidade: String(form.get("quantidade") ?? ""),
     valor: String(form.get("valor") ?? ""),
     espaco: String(form.get("espaco") ?? ""),
+    reaproveitada: form.get("reaproveitada") === "on",
   };
   const resultado = validarItem(valores);
   if (!resultado.ok) {
@@ -62,6 +63,7 @@ export async function adicionarItem(
     quantidade: d.quantidade,
     valor_centavos: d.valorCentavos,
     espaco: d.espaco,
+    reaproveitada: d.reaproveitada,
   });
   if (error) {
     return {

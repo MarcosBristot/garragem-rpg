@@ -44,6 +44,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
           km: "",
           notas: "",
           visibilidade: VISIBILIDADE_PADRAO,
+          faca_voce_mesmo: false,
         }}
         hoje={hoje}
         rotuloEnviar="Adicionar registro"

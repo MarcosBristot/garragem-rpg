@@ -13,11 +13,12 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-11-02.2";
+export const VERSAO_TERMOS = "2026-11-02.3";
 export const VIGENCIA = "02/11/2026";
 
 /** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
 export const MUDANCAS_TERMOS = [
+  "Ficha RPG: carros públicos mostram nível e atributos (Potência, Estilo, Engenhosidade, Dedicação e Condição). São só números, calculados também a partir de registros privados; o conteúdo dos registros continua privado.",
   "Curtidas e comentários: você pode curtir e comentar posts. Comentários e o total de curtidas aparecem para quem pode ver o post; o dono do post pode apagar comentários nele.",
   "Feed: agora você pode publicar posts com até 4 fotos de um carro público. Só quem tem conta vê, e o post some do feed se o carro voltar a ser privado.",
   "Seguir e bloquear: guardamos quem você segue e quem você bloqueou. Isso não aparece para outras pessoas, e quem é bloqueado não é avisado.",

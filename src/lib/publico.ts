@@ -1,5 +1,6 @@
 import "server-only";
 import { cache } from "react";
+import { fichaDoCarro } from "./ficha";
 import { clientePublico } from "./supabase/publico";
 import { ehUuid } from "./uuid";
 
@@ -75,4 +76,10 @@ export const perfilPublico = cache(async (nomeUsuario: string) => {
     .eq("publico", true)
     .order("criado_em");
   return { perfil, carros: carros ?? [] };
+});
+
+/** Ficha RPG (nível e atributos) lida como visitante: só carro público. */
+export const fichaPublica = cache(async (carroId: string) => {
+  if (!ehUuid(carroId)) return null;
+  return fichaDoCarro(await clientePublico(), carroId);
 });

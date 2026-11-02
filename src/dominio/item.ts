@@ -29,6 +29,8 @@ export interface DadosItem {
   quantidade: number;
   valorCentavos: number | null;
   espaco: Espaco | null;
+  /** Peça reaproveitada ou usada: entra no atributo Engenhosidade. */
+  reaproveitada: boolean;
 }
 
 export type ErrosItem = Partial<Record<keyof DadosItem, string>>;
@@ -49,6 +51,7 @@ export function validarItem(entrada: {
   quantidade: unknown;
   valor: unknown;
   espaco: unknown;
+  reaproveitada?: unknown;
 }): ResultadoItem {
   const descricao = texto(entrada.descricao);
   const categoria = texto(entrada.categoria);
@@ -85,6 +88,8 @@ export function validarItem(entrada: {
       quantidade,
       valorCentavos: valorCentavos ?? null,
       espaco: espaco === "" ? null : (espaco as Espaco),
+      reaproveitada:
+        entrada.reaproveitada === "on" || entrada.reaproveitada === true,
     },
   };
 }

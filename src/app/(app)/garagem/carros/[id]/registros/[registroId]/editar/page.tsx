@@ -54,7 +54,7 @@ async function Conteudo({
   const { data: registro } = await supabase
     .from("registros")
     .select(
-      "id, tipo, titulo, data, km, notas, visibilidade, itens_registro(id, descricao, categoria, quantidade, valor_centavos, espaco, criado_em), fotos_registro(id, chave, descricao, criado_em), ordens_servico(oficina, data, km, total_centavos, foto_chave)",
+      "id, tipo, titulo, data, km, notas, visibilidade, faca_voce_mesmo, itens_registro(id, descricao, categoria, quantidade, valor_centavos, espaco, reaproveitada, criado_em), fotos_registro(id, chave, descricao, criado_em), ordens_servico(oficina, data, km, total_centavos, foto_chave)",
     )
     .eq("id", registroId)
     .eq("carro_id", carro.id)
@@ -77,6 +77,7 @@ async function Conteudo({
             km: registro.km?.toString() ?? "",
             notas: registro.notas ?? "",
             visibilidade: registro.visibilidade,
+            faca_voce_mesmo: registro.faca_voce_mesmo,
           }}
           hoje={hojeEmSaoPaulo()}
           rotuloEnviar="Salvar alterações"

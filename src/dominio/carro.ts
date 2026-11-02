@@ -8,6 +8,8 @@ export interface DadosCarro {
   ano: number | null;
   apelido: string | null;
   publico: boolean;
+  /** Potência de fábrica em cv, informada pelo dono (atributo Potência). */
+  potencia_cv: number | null;
 }
 
 export type ErrosCarro = Partial<Record<keyof DadosCarro, string>>;
@@ -17,6 +19,8 @@ export type ResultadoCarro =
 
 /** Primeiro automóvel patenteado; também é o limite do banco. */
 const ANO_MINIMO = 1886;
+/** Mesmo limite do CHECK de carros.potencia_cv. */
+const CV_MAXIMO = 2000;
 
 function texto(valor: unknown): string {
   return String(valor ?? "").trim();
@@ -29,10 +33,12 @@ export function validarCarro(
     ano: unknown;
     apelido: unknown;
     publico: unknown;
+    potencia_cv?: unknown;
   },
   anoAtual: number,
 ): ResultadoCarro {
   const anoTexto = texto(entrada.ano);
+  const cvTexto = texto(entrada.potencia_cv);
   const dados: DadosCarro = {
     marca: texto(entrada.marca),
     modelo: texto(entrada.modelo),
@@ -40,6 +46,7 @@ export function validarCarro(
     apelido: texto(entrada.apelido) || null,
     // Checkbox HTML: vem "on" quando marcado e nada quando não.
     publico: entrada.publico === "on" || entrada.publico === true,
+    potencia_cv: cvTexto === "" ? null : Number(cvTexto),
   };
 
   const erros: ErrosCarro = {};
@@ -56,6 +63,14 @@ export function validarCarro(
       dados.ano > anoAtual + 1)
   ) {
     erros.ano = `Use um ano entre ${ANO_MINIMO} e ${anoAtual + 1}.`;
+  }
+  if (
+    dados.potencia_cv !== null &&
+    (!Number.isInteger(dados.potencia_cv) ||
+      dados.potencia_cv < 1 ||
+      dados.potencia_cv > CV_MAXIMO)
+  ) {
+    erros.potencia_cv = `Use um número inteiro de 1 a ${CV_MAXIMO}.`;
   }
   if (dados.apelido && dados.apelido.length > 40) {
     erros.apelido = "Máximo de 40 caracteres.";

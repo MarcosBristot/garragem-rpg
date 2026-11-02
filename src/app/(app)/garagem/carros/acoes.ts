@@ -14,6 +14,7 @@ export type ValoresCarro = {
   ano: string;
   apelido: string;
   publico: boolean;
+  potencia_cv: string;
 };
 
 export type EstadoCarro = {
@@ -40,6 +41,7 @@ export async function salvarCarro(
     ano: String(form.get("ano") ?? ""),
     apelido: String(form.get("apelido") ?? ""),
     publico: form.get("publico") === "on",
+    potencia_cv: String(form.get("potencia_cv") ?? ""),
   };
   const resultado = validarCarro(valores, new Date().getFullYear());
   if (!resultado.ok) return { valores, erros: resultado.erros };

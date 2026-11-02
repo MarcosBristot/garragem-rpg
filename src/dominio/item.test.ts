@@ -10,6 +10,11 @@ const base = {
 };
 
 describe("validarItem", () => {
+  it('"reaproveitada" vem do checkbox e não depende do valor', () => {
+    const r = validarItem({ ...base, reaproveitada: "on", valor: "5.000,00" });
+    expect(r.ok && r.dados.reaproveitada).toBe(true);
+  });
+
   it("quantidade vazia vira 1; valor e espaço são opcionais", () => {
     expect(validarItem(base)).toEqual({
       ok: true,
@@ -19,6 +24,7 @@ describe("validarItem", () => {
         quantidade: 1,
         valorCentavos: null,
         espaco: null,
+        reaproveitada: false,
       },
     });
   });

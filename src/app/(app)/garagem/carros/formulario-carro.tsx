@@ -54,6 +54,16 @@ export function FormularioCarro({
         erro={estado.erros.ano}
       />
       <Campo
+        id="potencia_cv"
+        name="potencia_cv"
+        rotulo="Potência de fábrica em cv (opcional)"
+        defaultValue={v.potencia_cv}
+        inputMode="numeric"
+        maxLength={4}
+        erro={estado.erros.potencia_cv}
+        dica="Do manual ou da ficha técnica. Entra no atributo Potência."
+      />
+      <Campo
         id="apelido"
         name="apelido"
         rotulo="Apelido (opcional)"

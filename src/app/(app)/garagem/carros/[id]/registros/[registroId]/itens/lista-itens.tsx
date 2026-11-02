@@ -9,6 +9,7 @@ type Item = {
   quantidade: number;
   valor_centavos: number | null;
   espaco: keyof typeof ESPACOS | null;
+  reaproveitada: boolean;
 };
 
 export function ListaItens({
@@ -44,6 +45,7 @@ export function ListaItens({
                 {" · "}
                 {item.quantidade.toLocaleString("pt-BR")}×
                 {item.espaco ? ` · ${ESPACOS[item.espaco]}` : null}
+                {item.reaproveitada ? " · Reaproveitada" : null}
                 {item.valor_centavos !== null
                   ? ` · ${formatarReais(item.valor_centavos)}`
                   : null}

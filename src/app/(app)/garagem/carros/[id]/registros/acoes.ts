@@ -12,7 +12,7 @@ import { ehUuid } from "@/lib/uuid";
 export type ValoresRegistro = Record<
   "tipo" | "titulo" | "data" | "km" | "notas" | "visibilidade",
   string
->;
+> & { faca_voce_mesmo: boolean };
 
 export type EstadoRegistro = {
   valores: ValoresRegistro;
@@ -37,6 +37,7 @@ export async function salvarRegistro(
     km: String(form.get("km") ?? ""),
     notas: String(form.get("notas") ?? ""),
     visibilidade: String(form.get("visibilidade") ?? ""),
+    faca_voce_mesmo: form.get("faca_voce_mesmo") === "on",
   };
   const resultado = validarRegistro(valores, hojeEmSaoPaulo());
   if (!resultado.ok) return { valores, erros: resultado.erros };

@@ -23,7 +23,14 @@ async function Conteudo() {
   return (
     <FormularioCarro
       acao={salvarCarro.bind(null, null)}
-      valores={{ marca: "", modelo: "", ano: "", apelido: "", publico: false }}
+      valores={{
+        marca: "",
+        modelo: "",
+        ano: "",
+        apelido: "",
+        publico: false,
+        potencia_cv: "",
+      }}
       rotuloEnviar="Adicionar carro"
     />
   );

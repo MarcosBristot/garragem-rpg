@@ -5,13 +5,14 @@ import { calcularCondicao } from "@/dominio/condicao";
 import { formatarReais } from "@/dominio/dinheiro";
 import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
-import { progressoXp } from "@/dominio/xp";
 import { FotoAssinada } from "@/components/foto-assinada";
 import { PainelCondicao } from "@/components/painel-condicao";
+import { PainelAtributos } from "@/components/painel-atributos";
 import { PainelXp } from "@/components/painel-xp";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
 import { formatarData, hojeEmSaoPaulo } from "@/lib/datas";
+import { fichaDoCarro } from "@/lib/ficha";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Diário do carro · Garagem RPG" };
@@ -59,19 +60,12 @@ async function Conteudo({ carroId }: { carroId: string }) {
     .order("data", { ascending: false })
     .order("criado_em", { ascending: false });
 
-  // Eventos gravados só pelo banco (triggers); aqui só somamos.
-  const { data: eventosXp } = await supabase
-    .from("eventos_xp")
-    .select("pontos")
-    .eq("carro_id", carro.id)
-    .eq("dono_id", perfil.id);
+  // XP e atributos: totais do banco, calculados aqui no servidor (regra 4).
+  const ficha = await fichaDoCarro(supabase, carro.id);
 
   const novoRegistro = `/garagem/carros/${carro.id}/registros/novo`;
   // Calculadas no servidor (regra 4), com todos os dados do dono.
   const condicao = calcularCondicao(registros ?? [], hojeEmSaoPaulo());
-  const progresso = progressoXp(
-    (eventosXp ?? []).reduce((soma, e) => soma + e.pontos, 0),
-  );
 
   return (
     <>
@@ -126,10 +120,15 @@ async function Conteudo({ carroId }: { carroId: string }) {
         </div>
       </header>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <PainelXp progresso={progresso} />
-        <PainelCondicao condicao={condicao} />
-      </div>
+      {ficha ? (
+        <>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <PainelXp progresso={ficha.progresso} />
+            <PainelCondicao condicao={condicao} />
+          </div>
+          <PainelAtributos atributos={ficha.atributos} semCondicao comDicas />
+        </>
+      ) : null}
 
       <section aria-labelledby="titulo-diario" className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">

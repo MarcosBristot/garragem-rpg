@@ -3,7 +3,7 @@
 export type ValoresItem = Record<
   "descricao" | "categoria" | "quantidade" | "valor" | "espaco",
   string
->;
+> & { reaproveitada: boolean };
 
 export const VALORES_ITEM_VAZIOS: ValoresItem = {
   descricao: "",
@@ -11,4 +11,5 @@ export const VALORES_ITEM_VAZIOS: ValoresItem = {
   quantidade: "1",
   valor: "",
   espaco: "",
+  reaproveitada: false,
 };
