@@ -50,7 +50,10 @@ select is(
 reset role;
 
 delete from public.registros where id = 'd4000000-0000-0000-0000-000000000001';
-select is((select count(*) from public.ordens_servico), 0::bigint, 'OS some junto com o registro');
+select is(
+  (select count(*) from public.ordens_servico where registro_id = 'd4000000-0000-0000-0000-000000000001'),
+  0::bigint, 'OS some junto com o registro'
+);
 
 select * from finish();
 rollback;

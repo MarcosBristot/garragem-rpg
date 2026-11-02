@@ -118,6 +118,69 @@ export type Database = {
           },
         ];
       };
+      eventos_xp: {
+        Row: {
+          acao: Database["public"]["Enums"]["acao_xp"];
+          carro_id: string;
+          criado_em: string;
+          dono_id: string;
+          id: number;
+          origem_id: string;
+          pontos: number;
+          registro_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          acao: Database["public"]["Enums"]["acao_xp"];
+          carro_id: string;
+          criado_em?: string;
+          dono_id: string;
+          id?: never;
+          origem_id: string;
+          pontos: number;
+          registro_id: string;
+        };
+        Update: {
+          acao?: Database["public"]["Enums"]["acao_xp"];
+          carro_id?: string;
+          criado_em?: string;
+          dono_id?: string;
+          id?: never;
+          origem_id?: string;
+          pontos?: number;
+          registro_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "eventos_xp_carro_id_fkey";
+            columns: ["carro_id"];
+            isOneToOne: false;
+            referencedRelation: "carros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "eventos_xp_dono_id_fkey";
+            columns: ["dono_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "eventos_xp_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "eventos_xp_registro_id_fkey";
+            columns: ["registro_id"];
+            isOneToOne: false;
+            referencedRelation: "registros_publicos";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       fotos_registro: {
         Row: {
           altura: number;
@@ -513,6 +576,7 @@ export type Database = {
       };
     };
     Enums: {
+      acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";
       alvo_denuncia: "carro" | "perfil" | "registro";
       espaco_equipamento:
         "motor" | "suspensao" | "rodas" | "freios" | "estetica" | "som";
@@ -650,6 +714,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      acao_xp: ["manutencao", "modificacao", "item", "foto", "ordem_servico"],
       alvo_denuncia: ["carro", "perfil", "registro"],
       espaco_equipamento: [
         "motor",

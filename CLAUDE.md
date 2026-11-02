@@ -64,7 +64,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 2 — leitura de OS. Feito: Fase 1 completa; OS anexada ao registro (foto privada + oficina, data, km, total à mão). Próximo: leitura por IA (Claude) — só com aprovação de custo do usuário; até lá, sem chamadas pagas.
+**Fase atual:** 4 — RPG. Feito: Fase 1 completa; Fase 2 sem custo (OS anexada à mão); Condição; XP e nível. Próximo: atributos e ficha RPG na página pública. Leitura de OS por IA (Claude) só com aprovação de custo do usuário; até lá, sem chamadas pagas.
 
 ## Identidade visual
 
@@ -109,6 +109,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Denúncias: só INSERT pela API (RLS); moderação pelo painel do Supabase por enquanto.
 - Ordem de serviço (`ordens_servico`): sempre privada, nunca em view pública, card ou OG; foto em `u/…/r/<registro>/os/`. IA para ler OS: não fazer chamadas pagas sem aprovação explícita do usuário (ele pediu custo zero no início).
 - RPG: `src/dominio/condicao.ts` (função pura, testada; intervalos em constantes). Condição, XP e atributos só calculados no servidor.
+- XP: tabela `eventos_xp` gravada SÓ por triggers (`private.conceder_xp`, limite diário no dia de São Paulo; apagar a origem apaga o XP). Pontos em `private.regra_xp()` e espelhados em `REGRAS_XP` (`src/dominio/xp.ts`; um teste compara com a migração). Nível = `nivelDoXp(soma)`, nunca guardado.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js
