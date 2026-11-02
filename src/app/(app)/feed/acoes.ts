@@ -11,6 +11,7 @@ import {
 } from "@/lib/fotos/armazenamento";
 import { chaveFotoPost, prefixoPost } from "@/lib/fotos/chaves";
 import { prepararFoto } from "@/lib/fotos/preparar";
+import { registrarFalha } from "@/lib/log";
 import { exigirPerfil } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 
@@ -39,8 +40,9 @@ async function salvarFoto(
   const chave = chaveFotoPost(donoId, carroId, postId, crypto.randomUUID());
   try {
     await enviarFoto(chave, preparada.foto.arquivos);
-  } catch {
-    return FALHA;
+  } catch (erro) {
+    registrarFalha("feed: enviar foto ao armazenamento", erro);
+    return "Não foi possível guardar a foto. Tente de novo em instantes.";
   }
   const { error } = await supabase.from("fotos_post").insert({
     post_id: postId,
@@ -51,9 +53,10 @@ async function salvarFoto(
   });
   if (error) {
     await apagarFoto(chave).catch(() => undefined);
-    return error.code === "23514"
-      ? `No máximo ${MAX_FOTOS_POST} fotos por post.`
-      : FALHA;
+    if (error.code === "23514")
+      return `No máximo ${MAX_FOTOS_POST} fotos por post.`;
+    registrarFalha("feed: gravar foto no banco", error);
+    return FALHA;
   }
   return null;
 }
@@ -78,11 +81,15 @@ export async function criarPost(form: FormData): Promise<ResultadoCriarPost> {
   if (error?.code === "23514") {
     return { ok: false, erro: "Você chegou ao limite de posts de hoje." };
   }
-  if (error || !post) {
+  if (error?.code === "42501") {
     return {
       ok: false,
       erro: "Só dá para publicar fotos de um carro seu marcado como público.",
     };
+  }
+  if (error || !post) {
+    registrarFalha("feed: criar post", error);
+    return { ok: false, erro: FALHA };
   }
 
   const erroFoto = await salvarFoto(

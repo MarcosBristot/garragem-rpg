@@ -6,6 +6,7 @@ import { validarOS, type ErrosOS } from "@/dominio/ordem-servico";
 import { hojeEmSaoPaulo } from "@/lib/datas";
 import { apagarFoto, enviarFoto } from "@/lib/fotos/armazenamento";
 import { chaveFotoOS } from "@/lib/fotos/chaves";
+import { registrarFalha } from "@/lib/log";
 import { prepararFoto } from "@/lib/fotos/preparar";
 import { usuarioLogado } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
@@ -103,7 +104,8 @@ export async function enviarFotoOS(
   );
   try {
     await enviarFoto(chave, preparada.foto.arquivos);
-  } catch {
+  } catch (erro) {
+    registrarFalha("os: enviar foto ao armazenamento", erro);
     return { erro: "Não foi possível enviar a foto. Tente de novo." };
   }
   const { error } = await contexto.supabase

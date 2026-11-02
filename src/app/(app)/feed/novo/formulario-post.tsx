@@ -63,41 +63,52 @@ export function FormularioPost({ carros }: { carros: Record<string, string> }) {
     return dados;
   }
 
+  async function enviarTudo(campos: FormData) {
+    setErro(undefined);
+    setErros({});
+    // 1ª foto junto com o post; as outras uma por vez (limite de 4,5 MB
+    // por envio na hospedagem).
+    setProgresso(
+      fotos.length > 1 ? `Enviando foto 1 de ${fotos.length}…` : "Publicando…",
+    );
+    const primeira = dadosDaFoto(fotos[0]);
+    primeira.set("carro", String(campos.get("carro") ?? ""));
+    primeira.set("legenda", String(campos.get("legenda") ?? ""));
+    const resultado = await criarPost(primeira);
+    if (!resultado.ok) {
+      setProgresso(undefined);
+      setErro(resultado.erro);
+      setErros(resultado.erros ?? {});
+      return;
+    }
+    let falhas = 0;
+    for (let i = 1; i < fotos.length; i++) {
+      setProgresso(`Enviando foto ${i + 1} de ${fotos.length}…`);
+      const r = await adicionarFotoPost(
+        resultado.postId,
+        dadosDaFoto(fotos[i]),
+      );
+      if (r.erro) falhas++;
+    }
+    fotos.forEach((f) => URL.revokeObjectURL(f.previa));
+    router.push(falhas > 0 ? `/feed?falhas=${falhas}` : "/feed");
+  }
+
   function publicar(evento: React.FormEvent<HTMLFormElement>) {
     evento.preventDefault();
     if (fotos.length === 0) return;
     const campos = new FormData(evento.currentTarget);
     iniciar(async () => {
-      setErro(undefined);
-      setErros({});
-      // 1ª foto junto com o post; as outras uma por vez (limite de 4,5 MB
-      // por envio na hospedagem).
-      setProgresso(
-        fotos.length > 1
-          ? `Enviando foto 1 de ${fotos.length}…`
-          : "Publicando…",
-      );
-      const primeira = dadosDaFoto(fotos[0]);
-      primeira.set("carro", String(campos.get("carro") ?? ""));
-      primeira.set("legenda", String(campos.get("legenda") ?? ""));
-      const resultado = await criarPost(primeira);
-      if (!resultado.ok) {
+      // Rede caiu, tempo esgotado, envio recusado pela hospedagem: sem este
+      // try, a ação "estoura" e a tela não diz nada.
+      try {
+        await enviarTudo(campos);
+      } catch {
         setProgresso(undefined);
-        setErro(resultado.erro);
-        setErros(resultado.erros ?? {});
-        return;
-      }
-      let falhas = 0;
-      for (let i = 1; i < fotos.length; i++) {
-        setProgresso(`Enviando foto ${i + 1} de ${fotos.length}…`);
-        const r = await adicionarFotoPost(
-          resultado.postId,
-          dadosDaFoto(fotos[i]),
+        setErro(
+          "A conexão falhou durante o envio. Confira a internet e tente de novo; se algo já tiver sido publicado, aparece no feed.",
         );
-        if (r.erro) falhas++;
       }
-      fotos.forEach((f) => URL.revokeObjectURL(f.previa));
-      router.push(falhas > 0 ? `/feed?falhas=${falhas}` : "/feed");
     });
   }
 

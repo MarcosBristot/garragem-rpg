@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { apagarFoto, enviarFoto } from "@/lib/fotos/armazenamento";
 import { chaveCapa, chaveFotoRegistro } from "@/lib/fotos/chaves";
 import { prepararFoto } from "@/lib/fotos/preparar";
+import { registrarFalha } from "@/lib/log";
 import { usuarioLogado } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 
@@ -37,7 +38,8 @@ export async function enviarCapa(
   const chave = chaveCapa(usuarioId, carroId, crypto.randomUUID());
   try {
     await enviarFoto(chave, preparada.foto.arquivos);
-  } catch {
+  } catch (erro) {
+    registrarFalha("fotos: enviar ao armazenamento", erro);
     return FALHA;
   }
 
@@ -119,7 +121,8 @@ export async function adicionarFotoRegistro(
   );
   try {
     await enviarFoto(chave, preparada.foto.arquivos);
-  } catch {
+  } catch (erro) {
+    registrarFalha("fotos: enviar ao armazenamento", erro);
     return FALHA;
   }
 
