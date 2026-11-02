@@ -111,6 +111,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Ordem de serviço (`ordens_servico`): sempre privada, nunca em view pública, card ou OG; foto em `u/…/r/<registro>/os/`. IA para ler OS: não fazer chamadas pagas sem aprovação explícita do usuário (ele pediu custo zero no início).
 - RPG: `src/dominio/condicao.ts` (função pura, testada; intervalos em constantes). Condição, XP e atributos só calculados no servidor.
 - XP: tabela `eventos_xp` gravada SÓ por triggers (`private.conceder_xp`, limite diário no dia de São Paulo; apagar a origem apaga o XP). Pontos em `private.regra_xp()` e espelhados em `REGRAS_XP` (`src/dominio/xp.ts`; um teste compara com a migração). Nível = `nivelDoXp(soma)`, nunca guardado.
+- Personagem: `perfis.personagem` (jsonb, só chaves; público como o perfil). Opções e validação em `src/dominio/personagem.ts`; vazio = `personagemPadrao(id)`. 3D em `src/components/personagem/` (`Boneco`, carregado só no navegador; `AvatarPersonagem` é o 2D leve para listas). Hooks próprios começam com `use` (ex.: `useMenosMovimento`).
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

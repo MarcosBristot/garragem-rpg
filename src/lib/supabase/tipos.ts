@@ -411,6 +411,7 @@ export type Database = {
           id: string;
           nome_exibicao: string | null;
           nome_usuario: string;
+          personagem: Json | null;
           termos_aceitos_em: string | null;
           versao_termos: string | null;
         };
@@ -421,6 +422,7 @@ export type Database = {
           id: string;
           nome_exibicao?: string | null;
           nome_usuario: string;
+          personagem?: Json | null;
           termos_aceitos_em?: string | null;
           versao_termos?: string | null;
         };
@@ -430,6 +432,7 @@ export type Database = {
           id?: string;
           nome_exibicao?: string | null;
           nome_usuario?: string;
+          personagem?: Json | null;
           termos_aceitos_em?: string | null;
           versao_termos?: string | null;
         };

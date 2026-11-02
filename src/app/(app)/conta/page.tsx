@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Botao } from "@/components/formulario";
+import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
+import { personagemDoPerfil } from "@/dominio/personagem";
 import { exigirPerfil } from "@/lib/sessao";
 import { sair } from "./acoes";
 import { EditarPerfil } from "./editar-perfil";
@@ -26,7 +28,13 @@ export default function PaginaConta() {
 
 async function Conteudo() {
   // Conta continua acessível sem o novo aceite (baixar dados, excluir).
-  const { perfil } = await exigirPerfil({ aceiteOpcional: true });
+  const { supabase, perfil } = await exigirPerfil({ aceiteOpcional: true });
+  const { data } = await supabase
+    .from("perfis")
+    .select("personagem")
+    .eq("id", perfil.id)
+    .maybeSingle();
+  const personagem = personagemDoPerfil(data?.personagem, perfil.id);
 
   return (
     <>
@@ -44,6 +52,30 @@ async function Conteudo() {
             cidade: perfil.cidade ?? "",
           }}
         />
+      </section>
+
+      <section
+        aria-labelledby="titulo-personagem"
+        className="flex items-center gap-5 rounded-2xl border border-borda bg-superficie p-6"
+      >
+        <AvatarPersonagem
+          personagem={personagem}
+          className="size-20 shrink-0 rounded-2xl bg-superficie-2 p-1"
+        />
+        <div className="flex flex-col gap-2">
+          <h2 id="titulo-personagem" className="rotulo font-sans">
+            Seu personagem
+          </h2>
+          <p className="text-sm text-texto-secundario">
+            Boneco 3D do seu perfil público.
+          </p>
+          <Link
+            href="/conta/personagem"
+            className="inline-flex min-h-11 items-center self-start rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+          >
+            Editar personagem
+          </Link>
+        </div>
       </section>
 
       <section

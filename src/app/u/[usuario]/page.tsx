@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CabecalhoPublico } from "@/components/cabecalho-publico";
 import { FotoAssinada } from "@/components/foto-assinada";
+import { Boneco } from "@/components/personagem/boneco";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
+import { personagemDoPerfil } from "@/dominio/personagem";
 import { nomeDoCarro } from "@/lib/carros";
 import { perfilPublico } from "@/lib/publico";
 
@@ -54,13 +56,12 @@ async function Conteudo({ usuario }: { usuario: string }) {
 
   return (
     <>
-      <header className="flex items-center gap-4">
-        <span
-          aria-hidden="true"
-          className="grid size-24 place-items-center rounded-full bg-superficie-2 font-titulo text-5xl text-destaque uppercase"
-        >
-          {nome.charAt(0)}
-        </span>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end">
+        <Boneco
+          personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
+          rotulo={`Personagem de ${nome}`}
+          className="aspect-square w-full max-w-64"
+        />
         <div>
           <h1 className="text-5xl">{nome}</h1>
           <p className="text-texto-secundario">

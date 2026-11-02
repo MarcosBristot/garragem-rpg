@@ -64,7 +64,7 @@ export const perfilPublico = cache(async (nomeUsuario: string) => {
   const supabase = await clientePublico();
   const { data: perfil } = await supabase
     .from("perfis")
-    .select("id, nome_usuario, nome_exibicao, cidade")
+    .select("id, nome_usuario, nome_exibicao, cidade, personagem")
     .eq("nome_usuario", nomeUsuario)
     .maybeSingle();
   if (!perfil) return null;
