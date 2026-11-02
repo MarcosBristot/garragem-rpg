@@ -65,7 +65,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 3 e 4 em paralelo. Feito: Fase 1; Fase 2 sem custo (OS à mão); Condição; XP e nível; personagem 3D; feed (posts, seguir, bloquear, curtidas, comentários, denúncias); atributos e ficha pública. Próximo: equipamento, conquistas, ranking por liga e cidade. Leitura de OS por IA só com aprovação de custo do usuário.
+**Fase atual:** 3 e 4 em paralelo. Feito: Fase 1; Fase 2 sem custo (OS à mão); Condição; XP e nível; personagem 3D; feed (posts, seguir, bloquear, curtidas, comentários, denúncias); atributos e ficha pública; equipamento. Próximo: conquistas, ranking por liga e cidade. Leitura de OS por IA só com aprovação de custo do usuário.
 
 ## Identidade visual
 
@@ -115,6 +115,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Feed: `posts` + `fotos_post` (até 4; chave `u/…/c/<carro>/p/<post>/`), `seguidores`, `bloqueios`. Post só em carro próprio e público; quem vê é decidido pela RLS (carro público + sem bloqueio nos dois sentidos via `private.bloqueio_entre`, única função do schema `private` executável por `authenticated`). Fotos sobem uma por requisição (limite da Vercel). Seguir/bloquear em `src/app/(app)/pessoas-acoes.ts`. Não rode `npm run build` com o dev server ligado: os dois usam `.next` e o dev pode ficar com módulo velho (reinicie o dev).
 - Curtidas (uma por pessoa, nunca no próprio post) e comentários (autor ou dono do post apagam). Embeds de `perfis` a partir de `posts` usam a FK nomeada (`perfis!posts_dono_id_fkey`): `curtidas` cria um caminho muitos-para-muitos e deixa o embed ambíguo. Consultas do feed lançam erro em vez de devolver lista vazia.
 - Atributos: `public.ficha_do_carro(carro)` (security definer) devolve só TOTAIS, e só para carro público ou dono; cálculo em `src/dominio/atributos.ts` (constantes ajustáveis, testado) via `src/lib/ficha.ts`. Registros privados contam (só o número aparece). Em plpgsql, compare com `auth.uid()` usando `coalesce(..., false)`: sem login ele é null e `not (x or null)` não barra. Nos testes pgTAP, limpe `request.jwt.claims` antes de testar como anon.
+- Equipamento: derivado dos itens com `espaco` (`montarEquipamento` em `src/dominio/equipamento.ts`, a peça mais recente de cada espaço). Dono usa todos os registros; ficha pública usa só `itens_publicos`. Falhas de servidor vão ao log por `registrarFalha` (`src/lib/log.ts`): só etapa e código, nunca dados da pessoa.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

@@ -43,7 +43,7 @@ export const diarioPublico = cache(async (carroId: string) => {
     supabase
       .from("itens_publicos")
       .select(
-        "id, registro_id, descricao, categoria, quantidade, valor_centavos",
+        "id, registro_id, descricao, categoria, quantidade, valor_centavos, espaco",
       )
       .in("registro_id", ids),
     supabase

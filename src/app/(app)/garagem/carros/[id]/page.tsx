@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { calcularCondicao } from "@/dominio/condicao";
+import { montarEquipamento } from "@/dominio/equipamento";
 import { formatarReais } from "@/dominio/dinheiro";
 import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
 import { FotoAssinada } from "@/components/foto-assinada";
 import { PainelCondicao } from "@/components/painel-condicao";
 import { PainelAtributos } from "@/components/painel-atributos";
+import { PainelEquipamento } from "@/components/painel-equipamento";
 import { PainelXp } from "@/components/painel-xp";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
@@ -53,7 +55,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
   const { data: registros } = await supabase
     .from("registros")
     .select(
-      "id, tipo, titulo, data, km, visibilidade, itens_registro(valor_centavos), fotos_registro(count)",
+      "id, tipo, titulo, data, km, visibilidade, itens_registro(valor_centavos, descricao, espaco, criado_em), fotos_registro(count)",
     )
     .eq("carro_id", carro.id)
     .eq("dono_id", perfil.id)
@@ -66,6 +68,9 @@ async function Conteudo({ carroId }: { carroId: string }) {
   const novoRegistro = `/garagem/carros/${carro.id}/registros/novo`;
   // Calculadas no servidor (regra 4), com todos os dados do dono.
   const condicao = calcularCondicao(registros ?? [], hojeEmSaoPaulo());
+  const equipamento = montarEquipamento(
+    (registros ?? []).map((r) => ({ data: r.data, itens: r.itens_registro })),
+  );
 
   return (
     <>
@@ -127,6 +132,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
             <PainelCondicao condicao={condicao} />
           </div>
           <PainelAtributos atributos={ficha.atributos} semCondicao comDicas />
+          <PainelEquipamento equipamento={equipamento} dono />
         </>
       ) : null}
 
