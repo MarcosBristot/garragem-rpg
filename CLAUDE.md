@@ -23,6 +23,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 - Migrações: `npx supabase migration new <nome>`; aplicar do zero: `npx supabase db reset`
 - Testes de RLS (pgTAP): `npx supabase test db`
 - Bucket local de fotos (depois de `supabase start` num banco novo): `npx supabase seed buckets --local`
+- Ambiente de teste (Vercel + Supabase na nuvem): passo a passo em `docs/publicar-teste.md`. Migração nova: `npx supabase db push` ANTES do push do código. Fotos até 4 MB (teto de 4,5 MB por requisição da Vercel).
 
 ## Modelo de dados
 

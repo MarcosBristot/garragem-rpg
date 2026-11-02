@@ -1,5 +1,6 @@
 import "server-only";
-import { BYTES_MAX, TIPOS_ACEITOS } from "./processar";
+import { BYTES_MAX, ROTULO_BYTES_MAX } from "./limites";
+import { TIPOS_ACEITOS } from "./processar";
 
 export type FotoRecebida =
   { ok: true; conteudo: Buffer } | { ok: false; erro: string };
@@ -17,7 +18,10 @@ export async function lerFotoDoFormulario(
     return { ok: false, erro: "Use uma foto JPG, PNG ou WebP." };
   }
   if (arquivo.size > BYTES_MAX) {
-    return { ok: false, erro: "Foto grande demais (máximo de 4,8 MB)." };
+    return {
+      ok: false,
+      erro: `Foto grande demais (máximo de ${ROTULO_BYTES_MAX}).`,
+    };
   }
   return { ok: true, conteudo: Buffer.from(await arquivo.arrayBuffer()) };
 }
