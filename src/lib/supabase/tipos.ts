@@ -34,6 +34,40 @@ export type Database = {
   };
   public: {
     Tables: {
+      bloqueios: {
+        Row: {
+          bloqueado_id: string;
+          bloqueador_id: string;
+          criado_em: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          bloqueado_id: string;
+          bloqueador_id?: string;
+          criado_em?: string;
+        };
+        Update: {
+          bloqueado_id?: string;
+          bloqueador_id?: string;
+          criado_em?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "bloqueios_bloqueado_id_fkey";
+            columns: ["bloqueado_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bloqueios_bloqueador_id_fkey";
+            columns: ["bloqueador_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       carros: {
         Row: {
           ano: number | null;
@@ -177,6 +211,55 @@ export type Database = {
             columns: ["registro_id"];
             isOneToOne: false;
             referencedRelation: "registros_publicos";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      fotos_post: {
+        Row: {
+          altura: number;
+          chave: string;
+          criado_em: string;
+          descricao: string | null;
+          dono_id: string;
+          id: string;
+          largura: number;
+          post_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          altura: number;
+          chave: string;
+          criado_em?: string;
+          descricao?: string | null;
+          dono_id?: string;
+          id?: string;
+          largura: number;
+          post_id: string;
+        };
+        Update: {
+          altura?: number;
+          chave?: string;
+          criado_em?: string;
+          descricao?: string | null;
+          dono_id?: string;
+          id?: string;
+          largura?: number;
+          post_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "fotos_post_dono_id_fkey";
+            columns: ["dono_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "fotos_post_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
             referencedColumns: ["id"];
           },
         ];
@@ -438,6 +521,46 @@ export type Database = {
         };
         Relationships: [];
       };
+      posts: {
+        Row: {
+          carro_id: string;
+          criado_em: string;
+          dono_id: string;
+          id: string;
+          legenda: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          carro_id: string;
+          criado_em?: string;
+          dono_id?: string;
+          id?: string;
+          legenda?: string | null;
+        };
+        Update: {
+          carro_id?: string;
+          criado_em?: string;
+          dono_id?: string;
+          id?: string;
+          legenda?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "posts_carro_id_dono_id_fkey";
+            columns: ["carro_id", "dono_id"];
+            isOneToOne: false;
+            referencedRelation: "carros";
+            referencedColumns: ["id", "dono_id"];
+          },
+          {
+            foreignKeyName: "posts_dono_id_fkey";
+            columns: ["dono_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       registros: {
         Row: {
           atualizado_em: string;
@@ -486,6 +609,40 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "carros";
             referencedColumns: ["id", "dono_id"];
+          },
+        ];
+      };
+      seguidores: {
+        Row: {
+          criado_em: string;
+          seguido_id: string;
+          seguidor_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          criado_em?: string;
+          seguido_id: string;
+          seguidor_id?: string;
+        };
+        Update: {
+          criado_em?: string;
+          seguido_id?: string;
+          seguidor_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "seguidores_seguido_id_fkey";
+            columns: ["seguido_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "seguidores_seguidor_id_fkey";
+            columns: ["seguidor_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
           },
         ];
       };
@@ -580,7 +737,7 @@ export type Database = {
     };
     Enums: {
       acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";
-      alvo_denuncia: "carro" | "perfil" | "registro";
+      alvo_denuncia: "carro" | "perfil" | "registro" | "post";
       espaco_equipamento:
         "motor" | "suspensao" | "rodas" | "freios" | "estetica" | "som";
       motivo_denuncia:
@@ -718,7 +875,7 @@ export const Constants = {
   public: {
     Enums: {
       acao_xp: ["manutencao", "modificacao", "item", "foto", "ordem_servico"],
-      alvo_denuncia: ["carro", "perfil", "registro"],
+      alvo_denuncia: ["carro", "perfil", "registro", "post"],
       espaco_equipamento: [
         "motor",
         "suspensao",

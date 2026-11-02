@@ -65,7 +65,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 4 — RPG. Feito: Fase 1 completa; Fase 2 sem custo (OS anexada à mão); Condição; XP e nível. Próximo: atributos e ficha RPG na página pública. Leitura de OS por IA (Claude) só com aprovação de custo do usuário; até lá, sem chamadas pagas.
+**Fase atual:** 3 e 4 em paralelo. Feito: Fase 1; Fase 2 sem custo (OS à mão); Condição; XP e nível; personagem 3D; feed (posts, seguir, bloquear, denunciar). Próximo: curtidas e comentários, depois atributos (Estilo vem das curtidas). Leitura de OS por IA só com aprovação de custo do usuário.
 
 ## Identidade visual
 
@@ -112,6 +112,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - RPG: `src/dominio/condicao.ts` (função pura, testada; intervalos em constantes). Condição, XP e atributos só calculados no servidor.
 - XP: tabela `eventos_xp` gravada SÓ por triggers (`private.conceder_xp`, limite diário no dia de São Paulo; apagar a origem apaga o XP). Pontos em `private.regra_xp()` e espelhados em `REGRAS_XP` (`src/dominio/xp.ts`; um teste compara com a migração). Nível = `nivelDoXp(soma)`, nunca guardado.
 - Personagem: `perfis.personagem` (jsonb, só chaves; público como o perfil). Opções e validação em `src/dominio/personagem.ts`; vazio = `personagemPadrao(id)`. 3D em `src/components/personagem/` (`Boneco`, carregado só no navegador; `AvatarPersonagem` é o 2D leve para listas). Hooks próprios começam com `use` (ex.: `useMenosMovimento`).
+- Feed: `posts` + `fotos_post` (até 4; chave `u/…/c/<carro>/p/<post>/`), `seguidores`, `bloqueios`. Post só em carro próprio e público; quem vê é decidido pela RLS (carro público + sem bloqueio nos dois sentidos via `private.bloqueio_entre`, única função do schema `private` executável por `authenticated`). Fotos sobem uma por requisição (limite da Vercel). Seguir/bloquear em `src/app/(app)/pessoas-acoes.ts`. Não rode `npm run build` com o dev server ligado: os dois usam `.next` e o dev pode ficar com módulo velho (reinicie o dev).
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

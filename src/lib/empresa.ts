@@ -13,14 +13,14 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-10-31";
-export const VIGENCIA = "31/10/2026";
+export const VERSAO_TERMOS = "2026-11-02";
+export const VIGENCIA = "02/11/2026";
 
 /** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
 export const MUDANCAS_TERMOS = [
-  "Fotos: agora você pode enviar fotos do carro e dos registros. Removemos a localização (GPS) e outros metadados antes de salvar, e as fotos ficam no Cloudflare R2.",
-  "Páginas públicas: carros marcados como públicos ganham uma página com link para compartilhar e um card para stories.",
-  "Denúncias: é possível denunciar conteúdo público. Guardamos as denúncias para a moderação.",
+  "Feed: agora você pode publicar posts com até 4 fotos de um carro público. Só quem tem conta vê, e o post some do feed se o carro voltar a ser privado.",
+  "Seguir e bloquear: guardamos quem você segue e quem você bloqueou. Isso não aparece para outras pessoas, e quem é bloqueado não é avisado.",
+  "Personagem: as escolhas do boneco do seu perfil (pele, cabelo, roupa, acessório) ficam públicas, como o resto do perfil.",
 ];
 
 export const PROVEDORES = {

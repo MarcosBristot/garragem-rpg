@@ -15,15 +15,39 @@ export async function GET() {
     );
   }
 
-  const [perfil, carros, registros, itens, historico, fotos] =
-    await Promise.all([
-      supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
-      supabase.from("carros").select("*").eq("dono_id", usuarioId),
-      supabase.from("registros").select("*").eq("dono_id", usuarioId),
-      supabase.from("itens_registro").select("*"),
-      supabase.from("historico_edicoes").select("*").eq("dono_id", usuarioId),
-      supabase.from("fotos_registro").select("*").eq("dono_id", usuarioId),
-    ]);
+  const [
+    perfil,
+    carros,
+    registros,
+    historico,
+    fotos,
+    ordens,
+    posts,
+    fotosPosts,
+    seguindo,
+    bloqueios,
+  ] = await Promise.all([
+    supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
+    supabase.from("carros").select("*").eq("dono_id", usuarioId),
+    supabase.from("registros").select("*").eq("dono_id", usuarioId),
+    supabase.from("historico_edicoes").select("*").eq("dono_id", usuarioId),
+    supabase.from("fotos_registro").select("*").eq("dono_id", usuarioId),
+    supabase.from("ordens_servico").select("*").eq("dono_id", usuarioId),
+    supabase.from("posts").select("*").eq("dono_id", usuarioId),
+    supabase.from("fotos_post").select("*").eq("dono_id", usuarioId),
+    supabase.from("seguidores").select("*").eq("seguidor_id", usuarioId),
+    supabase.from("bloqueios").select("*").eq("bloqueador_id", usuarioId),
+  ]);
+  // Itens não têm dono_id: filtra pelos registros da pessoa (a RLS também
+  // libera itens de registros públicos de outras pessoas).
+  const idsRegistros = (registros.data ?? []).map((r) => r.id);
+  const itens =
+    idsRegistros.length > 0
+      ? await supabase
+          .from("itens_registro")
+          .select("*")
+          .in("registro_id", idsRegistros)
+      : { data: [] };
 
   // Fotos: link temporário (24 h) do tamanho maior de cada uma.
   const comLink = async (chave: string) => ({
@@ -42,6 +66,19 @@ export async function GET() {
     })),
   );
 
+  const ordensComLink = await Promise.all(
+    (ordens.data ?? []).map(async (o) => ({
+      ...o,
+      ...(o.foto_chave ? await comLink(o.foto_chave) : {}),
+    })),
+  );
+  const fotosDosPosts = await Promise.all(
+    (fotosPosts.data ?? []).map(async (f) => ({
+      ...f,
+      ...(await comLink(f.chave)),
+    })),
+  );
+
   const arquivo = {
     exportado_em: new Date().toISOString(),
     aviso:
@@ -54,6 +91,11 @@ export async function GET() {
     historico_edicoes: historico.data ?? [],
     fotos_capa: capas,
     fotos_registros: fotosRegistros,
+    ordens_servico: ordensComLink,
+    posts: posts.data ?? [],
+    fotos_posts: fotosDosPosts,
+    seguindo: seguindo.data ?? [],
+    bloqueios: bloqueios.data ?? [],
   };
 
   return new Response(JSON.stringify(arquivo, null, 2), {

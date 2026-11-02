@@ -59,6 +59,26 @@ export function chaveFotoOS(
   return `${prefixoRegistro(usuarioId, carroId, registroId)}os/${fotoId}`;
 }
 
+/** Fotos de um post: dentro do carro (apagar o carro leva junto). */
+export function prefixoPost(
+  usuarioId: string,
+  carroId: string,
+  postId: string,
+): string {
+  exigirUuid(postId);
+  return `${prefixoCarro(usuarioId, carroId)}p/${postId}/`;
+}
+
+export function chaveFotoPost(
+  usuarioId: string,
+  carroId: string,
+  postId: string,
+  fotoId: string,
+) {
+  exigirUuid(fotoId);
+  return `${prefixoPost(usuarioId, carroId, postId)}${fotoId}`;
+}
+
 /** Arquivo de um tamanho: "<chave>-feed.webp". */
 export function arquivoDaChave(chave: string, tamanho: Tamanho): string {
   return `${chave}-${tamanho}.webp`;

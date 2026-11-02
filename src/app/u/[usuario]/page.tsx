@@ -9,6 +9,7 @@ import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { personagemDoPerfil } from "@/dominio/personagem";
 import { nomeDoCarro } from "@/lib/carros";
 import { perfilPublico } from "@/lib/publico";
+import { AcoesPerfil } from "./acoes-perfil";
 
 // Perfil público: nome, cidade (nunca endereço) e só os carros públicos.
 
@@ -68,6 +69,11 @@ async function Conteudo({ usuario }: { usuario: string }) {
             @{perfil.nome_usuario}
             {perfil.cidade ? ` · ${perfil.cidade}` : null}
           </p>
+          <Suspense fallback={null}>
+            <div className="mt-3">
+              <AcoesPerfil perfilId={perfil.id} />
+            </div>
+          </Suspense>
         </div>
       </header>
 

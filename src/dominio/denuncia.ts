@@ -17,7 +17,12 @@ export const MOTIVOS = {
   outro: { rotulo: "Outro motivo", descricao: "Explique nos detalhes." },
 } as const;
 
-export const ALVOS = { carro: "carro", perfil: "perfil", registro: "registro" };
+export const ALVOS = {
+  carro: "carro",
+  perfil: "perfil",
+  registro: "registro",
+  post: "post",
+};
 
 export type Motivo = keyof typeof MOTIVOS;
 export type Alvo = keyof typeof ALVOS;

@@ -67,6 +67,26 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>Escolhas do seu personagem (pele, cabelo, roupa, acessório)</td>
+            <td>Montar o boneco do seu perfil</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
+            <td>Posts do feed (fotos, descrições e legenda)</td>
+            <td>Mostrar o que você publicou para a comunidade</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
+            <td>Quem você segue</td>
+            <td>Montar a aba Seguindo do feed</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
+            <td>Quem você bloqueou</td>
+            <td>Esconder os posts entre vocês dois</td>
+            <td>Execução de contrato (V) e legítimo interesse (IX)</td>
+          </tr>
+          <tr>
             <td>Denúncias que você envia (motivo e detalhes)</td>
             <td>Moderar conteúdo e proteger a comunidade</td>
             <td>
@@ -107,14 +127,25 @@ export default function PaginaPrivacidade() {
 
       <h2>3. O que fica público</h2>
       <ul>
-        <li>Nome de usuário, nome de exibição e cidade do perfil.</li>
+        <li>
+          Nome de usuário, nome de exibição, cidade e personagem do perfil.
+        </li>
         <li>Carros que você marcar como públicos.</li>
         <li>
           Registros de carros públicos, conforme a visibilidade que você
           escolher em cada um: <em>privado</em> (só você vê),{" "}
           <em>público sem valores</em> ou <em>público</em>.
         </li>
+        <li>
+          Posts do feed: só quem tem conta vê, e só enquanto o carro do post
+          estiver público. Pessoas que você bloquear (ou que bloquearem você)
+          não veem os posts de vocês.
+        </li>
       </ul>
+      <p>
+        Quem você segue e quem você bloqueou não aparece para outras pessoas. A
+        pessoa bloqueada não é avisada.
+      </p>
       <p>
         Notas e histórico de edições <strong>nunca</strong> são públicos.
         Valores aparecem só em registros marcados como públicos. Essas regras
@@ -141,10 +172,11 @@ export default function PaginaPrivacidade() {
       <h2>5. Por quanto tempo guardamos</h2>
       <p>
         Enquanto sua conta existir. Ao excluir a conta, apagamos na hora perfil,
-        carros, registros, itens, notas, fotos e histórico. Denúncias que você
-        enviou ficam para a moderação, mas sem identificar você. Cópias de
-        segurança do provedor de infraestrutura são sobrescritas em até
-        [preencher: prazo de retenção dos backups].
+        personagem, carros, registros, itens, notas, fotos, posts, quem você
+        segue, bloqueios e histórico. Denúncias que você enviou ficam para a
+        moderação, mas sem identificar você. Cópias de segurança do provedor de
+        infraestrutura são sobrescritas em até [preencher: prazo de retenção dos
+        backups].
       </p>
 
       <h2>6. Seus direitos</h2>

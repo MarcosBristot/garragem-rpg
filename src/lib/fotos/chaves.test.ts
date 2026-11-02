@@ -3,6 +3,7 @@ import {
   arquivoDaChave,
   chaveCapa,
   chaveFotoOS,
+  chaveFotoPost,
   chaveFotoRegistro,
   prefixoCarro,
   prefixoUsuario,
@@ -24,6 +25,13 @@ describe("chaves das fotos", () => {
 
   it("foto da OS fica dentro do registro (apagar o registro leva junto)", () => {
     expect(chaveFotoOS(U, C, R, F)).toBe(`u/${U}/c/${C}/r/${R}/os/${F}`);
+  });
+
+  it("foto do post fica no diretório do post, dentro do carro", () => {
+    const P = "e0000000-0000-0000-0000-000000000001";
+    expect(chaveFotoPost(U, C, P, F)).toBe(`u/${U}/c/${C}/p/${P}/${F}`);
+    expect(chaveFotoPost(U, C, P, F).startsWith(prefixoCarro(U, C))).toBe(true);
+    expect(() => chaveFotoPost(U, C, "../x", F)).toThrow();
   });
 
   it("tudo do carro fica sob o prefixo do carro, e tudo sob o do usuário", () => {

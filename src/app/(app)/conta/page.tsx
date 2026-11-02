@@ -5,6 +5,7 @@ import { Botao } from "@/components/formulario";
 import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
 import { personagemDoPerfil } from "@/dominio/personagem";
 import { exigirPerfil } from "@/lib/sessao";
+import { desbloquear } from "../pessoas-acoes";
 import { sair } from "./acoes";
 import { EditarPerfil } from "./editar-perfil";
 import { ExcluirConta } from "./excluir-conta";
@@ -35,6 +36,13 @@ async function Conteudo() {
     .eq("id", perfil.id)
     .maybeSingle();
   const personagem = personagemDoPerfil(data?.personagem, perfil.id);
+  const { data: bloqueados } = await supabase
+    .from("bloqueios")
+    .select(
+      "bloqueado_id, perfis!bloqueios_bloqueado_id_fkey (nome_usuario, nome_exibicao)",
+    )
+    .eq("bloqueador_id", perfil.id)
+    .order("criado_em", { ascending: false });
 
   return (
     <>
@@ -76,6 +84,42 @@ async function Conteudo() {
             Editar personagem
           </Link>
         </div>
+      </section>
+
+      <section
+        aria-labelledby="titulo-bloqueios"
+        className="flex flex-col gap-3 rounded-2xl border border-borda bg-superficie p-6"
+      >
+        <h2 id="titulo-bloqueios" className="rotulo font-sans">
+          Pessoas bloqueadas
+        </h2>
+        {bloqueados && bloqueados.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {bloqueados.map((b) => (
+              <li
+                key={b.bloqueado_id}
+                className="flex items-center justify-between gap-3"
+              >
+                <span className="truncate">
+                  {b.perfis?.nome_exibicao ?? b.perfis?.nome_usuario}{" "}
+                  <span className="text-texto-secundario">
+                    @{b.perfis?.nome_usuario}
+                  </span>
+                </span>
+                <form action={desbloquear.bind(null, b.bloqueado_id)}>
+                  <Botao type="submit" variante="secundario">
+                    Desbloquear
+                  </Botao>
+                </form>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-texto-secundario">
+            Ninguém. Quem você bloquear não vê seus posts, você não vê os dela,
+            e a pessoa não é avisada.
+          </p>
+        )}
       </section>
 
       <section
