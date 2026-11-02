@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { calcularCondicao } from "@/dominio/condicao";
 import { formatarReais } from "@/dominio/dinheiro";
 import { totalCentavos } from "@/dominio/item";
 import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
 import { FotoAssinada } from "@/components/foto-assinada";
+import { PainelCondicao } from "@/components/painel-condicao";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
-import { formatarData } from "@/lib/datas";
+import { formatarData, hojeEmSaoPaulo } from "@/lib/datas";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Diário do carro · Garagem RPG" };
@@ -56,6 +58,8 @@ async function Conteudo({ carroId }: { carroId: string }) {
     .order("criado_em", { ascending: false });
 
   const novoRegistro = `/garagem/carros/${carro.id}/registros/novo`;
+  // Calculada no servidor (regra 4), com todos os registros do dono.
+  const condicao = calcularCondicao(registros ?? [], hojeEmSaoPaulo());
 
   return (
     <>
@@ -109,6 +113,8 @@ async function Conteudo({ carroId }: { carroId: string }) {
           </div>
         </div>
       </header>
+
+      <PainelCondicao condicao={condicao} />
 
       <section aria-labelledby="titulo-diario" className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">

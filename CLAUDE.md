@@ -108,6 +108,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Páginas públicas (`/c/[id]`, `/u/[usuario]`, card, OG) leem SEMPRE pelo `clientePublico()` (anônimo, sem cookies) via `src/lib/publico.ts`: assim o dono não vê dado privado na própria página pública. Imagens geradas (`next/og`) recebem fotos como data URL (`fotoParaImagem`), nunca por URL.
 - Denúncias: só INSERT pela API (RLS); moderação pelo painel do Supabase por enquanto.
 - Ordem de serviço (`ordens_servico`): sempre privada, nunca em view pública, card ou OG; foto em `u/…/r/<registro>/os/`. IA para ler OS: não fazer chamadas pagas sem aprovação explícita do usuário (ele pediu custo zero no início).
+- RPG: `src/dominio/condicao.ts` (função pura, testada; intervalos em constantes). Condição, XP e atributos só calculados no servidor.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js
