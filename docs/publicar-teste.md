@@ -25,7 +25,7 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 2. No terminal, na pasta do projeto:
    - `npx supabase login` (abre o navegador)
    - `npx supabase link --project-ref <REF>` (o REF está na URL do painel; pede a senha do banco)
-   - `npx supabase db push` (aplica todas as migrações de `supabase/migrations`)
+   - `npx supabase db push --linked` (aplica todas as migrações de `supabase/migrations`)
    - `npx supabase seed buckets --linked` (cria o bucket privado `fotos`)
 3. No painel, **Authentication → URL Configuration**:
    - Site URL: a URL da Vercel (passo 3), ex. `https://garagem-rpg-staging.vercel.app`
@@ -57,5 +57,6 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 ## 3. Rotina depois de publicado
 
 - Todo `git push` na `main` publica sozinho na Vercel.
-- **Migração nova:** rode `npx supabase db push` ANTES de enviar o código que depende dela (senão o site novo procura colunas que ainda não existem).
+- **Sempre com `--linked`:** a CLI avisa que, numa próxima versão, `db push` sem opção vai mirar o banco local.
+- **Migração nova:** rode `npx supabase db push --linked` ANTES de enviar o código que depende dela (senão o site novo procura colunas que ainda não existem).
 - Fotos e dados de teste lá são seus; não use dados de outras pessoas sem consentimento (as páginas legais ainda são rascunho).
