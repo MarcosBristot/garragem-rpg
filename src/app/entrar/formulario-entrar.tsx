@@ -22,7 +22,7 @@ export function FormularioEntrar() {
           required
           defaultValue={estado.email}
           erro={estado.erro}
-          dica="Enviamos um código de 6 dígitos. Sem senha."
+          dica="Enviamos um código para o seu e-mail. Sem senha."
         />
         <Botao type="submit" disabled={enviando}>
           {enviando ? "Enviando…" : "Receber código"}
@@ -44,7 +44,7 @@ export function FormularioEntrar() {
         autoComplete="one-time-code"
         inputMode="numeric"
         pattern="[0-9]*"
-        maxLength={6}
+        maxLength={10}
         required
         autoFocus
         erro={estado.erro}

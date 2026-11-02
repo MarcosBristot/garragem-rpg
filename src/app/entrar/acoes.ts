@@ -44,8 +44,13 @@ export async function entrar(
   }
 
   const codigo = String(form.get("codigo") ?? "").replace(/\s/g, "");
-  if (!/^\d{6}$/.test(codigo)) {
-    return { ...estado, erro: "O código tem 6 dígitos." };
+  // O tamanho vem da config do Supabase (6 no local; a nuvem pode usar
+  // até 10): aceitar a faixa toda evita quebrar o login entre ambientes.
+  if (!/^\d{6,10}$/.test(codigo)) {
+    return {
+      ...estado,
+      erro: "Digite o código numérico que chegou no e-mail.",
+    };
   }
   const { error } = await supabase.auth.verifyOtp({
     email: estado.email,
