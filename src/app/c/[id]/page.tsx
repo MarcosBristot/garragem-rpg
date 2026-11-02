@@ -11,6 +11,7 @@ import { TIPOS } from "@/dominio/registro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
 import { PainelAtributos } from "@/components/painel-atributos";
+import { PainelConquistas } from "@/components/painel-conquistas";
 import { PainelEquipamento } from "@/components/painel-equipamento";
 import { montarEquipamento } from "@/dominio/equipamento";
 import { carroPublico, diarioPublico, fichaPublica } from "@/lib/publico";
@@ -110,6 +111,9 @@ async function Conteudo({ id }: { id: string }) {
       ) : null}
       {/* Só itens de registros públicos (itens_publicos): nada privado. */}
       <PainelEquipamento equipamento={montarEquipamento(diario)} />
+      {ficha ? (
+        <PainelConquistas conquistas={ficha.conquistas} publico />
+      ) : null}
 
       <section aria-labelledby="titulo-diario" className="flex flex-col gap-4">
         <h2 id="titulo-diario" className="text-4xl">

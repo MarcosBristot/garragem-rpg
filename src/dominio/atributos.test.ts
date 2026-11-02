@@ -20,6 +20,13 @@ const vazio: Insumos = {
   ultima_manutencao: null,
   km_ultima_manutencao: null,
   km_atual: null,
+  registros_total: 0,
+  manutencoes_total: 0,
+  completos_total: 0,
+  primeiro_registro: null,
+  ultimo_registro: null,
+  posts_total: 0,
+  espacos_ocupados: 0,
 };
 const calc = (parcial: Partial<Insumos>) =>
   calcularAtributos({ ...vazio, ...parcial }, HOJE);

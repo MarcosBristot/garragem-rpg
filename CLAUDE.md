@@ -65,7 +65,7 @@ Proponha outra tecnologia só com motivo forte, explicando o custo da troca.
 
 Fora do MVP: marketplace, chat privado, vídeos, integração com oficinas, app nativo.
 
-**Fase atual:** 3 e 4 em paralelo. Feito: Fase 1; Fase 2 sem custo (OS à mão); Condição; XP e nível; personagem 3D; feed (posts, seguir, bloquear, curtidas, comentários, denúncias); atributos e ficha pública; equipamento. Próximo: conquistas, ranking por liga e cidade. Leitura de OS por IA só com aprovação de custo do usuário.
+**Fase atual:** 3 e 4 em paralelo. Feito: Fase 1; Fase 2 sem custo (OS à mão); Condição; XP e nível; personagem 3D; feed (posts, seguir, bloquear, curtidas, comentários, denúncias); atributos e ficha pública; equipamento; conquistas. Próximo: ranking por liga e cidade (falta decidir como definir a liga). Leitura de OS por IA só com aprovação de custo do usuário.
 
 ## Identidade visual
 
@@ -116,6 +116,7 @@ Tema escuro inspirado em estúdios automotivos: fundo `#0B0B0D`, superfícies `#
 - Curtidas (uma por pessoa, nunca no próprio post) e comentários (autor ou dono do post apagam). Embeds de `perfis` a partir de `posts` usam a FK nomeada (`perfis!posts_dono_id_fkey`): `curtidas` cria um caminho muitos-para-muitos e deixa o embed ambíguo. Consultas do feed lançam erro em vez de devolver lista vazia.
 - Atributos: `public.ficha_do_carro(carro)` (security definer) devolve só TOTAIS, e só para carro público ou dono; cálculo em `src/dominio/atributos.ts` (constantes ajustáveis, testado) via `src/lib/ficha.ts`. Registros privados contam (só o número aparece). Em plpgsql, compare com `auth.uid()` usando `coalesce(..., false)`: sem login ele é null e `not (x or null)` não barra. Nos testes pgTAP, limpe `request.jwt.claims` antes de testar como anon.
 - Equipamento: derivado dos itens com `espaco` (`montarEquipamento` em `src/dominio/equipamento.ts`, a peça mais recente de cada espaço). Dono usa todos os registros; ficha pública usa só `itens_publicos`. Falhas de servidor vão ao log por `registrarFalha` (`src/lib/log.ts`): só etapa e código, nunca dados da pessoa.
+- Conquistas: derivadas (somem se os dados somem), regras em `src/dominio/conquistas.ts` sobre os totais da `ficha_do_carro`. Ficha pública mostra só as desbloqueadas, sem progresso. A `ficha_do_carro` expõe TOTAIS (ex.: quantos registros) de carros públicos a qualquer um pela API: nunca acrescente nela conteúdo, valores ou datas de registros privados além dos já existentes.
 - Novo script de terceiros, cookie ou armazenamento local? Antes: consentimento (se não for essencial) e linha na tabela de `/cookies`.
 
 ## Next.js

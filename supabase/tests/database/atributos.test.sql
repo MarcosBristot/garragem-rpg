@@ -3,7 +3,7 @@
 -- prova; modificações de motor; dinheiro não entra.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(12);
+select plan(17);
 
 insert into auth.users (id, email) values
   ('90000000-0000-0000-0000-00000000000a', 'ana@exemplo.test'),
@@ -50,6 +50,14 @@ select is((select (f->>'reaproveitadas')::int from ficha), 2, 'peças reaproveit
 select is((select (f->>'meses_ativos_12m')::int from ficha) between 2 and 3, true, 'meses com registro nos últimos 12');
 select is((select (f->>'completos_12m')::int from ficha), 1, 'completo = km + (item ou foto)');
 select ok((select f ? 'xp' from ficha), 'traz o XP total');
+select is((select (f->>'registros_total')::int from ficha), 3, 'conquistas: total de registros (inclusive privados)');
+select is((select (f->>'manutencoes_total')::int from ficha), 1, 'conquistas: total de manutenções');
+select is((select (f->>'espacos_ocupados')::int from ficha), 2, 'conquistas: espaços distintos com peça');
+select is((select (f->>'posts_total')::int from ficha), 0, 'conquistas: post sem foto não conta');
+select is(
+  (select (f->>'ultimo_registro')::date - (f->>'primeiro_registro')::date from ficha), 60,
+  'conquistas: dias entre o primeiro e o último registro'
+);
 select ok(
   (select not (f::text ilike '%Admissão%' or f::text ilike '%Filtro%' or f::text like '%9999999%') from ficha),
   'não expõe títulos, itens nem valores'

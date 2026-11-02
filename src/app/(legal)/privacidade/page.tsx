@@ -137,9 +137,11 @@ export default function PaginaPrivacidade() {
         </li>
         <li>Carros que você marcar como públicos.</li>
         <li>
-          Ficha RPG dos carros públicos: nível e atributos (de 0 a 100). São só
-          números, calculados a partir do diário inteiro, inclusive registros
-          privados; o conteúdo desses registros não aparece.
+          Ficha RPG dos carros públicos: nível, atributos (de 0 a 100) e
+          conquistas desbloqueadas. São calculados a partir de totais do diário
+          inteiro, inclusive de registros privados (por exemplo, quantos
+          registros ou peças reaproveitadas existem). O conteúdo dos registros
+          privados nunca é exposto.
         </li>
         <li>
           Registros de carros públicos, conforme a visibilidade que você

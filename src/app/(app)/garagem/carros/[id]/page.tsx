@@ -9,6 +9,7 @@ import { TIPOS, VISIBILIDADES } from "@/dominio/registro";
 import { FotoAssinada } from "@/components/foto-assinada";
 import { PainelCondicao } from "@/components/painel-condicao";
 import { PainelAtributos } from "@/components/painel-atributos";
+import { PainelConquistas } from "@/components/painel-conquistas";
 import { PainelEquipamento } from "@/components/painel-equipamento";
 import { PainelXp } from "@/components/painel-xp";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
@@ -133,6 +134,7 @@ async function Conteudo({ carroId }: { carroId: string }) {
           </div>
           <PainelAtributos atributos={ficha.atributos} semCondicao comDicas />
           <PainelEquipamento equipamento={equipamento} dono />
+          <PainelConquistas conquistas={ficha.conquistas} />
         </>
       ) : null}
 

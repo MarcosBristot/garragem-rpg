@@ -4,6 +4,7 @@ import {
   lerInsumos,
   type Atributos,
 } from "@/dominio/atributos";
+import { avaliarConquistas, type Conquista } from "@/dominio/conquistas";
 import { progressoXp, type Progresso } from "@/dominio/xp";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { hojeEmSaoPaulo } from "@/lib/datas";
@@ -16,7 +17,11 @@ import type { Database } from "@/lib/supabase/tipos";
 // Serve com sessão (página do dono) e sem (página pública, anônima).
 type Cliente = SupabaseClient<Database>;
 
-export type Ficha = { atributos: Atributos; progresso: Progresso };
+export type Ficha = {
+  atributos: Atributos;
+  progresso: Progresso;
+  conquistas: Conquista[];
+};
 
 export async function fichaDoCarro(
   supabase: Cliente,
@@ -31,5 +36,6 @@ export async function fichaDoCarro(
   return {
     atributos: calcularAtributos(insumos, hojeEmSaoPaulo()),
     progresso: progressoXp(insumos.xp),
+    conquistas: avaliarConquistas(insumos),
   };
 }

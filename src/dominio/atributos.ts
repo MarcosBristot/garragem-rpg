@@ -19,6 +19,14 @@ export type Insumos = {
   ultima_manutencao: string | null; // AAAA-MM-DD
   km_ultima_manutencao: number | null;
   km_atual: number | null;
+  // Totais das conquistas (src/dominio/conquistas.ts).
+  registros_total: number;
+  manutencoes_total: number;
+  completos_total: number;
+  primeiro_registro: string | null; // AAAA-MM-DD
+  ultimo_registro: string | null; // AAAA-MM-DD
+  posts_total: number;
+  espacos_ocupados: number;
 };
 
 export type Atributos = {
@@ -107,7 +115,10 @@ export function lerInsumos(json: unknown): Insumos | null {
   const numero = (k: string) => inteiro(d[k]);
   const ouNull = (k: string) =>
     typeof d[k] === "number" && Number.isFinite(d[k]) ? (d[k] as number) : null;
-  const data = d.ultima_manutencao;
+  const dataOuNull = (k: string) => {
+    const v = d[k];
+    return typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null;
+  };
   return {
     potencia_cv: ouNull("potencia_cv"),
     mods_motor: numero("mods_motor"),
@@ -118,11 +129,15 @@ export function lerInsumos(json: unknown): Insumos | null {
     registros_12m: numero("registros_12m"),
     completos_12m: numero("completos_12m"),
     xp: numero("xp"),
-    ultima_manutencao:
-      typeof data === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data)
-        ? data
-        : null,
+    ultima_manutencao: dataOuNull("ultima_manutencao"),
     km_ultima_manutencao: ouNull("km_ultima_manutencao"),
     km_atual: ouNull("km_atual"),
+    registros_total: numero("registros_total"),
+    manutencoes_total: numero("manutencoes_total"),
+    completos_total: numero("completos_total"),
+    primeiro_registro: dataOuNull("primeiro_registro"),
+    ultimo_registro: dataOuNull("ultimo_registro"),
+    posts_total: numero("posts_total"),
+    espacos_ocupados: numero("espacos_ocupados"),
   };
 }
