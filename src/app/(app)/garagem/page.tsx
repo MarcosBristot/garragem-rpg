@@ -5,6 +5,8 @@ import { FotoAssinada } from "@/components/foto-assinada";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
+import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
+import { personagemDoPerfil } from "@/dominio/personagem";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Minha garagem · Garagem RPG" };
@@ -51,16 +53,20 @@ async function Conteudo() {
       <section aria-labelledby="titulo-perfil" className="flex flex-col">
         <div
           aria-hidden="true"
-          className="-mx-4 h-36 bg-[radial-gradient(ellipse_at_70%_120%,color-mix(in_srgb,var(--color-destaque)_35%,transparent),transparent_60%),linear-gradient(to_bottom,#16171b,#0b0b0d)] sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
+          className="-mx-4 h-36 fundo-nevoa sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
         />
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">
-            <span
-              aria-hidden="true"
-              className="grid size-24 place-items-center rounded-full border-4 border-fundo bg-superficie-2 font-titulo text-5xl text-destaque uppercase"
+            <Link
+              href="/conta/personagem"
+              aria-label="Editar seu personagem"
+              className="shrink-0 rounded-3xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
             >
-              {nome.charAt(0)}
-            </span>
+              <AvatarPersonagem
+                personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
+                className="size-24 rounded-3xl border-4 border-fundo bg-superficie-2 p-1"
+              />
+            </Link>
             <div className="pb-1">
               <h1 id="titulo-perfil" className="text-4xl">
                 {nome}
@@ -111,7 +117,7 @@ async function Conteudo() {
                     href={`/garagem/carros/${carro.id}`}
                     className="group flex flex-col overflow-hidden rounded-3xl border border-borda bg-superficie transition-colors hover:border-destaque/60"
                   >
-                    <div className="relative grid h-40 place-items-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_100%,color-mix(in_srgb,var(--color-destaque)_18%,transparent),transparent_70%)]">
+                    <div className="relative grid h-40 place-items-center overflow-hidden fundo-vitrine">
                       {carro.foto_capa ? (
                         <FotoAssinada
                           chave={carro.foto_capa}

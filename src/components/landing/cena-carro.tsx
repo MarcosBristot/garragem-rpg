@@ -13,7 +13,9 @@ import { quadroEm, type Quadro } from "./trajetoria";
 // Posições da câmera ao longo da rolagem (0 = topo, 1 = fim da página).
 // Cada seção da landing corresponde a um trecho.
 const QUADROS: Quadro[] = [
-  { p: 0.0, pos: [6.4, 1.4, 5.2], alvo: [0, 1.75, 0] }, // 3/4 dianteira, carro embaixo
+  // Abertura como a referência de clima: carro de 3/4 traseira, cavalo à
+  // esquerda, árvore à direita. Alvo alto: o carro fica abaixo do título.
+  { p: 0.0, pos: [-7.6, 1.5, 4.4], alvo: [0.6, 1.95, -1.2] },
   { p: 0.17, pos: [5.6, 0.8, 1.2], alvo: [0, 0.7, 0] }, // quase de frente, baixo
   { p: 0.34, pos: [0.2, 1.2, 6.6], alvo: [0, 0.7, 0] }, // lateral (dados)
   { p: 0.51, pos: [-4.6, 2.2, 4.2], alvo: [0, 0.8, 0] }, // 3/4 traseira (ficha)
@@ -45,7 +47,8 @@ function Camera({
   useFrame(({ camera, size }, dt) => {
     // Tela estreita (celular): campo de visão maior para o carro caber.
     const cam = camera as THREE.PerspectiveCamera;
-    const fov = size.width < 640 ? 52 : 34;
+    const estreita = size.width < 640;
+    const fov = estreita ? 52 : 34;
     if (cam.fov !== fov) {
       cam.fov = fov;
       cam.updateProjectionMatrix();
@@ -55,6 +58,9 @@ function Camera({
     const quadro = quadroEm(QUADROS, p);
     destino.current.set(...quadro.pos);
     alvo.current.set(...quadro.alvo);
+    // Celular: na abertura o texto ocupa quase a tela toda; olhar mais para
+    // cima faz o carro descer para baixo dos botões (some até o 2º trecho).
+    if (estreita) alvo.current.y += 2.4 * Math.max(0, 1 - p / 0.17);
     // Amortecimento: a câmera persegue o destino em vez de saltar.
     const k = semMovimento ? 1 : 1 - Math.exp(-dt * 4);
     camera.position.lerp(destino.current, k);
@@ -88,7 +94,7 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
   return (
     <Canvas
       dpr={leve ? [1, 1.25] : [1, 1.75]}
-      camera={{ position: [6.4, 1.4, 5.2], fov: 34, near: 0.1, far: 120 }}
+      camera={{ position: [-7.6, 1.5, 4.4], fov: 34, near: 0.1, far: 120 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       frameloop={semMovimento ? "demand" : "always"}
       // Sem WebGL: mostra a silhueta em SVG no lugar.
@@ -108,7 +114,7 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
         semMovimento={semMovimento}
       />
       <Carro3D giroRodasRef={giroRodas} />
-      <group position={[-5.4, 0, -2.2]} rotation-y={-0.2}>
+      <group position={[0.05, 0, -3.9]} rotation-y={-0.98}>
         <Cavalo3D semMovimento={semMovimento} />
       </group>
       <Cenario semMovimento={semMovimento} leve={leve} />
@@ -132,14 +138,19 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
       {/* Reflexos da pintura: céu enevoado montado com Lightformers, gerado
           localmente (os presets do drei baixariam arquivos de terceiros). */}
       <Environment resolution={256} frames={1}>
-        <Lightformer
-          form="rect"
-          intensity={1.6}
-          color="#9db3b8"
-          position={[0, 7, 0]}
-          rotation-x={Math.PI / 2}
-          scale={[14, 8, 1]}
-        />
+        {/* Duas faixas compridas no alto: viram "riscos" de reflexo na
+            pintura e nos vidros (uma placa grande deixava o vidro chapado). */}
+        {[-1.6, 1.6].map((z) => (
+          <Lightformer
+            key={z}
+            form="rect"
+            intensity={2.2}
+            color="#a9bec2"
+            position={[0, 6, z]}
+            rotation-x={Math.PI / 2}
+            scale={[16, 0.7, 1]}
+          />
+        ))}
         <Lightformer
           form="rect"
           intensity={0.9}

@@ -26,7 +26,9 @@ export async function exigirPerfil({ aceiteOpcional = false } = {}) {
 
   const { data: perfil } = await supabase
     .from("perfis")
-    .select("id, nome_usuario, nome_exibicao, cidade, versao_termos")
+    .select(
+      "id, nome_usuario, nome_exibicao, cidade, versao_termos, personagem",
+    )
     .eq("id", usuarioId)
     .maybeSingle();
   if (!perfil) redirect("/perfil/novo");

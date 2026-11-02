@@ -10,6 +10,8 @@ export const EIXO_TRASEIRO = -1.38;
 export const EIXO_DIANTEIRO = 1.36;
 /** Raio da caixa de roda (um pouco maior que a roda). */
 export const ARCO_RAIO = 0.44;
+/** Dentro do arco, a lateral recolhe para esta fração da largura. */
+const RECOLHIDO = 0.5;
 
 type Ponto = readonly [number, number];
 
@@ -80,9 +82,9 @@ const TOPO: Ponto[] = [
 ];
 /** Linha de baixo (assoalho, ~18 cm do chão). */
 const BASE: Ponto[] = [
-  [-2.25, 0.44],
-  [-2.12, 0.26],
-  [-1.8, 0.19],
+  [-2.25, 0.36],
+  [-2.16, 0.23],
+  [-1.85, 0.19],
   [1.85, 0.19],
   [2.14, 0.27],
   [2.25, 0.4],
@@ -165,19 +167,50 @@ export function pontoCarroceria(
   const cosseno = Math.cos(theta);
   const centro = (s.topo + s.base) / 2;
   const meiaAltura = (s.topo - s.base) / 2;
-  let y = centro + meiaAltura * Math.sign(seno) * Math.abs(seno) ** expoente;
+  const y = centro + meiaAltura * Math.sign(seno) * Math.abs(seno) ** expoente;
   let z = s.meiaLargura * Math.sign(cosseno) * Math.abs(cosseno) ** expoente;
 
   // Acima da cintura a lateral "entra" até a largura do teto (tumblehome).
   const subida = suave((y - CINTURA) / Math.max(0.05, s.topo - CINTURA));
   z *= 1 - (1 - s.cabine) * subida;
 
-  // Caixas de roda: na parte de fora da lateral, a borda inferior sobe
-  // acompanhando o arco (a parte de dentro continua: é o assoalho).
-  const arco = arcoEm(s.x);
-  if (Math.abs(z) > s.meiaLargura * 0.55 && y < arco) y = arco;
+  // Caixas de roda: abaixo da linha do arco, a lateral recolhe para dentro
+  // e fica atrás do pneu. Só a largura (z) muda, nunca a altura: subir a
+  // borda fazia a superfície dobrar sobre si mesma (aparecia vista de cima).
+  const dentroDoArco = suave((arcoEm(s.x) - y) / 0.05);
+  z *= 1 - (1 - RECOLHIDO) * dentroDoArco;
 
   return [s.x, y, z];
+}
+
+/** A seção em u contém o ponto (y, z)? (Superelipse: (z/w)^3,2 + (dy/h)^3,2 ≤ 1.) */
+function contem(u: number, y: number, z: number): boolean {
+  const s = secaoEm(u);
+  const centro = (s.topo + s.base) / 2;
+  const meiaAltura = (s.topo - s.base) / 2;
+  const dy = Math.abs(y - centro) / meiaAltura;
+  if (dy >= 1) return false;
+  return Math.abs(z) <= s.meiaLargura * (1 - dy ** 3.2) ** (1 / 3.2);
+}
+
+/**
+ * x da traseira (o ponto mais para trás da lataria) na altura y e na
+ * lateral z. Serve para pousar peças sobre a superfície (lanterna, difusor,
+ * escapes): a traseira é curva, então cada ponto fica num x diferente.
+ */
+export function xTraseiroEm(y: number, z: number): number {
+  for (let u = 0; u <= 0.25; u += 0.0005) {
+    if (contem(u, y, z)) return secaoEm(u).x;
+  }
+  return -COMPRIMENTO / 2;
+}
+
+/** O mesmo, na frente (faróis). */
+export function xDianteiroEm(y: number, z: number): number {
+  for (let u = 1; u >= 0.75; u -= 0.0005) {
+    if (contem(u, y, z)) return secaoEm(u).x;
+  }
+  return COMPRIMENTO / 2;
 }
 
 /** Faixas (em u e v) dos vidros, usadas para gerar as peças de vidro. */
@@ -187,5 +220,5 @@ export const VIDROS = {
   /** Para-brisa. */
   frente: { u: [0.53, 0.68], v: [0.38, 0.62] },
   /** Vidro traseiro, no caimento. */
-  tras: { u: [0.11, 0.3], v: [0.39, 0.61] },
+  tras: { u: [0.16, 0.3], v: [0.41, 0.59] },
 } as const;

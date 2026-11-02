@@ -77,7 +77,7 @@ async function Conteudo({ id }: { id: string }) {
             prioridade
           />
         ) : (
-          <div className="grid h-52 place-items-center rounded-3xl border border-borda bg-[radial-gradient(ellipse_at_50%_100%,color-mix(in_srgb,var(--color-destaque)_22%,transparent),transparent_70%)]">
+          <div className="grid h-52 place-items-center rounded-3xl border border-borda fundo-vitrine">
             <SilhuetaCarro className="w-3/4 max-w-md text-destaque" />
           </div>
         )}

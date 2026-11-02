@@ -19,10 +19,52 @@ import {
   RODA_RAIO,
   secaoEm,
   VIDROS,
+  xDianteiroEm,
+  xTraseiroEm,
 } from "./carroceria";
 
-const PINTURA = "#15191c"; // grafite fosco-acetinado, como na referência
+// Grafite acetinado: escuro como na referência, mas claro o bastante para
+// os vidros (mais escuros e espelhados) se destacarem da lataria.
+const PINTURA = "#23292d";
 const PRETO = "#07090a";
+const ALTURA_LANTERNA = 0.8;
+
+/**
+ * Halo da lanterna: uma faixa suave ao longo da barra (e não um ponto), que
+ * esmaece para cima, para baixo e nas pontas, sem nenhuma borda reta.
+ */
+function texturaHalo() {
+  const c = document.createElement("canvas");
+  c.width = 256;
+  c.height = 64;
+  const g = c.getContext("2d")!;
+  const vertical = g.createLinearGradient(0, 0, 0, 64);
+  vertical.addColorStop(0, "rgba(255,40,25,0)");
+  vertical.addColorStop(0.5, "rgba(255,50,30,0.55)");
+  vertical.addColorStop(1, "rgba(255,40,25,0)");
+  g.fillStyle = vertical;
+  g.fillRect(0, 0, 256, 64);
+  // Recorta as pontas com um degradê horizontal.
+  g.globalCompositeOperation = "destination-in";
+  const horizontal = g.createLinearGradient(0, 0, 256, 0);
+  horizontal.addColorStop(0, "rgba(0,0,0,0)");
+  horizontal.addColorStop(0.2, "rgba(0,0,0,1)");
+  horizontal.addColorStop(0.8, "rgba(0,0,0,1)");
+  horizontal.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = horizontal;
+  g.fillRect(0, 0, 256, 64);
+  return new THREE.CanvasTexture(c);
+}
+
+/** Curva de lado a lado na traseira, na altura y, colada na lataria. */
+function curvaTraseira(y: number, meiaLargura: number, folga: number) {
+  return new THREE.CatmullRomCurve3(
+    Array.from({ length: 17 }, (_, i) => {
+      const z = (-1 + (i / 16) * 2) * meiaLargura;
+      return new THREE.Vector3(xTraseiroEm(y, z) + folga, y, z);
+    }),
+  );
+}
 const LANTERNA = "#ff2b1f";
 
 /** Superfície (ou um pedaço dela) a partir de carroceria.ts. */
@@ -93,7 +135,7 @@ function Roda({
           roughness={0.45}
         />
       </mesh>
-      <mesh position={[0.1, 0.12, 0.0 * lado]} rotation-z={-0.7}>
+      <mesh position={[0.1, 0.12, 0.03 * lado]} rotation-z={-0.7}>
         <boxGeometry args={[0.07, 0.15, 0.09]} />
         <meshStandardMaterial color={PALETA.destaque} roughness={0.5} />
       </mesh>
@@ -148,20 +190,40 @@ export function Carro3D({ giroRodasRef }: { giroRodasRef: RefObject<number> }) {
     ] as const;
     return {
       carroceria: superficie([0, 1], [0, 1]),
+      halo: texturaHalo(),
+      molduraLanterna: new THREE.TubeGeometry(
+        curvaTraseira(ALTURA_LANTERNA, 0.82, 0.02),
+        64,
+        0.03,
+        8,
+        false,
+      ),
+      farois: [-1, 1].map(
+        (lado) =>
+          new THREE.TubeGeometry(
+            new THREE.CatmullRomCurve3(
+              Array.from({ length: 9 }, (_, i) => {
+                const z = lado * (0.28 + (i / 8) * 0.4);
+                const y = 0.67 - (i / 8) * 0.04;
+                return new THREE.Vector3(xDianteiroEm(y, z) + 0.004, y, z);
+              }),
+            ),
+            32,
+            0.011,
+            6,
+            false,
+          ),
+      ),
       vidros: [
         superficie(VIDROS.lateral.u, lateralDireita, 0.008, [60, 12]),
         superficie(VIDROS.lateral.u, lateralEsquerda, 0.008, [60, 12]),
         superficie(VIDROS.frente.u, VIDROS.frente.v, 0.008, [24, 30]),
         superficie(VIDROS.tras.u, VIDROS.tras.v, 0.008, [30, 30]),
       ],
-      // Barra de luz traseira, de lado a lado, acompanhando a curva.
+      // Barra de luz traseira, de lado a lado, pousada sobre a lataria
+      // (xTraseiroEm acha a superfície em cada ponto da curva).
       lanterna: new THREE.TubeGeometry(
-        new THREE.CatmullRomCurve3(
-          Array.from({ length: 9 }, (_, i) => {
-            const t = -1 + (i / 8) * 2;
-            return new THREE.Vector3(-2.2 + 0.06 * t * t, 0.78, t * 0.79);
-          }),
-        ),
+        curvaTraseira(ALTURA_LANTERNA, 0.8, -0.008),
         64,
         0.018,
         8,
@@ -176,10 +238,11 @@ export function Carro3D({ giroRodasRef }: { giroRodasRef: RefObject<number> }) {
         {/* Pintura com verniz (clearcoat): reflete o céu enevoado. */}
         <meshPhysicalMaterial
           color={PINTURA}
-          metalness={0.6}
-          roughness={0.34}
+          metalness={0.75}
+          roughness={0.3}
           clearcoat={1}
-          clearcoatRoughness={0.07}
+          clearcoatRoughness={0.06}
+          envMapIntensity={1.4}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -187,9 +250,10 @@ export function Carro3D({ giroRodasRef }: { giroRodasRef: RefObject<number> }) {
         <mesh key={i} geometry={g}>
           {/* polygonOffset: o vidro vence a lataria onde se encostam. */}
           <meshPhysicalMaterial
-            color="#050708"
-            metalness={0.3}
+            color="#0a1215"
+            metalness={0.9}
             roughness={0.04}
+            envMapIntensity={1.2}
             clearcoat={1}
             polygonOffset
             polygonOffsetFactor={-2}
@@ -198,57 +262,87 @@ export function Carro3D({ giroRodasRef }: { giroRodasRef: RefObject<number> }) {
         </mesh>
       ))}
 
-      {/* Lanterna em barra + brilho (sem pós-processamento: mais leve). */}
+      {/* Lanterna em barra: luz vermelha sobre uma moldura preta, mais o
+          halo (sem pós-processamento: mais leve no celular). A moldura fica
+          mais para dentro: a luz (raio 0,018) sobra 1,6 cm para fora dela. */}
+      <mesh geometry={geo.molduraLanterna}>
+        <meshStandardMaterial color={PRETO} roughness={0.4} />
+      </mesh>
       <mesh geometry={geo.lanterna}>
         <meshBasicMaterial color={LANTERNA} toneMapped={false} />
       </mesh>
+      <mesh
+        position={[xTraseiroEm(ALTURA_LANTERNA, 0) - 0.05, ALTURA_LANTERNA, 0]}
+        rotation-y={-Math.PI / 2}
+      >
+        <planeGeometry args={[2.1, 0.3]} />
+        <meshBasicMaterial
+          map={geo.halo}
+          transparent
+          opacity={0.75}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          side={THREE.DoubleSide}
+          toneMapped={false}
+        />
+      </mesh>
       <pointLight
-        position={[-2.6, 0.75, 0]}
+        position={[-3.1, 0.35, 0]}
         color={LANTERNA}
-        intensity={3}
-        distance={5}
+        intensity={1.4}
+        distance={4}
         decay={2}
       />
 
-      {/* Faróis finos. */}
-      {[-1, 1].map((lado) => (
-        <mesh
-          key={lado}
-          position={[2.12, 0.66, lado * 0.62]}
-          rotation-y={0.35 * lado}
-        >
-          <boxGeometry args={[0.03, 0.025, 0.36]} />
-          <meshBasicMaterial color="#e8f4ff" toneMapped={false} />
+      {/* Faróis em filete, pousados na frente (recuam nos cantos). */}
+      {geo.farois.map((g, i) => (
+        <mesh key={i} geometry={g}>
+          <meshBasicMaterial color="#e6f2fa" toneMapped={false} />
         </mesh>
       ))}
 
-      {/* Retrovisores. */}
+      {/* Retrovisores: haste curta e concha arredondada. */}
       {[-1, 1].map((lado) => (
-        <group key={lado} position={[0.62, 1.0, lado * 0.92]}>
+        <group key={lado} position={[0.64, 0.99, lado * 0.84]}>
           <mesh position-z={lado * 0.06}>
-            <boxGeometry args={[0.16, 0.08, 0.12]} />
+            <boxGeometry args={[0.05, 0.03, 0.12]} />
+            <meshStandardMaterial color={PRETO} roughness={0.5} />
+          </mesh>
+          <mesh
+            position={[-0.02, 0.03, lado * 0.15]}
+            scale={[0.13, 0.065, 0.09]}
+          >
+            <sphereGeometry args={[1, 20, 12]} />
             <meshPhysicalMaterial
               color={PINTURA}
-              metalness={0.6}
-              roughness={0.34}
+              metalness={0.75}
+              roughness={0.3}
               clearcoat={1}
             />
           </mesh>
         </group>
       ))}
 
-      {/* Difusor, saias e escapes (preto). */}
-      <mesh position={[-2.0, 0.27, 0]}>
-        <boxGeometry args={[0.4, 0.12, 1.5]} />
-        <meshStandardMaterial color={PRETO} roughness={0.7} />
-      </mesh>
+      {/* Difusor com aletas e escapes, encaixados na traseira. */}
+      <group position={[xTraseiroEm(0.28, 0) + 0.26, 0.22, 0]}>
+        <mesh>
+          <boxGeometry args={[0.52, 0.07, 1.25]} />
+          <meshStandardMaterial color={PRETO} roughness={0.6} />
+        </mesh>
+        {[-0.36, -0.12, 0.12, 0.36].map((z) => (
+          <mesh key={z} position={[-0.18, 0.05, z]}>
+            <boxGeometry args={[0.18, 0.08, 0.015]} />
+            <meshStandardMaterial color={PRETO} roughness={0.6} />
+          </mesh>
+        ))}
+      </group>
       {[-1, 1].map((lado) => (
         <mesh
           key={lado}
-          position={[-2.2, 0.3, lado * 0.42]}
+          position={[xTraseiroEm(0.32, lado * 0.42) + 0.02, 0.32, lado * 0.42]}
           rotation-z={Math.PI / 2}
         >
-          <cylinderGeometry args={[0.045, 0.05, 0.12, 24, 1, true]} />
+          <cylinderGeometry args={[0.042, 0.046, 0.12, 24, 1, true]} />
           <meshStandardMaterial
             color="#8d949a"
             metalness={1}

@@ -23,7 +23,11 @@ export function SilhuetaCarro({ className = "" }: { className?: string }) {
       />
       {/* Luzes */}
       <path d="M364 70 L388 76 L386 80 L362 76 Z" fill="#fff" opacity="0.9" />
-      <path d="M14 80 L30 76 L30 82 L13 84 Z" fill="#ef4444" opacity="0.9" />
+      <path
+        d="M14 80 L30 76 L30 82 L13 84 Z"
+        fill={PALETA.destaque}
+        opacity="0.9"
+      />
       {/* Rodas */}
       {[90, 318].map((cx) => (
         <g key={cx}>

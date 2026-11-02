@@ -91,7 +91,7 @@ async function Conteudo({ usuario }: { usuario: string }) {
                   href={`/c/${carro.id}`}
                   className="group flex flex-col overflow-hidden rounded-3xl border border-borda bg-superficie hover:border-destaque/60"
                 >
-                  <div className="relative grid h-40 place-items-center overflow-hidden bg-[radial-gradient(ellipse_at_50%_100%,color-mix(in_srgb,var(--color-destaque)_18%,transparent),transparent_70%)]">
+                  <div className="relative grid h-40 place-items-center overflow-hidden fundo-vitrine">
                     {carro.foto_capa ? (
                       <FotoAssinada
                         chave={carro.foto_capa}

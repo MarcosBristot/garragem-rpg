@@ -217,7 +217,7 @@ function Arvore() {
     };
   }, []);
   return (
-    <group position={[5.2, 0, -7.2]}>
+    <group position={[6.9, 0, -0.5]}>
       <mesh geometry={madeira}>
         <meshStandardMaterial color="#141210" roughness={1} />
       </mesh>

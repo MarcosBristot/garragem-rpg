@@ -19,6 +19,7 @@ describe("paleta", () => {
     expect(token("texto-apagado")).toBe(PALETA.textoApagado);
     expect(token("destaque")).toBe(PALETA.destaque);
     expect(token("condicao")).toBe(PALETA.condicao);
+    expect(token("nevoa")).toBe(PALETA.nevoa);
   });
 
   // Regra do CLAUDE.md: texto 4.5:1; contorno de campo 3:1.

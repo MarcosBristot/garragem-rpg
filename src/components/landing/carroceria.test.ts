@@ -6,6 +6,8 @@ import {
   EIXO_DIANTEIRO,
   pontoCarroceria,
   RODA_RAIO,
+  xDianteiroEm,
+  xTraseiroEm,
 } from "./carroceria";
 
 function amostrar(passos = 80) {
@@ -59,10 +61,46 @@ describe("carroceria", () => {
     }
   });
 
-  it("a borda de fora sobe no arco: a roda fica à mostra", () => {
+  it("no arco a lateral recolhe para trás do pneu: a roda fica à mostra", () => {
     const u = (EIXO_DIANTEIRO + COMPRIMENTO / 2) / COMPRIMENTO;
-    const [, y] = pontoCarroceria(u, 0.2); // lateral, embaixo
-    expect(y).toBeGreaterThanOrEqual(RODA_RAIO + ARCO_RAIO - 1e-6);
+    // Face interna do pneu: centro em z = 0,8, largura 0,27.
+    const faceInterna = 0.8 - 0.135;
+    for (const v of [0.2, 0.22, 0.25]) {
+      const [, y, z] = pontoCarroceria(u, v);
+      if (y < RODA_RAIO + ARCO_RAIO - 0.06) {
+        expect(Math.abs(z)).toBeLessThan(faceInterna);
+      }
+    }
+    // Fora do arco a lateral continua cheia.
+    const [, , zFora] = pontoCarroceria(0.5, 0.25);
+    expect(Math.abs(zFora)).toBeGreaterThan(0.85);
+  });
+
+  it("nenhuma dobra: a altura sobe sempre em volta da seção", () => {
+    for (const u of [0.1, 0.2, 0.8, 0.9]) {
+      let anterior = -Infinity;
+      for (let v = 0; v <= 0.5; v += 0.01) {
+        const [, y] = pontoCarroceria(u, v);
+        expect(y).toBeGreaterThanOrEqual(anterior - 1e-9);
+        anterior = y;
+      }
+    }
+  });
+
+  it("a lanterna pousa na traseira e acompanha a curva", () => {
+    const centro = xTraseiroEm(0.78, 0);
+    const canto = xTraseiroEm(0.78, 0.78);
+    expect(centro).toBeLessThan(-2.15);
+    expect(canto).toBeGreaterThan(centro); // os cantos ficam mais à frente
+    // O ponto achado está mesmo na lataria (dentro da seção).
+    expect(canto).toBeLessThan(-1.9);
+  });
+
+  it("os faróis pousam na frente, recuando nos cantos", () => {
+    const centro = xDianteiroEm(0.66, 0);
+    const canto = xDianteiroEm(0.66, 0.62);
+    expect(centro).toBeGreaterThan(2.1);
+    expect(canto).toBeLessThan(centro);
   });
 
   it("o teto é mais estreito que a lataria (cintura do teto)", () => {
