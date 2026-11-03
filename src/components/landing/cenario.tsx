@@ -1,8 +1,8 @@
 "use client";
 
-// Cenário da landing: pasto ao entardecer com névoa, cerca de madeira,
-// uma árvore grande e a linha de árvores sumindo ao fundo. Tudo gerado em
-// código (sem texturas nem modelos de terceiros). Inspiração de clima, não
+// Cenário da landing: pasto ao entardecer com névoa e cerca de madeira,
+// gerados em código. Cavalo e árvores são recortes renderizados
+// (recortes.tsx). Inspiração de clima, não
 // cópia de imagem. Pseudoaleatório com semente fixa: a cena é sempre igual
 // (servidor, navegador e capturas de tela batem).
 
@@ -159,99 +159,6 @@ function Cerca() {
   );
 }
 
-/** Copa feita de "nuvens" de folhagem deformadas (silhueta irregular). */
-function copa(
-  semente: number,
-  centro: THREE.Vector3,
-  raio: number,
-  blocos: number,
-) {
-  const r = aleatorio(semente);
-  const pecas: THREE.BufferGeometry[] = [];
-  for (let i = 0; i < blocos; i++) {
-    const g = new THREE.IcosahedronGeometry(raio * (0.35 + r() * 0.3), 2);
-    const pos = g.attributes.position;
-    for (let j = 0; j < pos.count; j++) {
-      const k = 1 + (r() - 0.5) * 0.35;
-      pos.setXYZ(j, pos.getX(j) * k, pos.getY(j) * k * 0.8, pos.getZ(j) * k);
-    }
-    const a = r() * Math.PI * 2;
-    const d = Math.sqrt(r()) * raio;
-    g.translate(
-      centro.x + Math.cos(a) * d,
-      centro.y + (r() - 0.3) * raio * 0.45,
-      centro.z + Math.sin(a) * d * 0.7,
-    );
-    pecas.push(g);
-  }
-  const unida = mergeGeometries(pecas);
-  unida.computeVertexNormals();
-  return unida;
-}
-
-/** Árvore grande: tronco, galhos abertos e copa larga. */
-function Arvore() {
-  const { madeira, folhagem } = useMemo(() => {
-    const partes: THREE.BufferGeometry[] = [];
-    const tronco = new THREE.CylinderGeometry(0.32, 0.55, 5.2, 14);
-    tronco.translate(0, 2.6, 0);
-    partes.push(tronco);
-    const galhos: [number, number, number, number][] = [
-      // [comprimento, inclinação, giro, altura]
-      [4.2, 1.05, 2.6, 4.2],
-      [3.6, 0.95, 0.4, 4.6],
-      [3.0, 0.75, 4.2, 4.9],
-      [2.6, 0.55, 1.6, 5.0],
-    ];
-    for (const [comp, incl, giro, alt] of galhos) {
-      const g = new THREE.CylinderGeometry(0.08, 0.2, comp, 8);
-      g.translate(0, comp / 2, 0);
-      g.rotateZ(incl);
-      g.rotateY(giro);
-      g.translate(0, alt, 0);
-      partes.push(g);
-    }
-    return {
-      madeira: mergeGeometries(partes),
-      folhagem: copa(11, new THREE.Vector3(-0.6, 6.4, 0), 4.6, 34),
-    };
-  }, []);
-  return (
-    <group position={[6.9, 0, -0.5]}>
-      <mesh geometry={madeira}>
-        <meshStandardMaterial color="#141210" roughness={1} />
-      </mesh>
-      <mesh geometry={folhagem}>
-        <meshStandardMaterial color="#0f1915" roughness={1} />
-      </mesh>
-    </group>
-  );
-}
-
-/** Linha de árvores ao fundo: só silhuetas, quase todas na névoa. */
-function LinhaDeArvores() {
-  const geo = useMemo(() => {
-    const r = aleatorio(19);
-    const pecas: THREE.BufferGeometry[] = [];
-    for (let i = 0; i < 46; i++) {
-      const ang = Math.PI * (1.05 + r() * 0.9); // atrás da cerca (z < 0)
-      const dist = 22 + r() * 12;
-      const centro = new THREE.Vector3(
-        Math.cos(ang) * dist,
-        2 + r() * 2.5,
-        Math.sin(ang) * dist,
-      );
-      pecas.push(copa(100 + i, centro, 2.2 + r() * 1.6, 5));
-    }
-    return mergeGeometries(pecas);
-  }, []);
-  return (
-    <mesh geometry={geo}>
-      <meshStandardMaterial color="#121c19" roughness={1} />
-    </mesh>
-  );
-}
-
 /** Faixas de neblina rente ao chão, andando devagar. */
 function Neblina({ semMovimento }: { semMovimento: boolean }) {
   const textura = useMemo(() => {
@@ -315,8 +222,6 @@ export function Cenario({
       <Ceu />
       <Pasto folhas={leve ? 2500 : 7000} />
       <Cerca />
-      <Arvore />
-      <LinhaDeArvores />
       <Neblina semMovimento={semMovimento} />
     </>
   );

@@ -2,12 +2,12 @@
 
 import { ContactShadows, Environment, Lightformer } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { Carro3D } from "./carro-3d";
-import { Cavalo3D } from "./cavalo-3d";
 import { Cenario, COR_NEVOA } from "./cenario";
+import { Recortes } from "./recortes";
 import { quadroEm, type Quadro } from "./trajetoria";
 
 // Posições da câmera ao longo da rolagem (0 = topo, 1 = fim da página).
@@ -114,9 +114,10 @@ export default function CenaCarro({ semMovimento }: { semMovimento: boolean }) {
         semMovimento={semMovimento}
       />
       <Carro3D giroRodasRef={giroRodas} />
-      <group position={[0.05, 0, -3.9]} rotation-y={-0.98}>
-        <Cavalo3D semMovimento={semMovimento} />
-      </group>
+      {/* Recortes (imagens) carregam à parte: a cena aparece sem esperar. */}
+      <Suspense fallback={null}>
+        <Recortes cavalo={[-1.4, 0, -4.3]} semMovimento={semMovimento} />
+      </Suspense>
       <Cenario semMovimento={semMovimento} leve={leve} />
 
       <ContactShadows
