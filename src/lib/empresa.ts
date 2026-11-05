@@ -13,11 +13,13 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-11-02.4";
-export const VIGENCIA = "02/11/2026";
+export const VERSAO_TERMOS = "2026-11-04.1";
+export const VIGENCIA = "04/11/2026";
 
 /** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
 export const MUDANCAS_TERMOS = [
+  "Ranking do mês: carros públicos com classe (hatch, sedã, SUV…) aparecem num ranking para quem tem conta, com seu nome de usuário, sua cidade e o XP ganho no mês. O XP conta registros privados, mas só o total aparece.",
+  "E-mail: o código de acesso agora é enviado pelo Gmail (Google). Para isso, seu endereço de e-mail passa pelos servidores do Google, que podem ficar fora do Brasil.",
   'Conquistas: carros públicos mostram as conquistas desbloqueadas (por exemplo, "Primeira revisão"). A ficha usa totais do diário inteiro, inclusive de registros privados (como quantos registros existem); o conteúdo deles continua privado.',
   "Ficha RPG: carros públicos mostram nível e atributos (Potência, Estilo, Engenhosidade, Dedicação e Condição). São só números, calculados também a partir de registros privados; o conteúdo dos registros continua privado.",
   "Curtidas e comentários: você pode curtir e comentar posts. Comentários e o total de curtidas aparecem para quem pode ver o post; o dono do post pode apagar comentários nele.",
@@ -31,7 +33,8 @@ export const PROVEDORES = {
     "Supabase (banco de dados, autenticação e armazenamento) — região de hospedagem: [preencher]",
   fotos:
     "Cloudflare R2 (armazenamento das fotos) — jurisdição dos dados: [preencher]",
-  email: "[preencher: provedor de envio de e-mail, quando contratado]",
+  email:
+    "Google (Gmail), para enviar o e-mail com o código de acesso — servidores fora do Brasil",
 };
 
 export function dadosPendentes(): boolean {

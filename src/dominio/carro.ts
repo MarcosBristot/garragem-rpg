@@ -2,6 +2,8 @@
 // Função pura: o ano atual entra como parâmetro em vez de ler o relógio,
 // para o teste dar o mesmo resultado em qualquer data.
 
+import { erroDaClasse, type Classe } from "./classe";
+
 export interface DadosCarro {
   marca: string;
   modelo: string;
@@ -10,6 +12,8 @@ export interface DadosCarro {
   publico: boolean;
   /** Potência de fábrica em cv, informada pelo dono (atributo Potência). */
   potencia_cv: number | null;
+  /** Liga do ranking (vazio = fora do ranking). */
+  classe: Classe | null;
 }
 
 export type ErrosCarro = Partial<Record<keyof DadosCarro, string>>;
@@ -34,11 +38,13 @@ export function validarCarro(
     apelido: unknown;
     publico: unknown;
     potencia_cv?: unknown;
+    classe?: unknown;
   },
   anoAtual: number,
 ): ResultadoCarro {
   const anoTexto = texto(entrada.ano);
   const cvTexto = texto(entrada.potencia_cv);
+  const classeTexto = texto(entrada.classe);
   const dados: DadosCarro = {
     marca: texto(entrada.marca),
     modelo: texto(entrada.modelo),
@@ -47,6 +53,8 @@ export function validarCarro(
     // Checkbox HTML: vem "on" quando marcado e nada quando não.
     publico: entrada.publico === "on" || entrada.publico === true,
     potencia_cv: cvTexto === "" ? null : Number(cvTexto),
+    // Conferida logo abaixo (erroDaClasse) antes de ser usada.
+    classe: classeTexto === "" ? null : (classeTexto as Classe),
   };
 
   const erros: ErrosCarro = {};
@@ -72,6 +80,12 @@ export function validarCarro(
   ) {
     erros.potencia_cv = `Use um número inteiro de 1 a ${CV_MAXIMO}.`;
   }
+  const erroClasse = erroDaClasse(
+    dados.classe,
+    erros.ano ? null : dados.ano,
+    anoAtual,
+  );
+  if (erroClasse) erros.classe = erroClasse;
   if (dados.apelido && dados.apelido.length > 40) {
     erros.apelido = "Máximo de 40 caracteres.";
   }

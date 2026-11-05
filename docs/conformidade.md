@@ -49,4 +49,4 @@ Estado em 29/10/2026. Legenda: ✅ feito e testado · ⚠️ feito, com pendênc
 
 ## Pendências técnicas conhecidas
 
-- Produção: configurar SMTP próprio (o e-mail padrão do Supabase é limitado) e citar o provedor em `PROVEDORES.email`.
+- E-mail: no teste, Gmail do projeto como SMTP (citado em `PROVEDORES.email`). Produção: domínio próprio + Resend; ao trocar, atualizar `PROVEDORES.email` e `VERSAO_TERMOS`.

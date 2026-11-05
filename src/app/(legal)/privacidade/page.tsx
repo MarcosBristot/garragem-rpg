@@ -153,6 +153,12 @@ export default function PaginaPrivacidade() {
           conta vê, e só enquanto o carro do post estiver público. Pessoas que
           você bloquear (ou que bloquearem você) não veem os posts de vocês.
         </li>
+        <li>
+          Ranking do mês: carros públicos com classe aparecem para quem tem
+          conta, com o nome de usuário, a cidade do perfil e o total de XP ganho
+          no mês (inclusive de registros privados; só o número). Quem você
+          bloquear (ou que bloquear você) não vê o seu carro no ranking.
+        </li>
       </ul>
       <p>
         Quem você segue e quem você bloqueou não aparece para outras pessoas. A

@@ -30,6 +30,7 @@ async function Conteudo() {
         apelido: "",
         publico: false,
         potencia_cv: "",
+        classe: "",
       }}
       rotuloEnviar="Adicionar carro"
     />

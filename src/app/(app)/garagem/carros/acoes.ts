@@ -15,12 +15,15 @@ export type ValoresCarro = {
   apelido: string;
   publico: boolean;
   potencia_cv: string;
+  classe: string;
 };
 
 export type EstadoCarro = {
   valores: ValoresCarro;
   erros: ErrosCarro;
   erroGeral?: string;
+  /** Muda a cada resposta: recria o form (o React 19 volta o <select> ao padrão). */
+  versao: number;
 };
 
 // Server Actions podem ser chamadas por qualquer POST, não só pela tela:
@@ -29,7 +32,7 @@ export type EstadoCarro = {
 /** Cria (id null) ou edita o carro. O id vem de .bind() na página. */
 export async function salvarCarro(
   id: string | null,
-  _estado: EstadoCarro,
+  estado: EstadoCarro,
   form: FormData,
 ): Promise<EstadoCarro> {
   const { supabase, usuarioId } = await usuarioLogado();
@@ -42,9 +45,11 @@ export async function salvarCarro(
     apelido: String(form.get("apelido") ?? ""),
     publico: form.get("publico") === "on",
     potencia_cv: String(form.get("potencia_cv") ?? ""),
+    classe: String(form.get("classe") ?? ""),
   };
+  const versao = estado.versao + 1;
   const resultado = validarCarro(valores, new Date().getFullYear());
-  if (!resultado.ok) return { valores, erros: resultado.erros };
+  if (!resultado.ok) return { valores, erros: resultado.erros, versao };
 
   const linha = resultado.dados;
   const { data, error } =
@@ -67,11 +72,12 @@ export async function salvarCarro(
       valores,
       erros: {},
       erroGeral: "Não foi possível salvar. Tente de novo.",
+      versao,
     };
   }
   // Update sem linha afetada: carro não existe ou é de outra pessoa.
   if (data.length === 0) {
-    return { valores, erros: {}, erroGeral: "Carro não encontrado." };
+    return { valores, erros: {}, erroGeral: "Carro não encontrado.", versao };
   }
 
   revalidatePath("/garagem");

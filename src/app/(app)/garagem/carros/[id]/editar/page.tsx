@@ -44,6 +44,7 @@ async function Conteudo({ id }: { id: string }) {
           apelido: carro.apelido ?? "",
           publico: carro.publico,
           potencia_cv: carro.potencia_cv?.toString() ?? "",
+          classe: carro.classe ?? "",
         }}
         rotuloEnviar="Salvar alterações"
         voltarPara={`/garagem/carros/${carro.id}`}

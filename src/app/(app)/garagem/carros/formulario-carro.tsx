@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
-import { Botao, CaixaMarcacao, Campo } from "@/components/formulario";
+import { Botao, CaixaMarcacao, Campo, Selecao } from "@/components/formulario";
+import { CLASSES } from "@/dominio/classe";
 import type { EstadoCarro, ValoresCarro } from "./acoes";
 
 type Acao = (estado: EstadoCarro, form: FormData) => Promise<EstadoCarro>;
@@ -21,11 +22,18 @@ export function FormularioCarro({
   const [estado, enviar, enviando] = useActionState(acao, {
     valores,
     erros: {},
+    versao: 0,
   });
   const v = estado.valores;
 
   return (
-    <form action={enviar} className="flex flex-col gap-4" noValidate>
+    <form
+      // Recriado a cada resposta (ver EstadoCarro.versao).
+      key={estado.versao}
+      action={enviar}
+      className="flex flex-col gap-4"
+      noValidate
+    >
       <Campo
         id="marca"
         name="marca"
@@ -63,6 +71,16 @@ export function FormularioCarro({
         erro={estado.erros.potencia_cv}
         dica="Do manual ou da ficha técnica. Entra no atributo Potência."
       />
+      <Selecao
+        id="classe"
+        name="classe"
+        rotulo="Classe (opcional)"
+        opcoes={CLASSES}
+        vazio="Sem classe (fora do ranking)"
+        defaultValue={v.classe}
+        erro={estado.erros.classe}
+        dica="É a liga do ranking: seu carro disputa só com carros da mesma classe."
+      />
       <Campo
         id="apelido"
         name="apelido"
@@ -80,7 +98,7 @@ export function FormularioCarro({
         dica="Aparece no seu perfil público. Registros continuam com a visibilidade que você escolher em cada um."
       />
       {estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erroGeral}
         </p>
       ) : null}

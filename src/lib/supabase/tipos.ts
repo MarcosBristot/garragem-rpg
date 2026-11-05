@@ -72,6 +72,7 @@ export type Database = {
         Row: {
           ano: number | null;
           apelido: string | null;
+          classe: string | null;
           criado_em: string;
           dono_id: string;
           foto_capa: string | null;
@@ -85,6 +86,7 @@ export type Database = {
         Insert: {
           ano?: number | null;
           apelido?: string | null;
+          classe?: string | null;
           criado_em?: string;
           dono_id?: string;
           foto_capa?: string | null;
@@ -97,6 +99,7 @@ export type Database = {
         Update: {
           ano?: number | null;
           apelido?: string | null;
+          classe?: string | null;
           criado_em?: string;
           dono_id?: string;
           foto_capa?: string | null;
@@ -818,6 +821,20 @@ export type Database = {
         Returns: undefined;
       };
       ficha_do_carro: { Args: { p_carro: string }; Returns: Json };
+      ranking_mensal: {
+        Args: { p_cidade?: string; p_classe: string; p_limite?: number };
+        Returns: {
+          ano: number;
+          apelido: string;
+          carro_id: string;
+          cidade: string;
+          marca: string;
+          modelo: string;
+          nome_usuario: string;
+          posicao: number;
+          xp_mes: number;
+        }[];
+      };
     };
     Enums: {
       acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";

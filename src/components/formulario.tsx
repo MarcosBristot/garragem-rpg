@@ -34,7 +34,7 @@ export function Campo({
 }
 
 const ESTILO_ENTRADA =
-  "rounded-lg border border-borda-campo bg-fundo text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-red-400";
+  "rounded-lg border border-borda-campo bg-fundo text-base outline-none focus-visible:border-destaque focus-visible:ring-2 focus-visible:ring-destaque/40 aria-invalid:border-erro";
 
 /** Erro tem prioridade sobre a dica; os ids batem com aria-describedby. */
 function Mensagem({
@@ -48,7 +48,7 @@ function Mensagem({
 }) {
   if (erro) {
     return (
-      <p id={`${id}-erro`} className="text-sm text-red-300">
+      <p id={`${id}-erro`} className="text-sm text-erro">
         {erro}
       </p>
     );
@@ -67,6 +67,7 @@ export function Selecao({
   rotulo,
   erro,
   id,
+  dica,
   opcoes,
   vazio,
   ...select
@@ -74,10 +75,12 @@ export function Selecao({
   id: string;
   rotulo: string;
   erro?: string;
+  dica?: string;
   opcoes: Record<string, string>;
   /** Texto da opção vazia, quando o campo é opcional. */
   vazio?: string;
 }) {
+  const idDescricao = erro ? `${id}-erro` : dica ? `${id}-dica` : undefined;
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={id} className="text-sm font-medium">
@@ -86,7 +89,7 @@ export function Selecao({
       <select
         id={id}
         aria-invalid={erro ? true : undefined}
-        aria-describedby={erro ? `${id}-erro` : undefined}
+        aria-describedby={idDescricao}
         className={`min-h-11 px-3 ${ESTILO_ENTRADA}`}
         {...select}
       >
@@ -97,7 +100,7 @@ export function Selecao({
           </option>
         ))}
       </select>
-      <Mensagem id={id} erro={erro} />
+      <Mensagem id={id} erro={erro} dica={dica} />
     </div>
   );
 }
@@ -234,7 +237,7 @@ export function CaixaMarcacao({
 const ESTILOS_BOTAO = {
   primario: "bg-destaque text-fundo hover:bg-destaque/90",
   secundario: "border border-borda text-texto hover:bg-borda/50",
-  perigo: "border border-red-400/60 text-red-300 hover:bg-red-400/10",
+  perigo: "border border-erro/50 text-erro hover:bg-erro/10",
 };
 
 export function Botao({

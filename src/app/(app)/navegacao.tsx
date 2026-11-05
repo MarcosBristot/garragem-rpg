@@ -7,6 +7,8 @@ import { usePathname } from "next/navigation";
 const ICONES = {
   garagem: "M3 10.5 12 4l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z",
   feed: "M4 5h16v14H4zM4 15l4.5-4.5 4 4 3-3L20 16",
+  ranking:
+    "M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4",
   adicionar: "M12 5v14M5 12h14",
   conta: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4.4 3.6-7 8-7s8 2.6 8 7",
 };
@@ -14,6 +16,7 @@ const ICONES = {
 const ITENS = [
   { href: "/garagem", rotulo: "Garagem", icone: ICONES.garagem },
   { href: "/feed", rotulo: "Feed", icone: ICONES.feed },
+  { href: "/ranking", rotulo: "Ranking", icone: ICONES.ranking },
   {
     href: "/garagem/carros/novo",
     rotulo: "Novo carro",
@@ -83,7 +86,7 @@ export function NavegacaoInferior({ caminho = "" }: { caminho?: string }) {
       aria-label="Principal"
       className="fixed inset-x-0 bottom-0 z-40 border-t border-borda bg-fundo/90 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-5">
         {ITENS.map((item) => (
           <li key={item.href}>
             <Link

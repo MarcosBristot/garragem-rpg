@@ -17,7 +17,7 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 - **Vercel Hobby:** só uso não comercial. No lançamento: plano Pro (US$ 20/mês) ou outra hospedagem.
 - **Vercel:** cada requisição tem no máximo 4,5 MB. Por isso fotos têm limite de 4 MB (`src/lib/fotos/limites.ts`) e o navegador as reduz antes.
 - **Supabase Free:** o projeto pausa após 1 semana sem uso (os dados ficam; reative no painel); 500 MB de banco e 1 GB de arquivos.
-- **E-mail do Supabase sem SMTP próprio:** só entrega para e-mails da equipe do projeto e com limite baixo por hora. Para você testar sozinho, basta. Para chamar outras pessoas: configurar SMTP próprio (ex.: Resend ou Brevo, plano grátis) — fica para depois.
+- **E-mail:** o e-mail padrão do Supabase só entrega para a equipe do projeto, e projetos novos só podem editar o modelo (código de 6 dígitos) com SMTP próprio. O Resend sem domínio (`onboarding@resend.dev`) só entrega no e-mail da própria conta. Para o teste com amigos usamos o **Gmail do projeto** (passo 4); no lançamento, domínio próprio + Resend.
 
 ## 1. Supabase na nuvem (você, ~10 min)
 
@@ -60,3 +60,15 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 - **Sempre com `--linked`:** a CLI avisa que, numa próxima versão, `db push` sem opção vai mirar o banco local.
 - **Migração nova:** rode `npx supabase db push --linked` ANTES de enviar o código que depende dela (senão o site novo procura colunas que ainda não existem).
 - Fotos e dados de teste lá são seus; não use dados de outras pessoas sem consentimento (as páginas legais ainda são rascunho).
+
+## 4. E-mail pelo Gmail do projeto (para chamar amigos, R$ 0)
+
+1. Crie uma conta Gmail só do projeto (ex.: `garagemrpg.teste@gmail.com`). Não use o seu e-mail pessoal: ele apareceria como remetente.
+2. Nessa conta: **Gerenciar conta → Segurança → Verificação em duas etapas** (ligar) e depois **Senhas de app** → crie uma chamada "Supabase". Copie a senha de 16 letras direto para o passo 3 (nunca para o Git nem para o chat).
+3. No Supabase, **Authentication → Emails → SMTP Settings** (onde hoje está o Resend), troque:
+   - Sender email: o Gmail do projeto · Sender name: `Garagem RPG`
+   - Host: `smtp.gmail.com` · Port: `465` · Username: o Gmail do projeto · Password: a senha de app
+4. **Authentication → Rate Limits**: "Rate limit for sending emails" para `30` por hora (o Gmail aceita ~500 por dia).
+5. Teste: peça o código com um e-mail que não seja o seu. Se não chegar, olhe a caixa de spam e **Authentication → Logs**.
+
+O modelo do e-mail (código de 6 dígitos) continua o mesmo: ele vale para qualquer SMTP próprio.

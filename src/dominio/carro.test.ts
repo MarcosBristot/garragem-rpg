@@ -23,6 +23,7 @@ describe("validarCarro", () => {
         apelido: null,
         publico: false,
         potencia_cv: null,
+        classe: null,
       },
     });
   });
@@ -38,6 +39,23 @@ describe("validarCarro", () => {
     for (const potencia_cv of ["0", "2001", "1,5", "muito"]) {
       const r = validarCarro({ ...base, potencia_cv }, ANO_ATUAL);
       expect(!r.ok && r.erros.potencia_cv).toBeTruthy();
+    }
+  });
+
+  it("classe: opcional, da lista; clássico só com 25 anos ou mais", () => {
+    const ok = validarCarro({ ...base, classe: "hatch" }, ANO_ATUAL);
+    expect(ok.ok && ok.dados.classe).toBe("hatch");
+    expect(
+      validarCarro({ ...base, ano: "2001", classe: "classico" }, ANO_ATUAL).ok,
+    ).toBe(true);
+    for (const [ano, classe] of [
+      ["", "classico"],
+      ["2002", "classico"],
+      ["", "toString"],
+      ["", "caminhao"],
+    ]) {
+      const r = validarCarro({ ...base, ano, classe }, ANO_ATUAL);
+      expect(!r.ok && r.erros.classe).toBeTruthy();
     }
   });
 
