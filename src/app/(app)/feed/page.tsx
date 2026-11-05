@@ -77,7 +77,7 @@ async function Conteudo({
       </nav>
 
       {falhas > 0 ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           O post foi publicado, mas {falhas}{" "}
           {falhas === 1 ? "foto não foi enviada" : "fotos não foram enviadas"}.
         </p>

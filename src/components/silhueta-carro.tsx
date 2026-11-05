@@ -18,29 +18,33 @@ export function SilhuetaCarro({ className = "" }: { className?: string }) {
       {/* Vidros */}
       <path
         d="M134 62 C154 51 178 46 206 45 L210 62 Z M220 45 C244 46 262 51 278 59 L222 62 Z"
-        fill={PALETA.fundo}
-        opacity="0.75"
+        fill={PALETA.texto}
+        opacity="0.8"
       />
       {/* Luzes */}
-      <path d="M364 70 L388 76 L386 80 L362 76 Z" fill="#fff" opacity="0.9" />
+      <path
+        d="M364 70 L388 76 L386 80 L362 76 Z"
+        fill={PALETA.superficie2}
+        opacity="0.95"
+      />
       <path
         d="M14 80 L30 76 L30 82 L13 84 Z"
-        fill={PALETA.destaque}
+        fill={PALETA.erro}
         opacity="0.9"
       />
       {/* Rodas */}
       {[90, 318].map((cx) => (
         <g key={cx}>
-          <circle cx={cx} cy={98} r={25} fill={PALETA.fundo} />
+          <circle cx={cx} cy={98} r={25} fill={PALETA.texto} />
           <circle
             cx={cx}
             cy={98}
             r={15}
             fill="none"
-            stroke={PALETA.textoApagado}
+            stroke={PALETA.borda}
             strokeWidth={4}
           />
-          <circle cx={cx} cy={98} r={4} fill={PALETA.textoApagado} />
+          <circle cx={cx} cy={98} r={4} fill={PALETA.borda} />
         </g>
       ))}
     </svg>

@@ -112,7 +112,7 @@ async function Conteudo({
                   <button
                     type="submit"
                     aria-label={`Remover foto ${i + 1}`}
-                    className="inline-flex min-h-11 items-center text-sm text-red-300 hover:underline"
+                    className="inline-flex min-h-11 items-center text-sm text-erro hover:underline"
                   >
                     Remover
                   </button>

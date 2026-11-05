@@ -19,7 +19,8 @@ describe("paleta", () => {
     expect(token("texto-apagado")).toBe(PALETA.textoApagado);
     expect(token("destaque")).toBe(PALETA.destaque);
     expect(token("condicao")).toBe(PALETA.condicao);
-    expect(token("nevoa")).toBe(PALETA.nevoa);
+    expect(token("erro")).toBe(PALETA.erro);
+    expect(token("ceu")).toBe(PALETA.ceu);
   });
 
   // Regra do CLAUDE.md: texto 4.5:1; contorno de campo 3:1.
@@ -31,6 +32,7 @@ describe("paleta", () => {
     ["texto apagado", PALETA.textoApagado],
     ["destaque (links)", PALETA.destaque],
     ["condição", PALETA.condicao],
+    ["erro", PALETA.erro],
   ])("%s tem contraste 4.5:1 sobre todos os fundos", (_nome, cor) => {
     for (const fundo of fundos) {
       expect(contraste(cor, fundo)).toBeGreaterThanOrEqual(4.5);
@@ -43,14 +45,15 @@ describe("paleta", () => {
     }
   });
 
-  it("texto escuro sobre botão de destaque tem 4.5:1", () => {
+  it("texto claro sobre botão de destaque tem 4.5:1", () => {
     expect(contraste(PALETA.fundo, PALETA.destaque)).toBeGreaterThanOrEqual(
       4.5,
     );
+    expect(contraste("#ffffff", PALETA.destaque)).toBeGreaterThanOrEqual(4.5);
   });
 
   it("comAlfa converte hex em rgba", () => {
-    expect(comAlfa("#ff5a4a", 0.3)).toBe("rgba(255, 90, 74, 0.3)");
+    expect(comAlfa("#5b3fd0", 0.3)).toBe("rgba(91, 63, 208, 0.3)");
   });
 
   it("contraste: preto e branco = 21", () => {

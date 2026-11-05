@@ -15,7 +15,7 @@ export function EditarPerfil({ valores }: { valores: ValoresPerfil }) {
     <form action={acao} className="flex flex-col gap-4" noValidate>
       <CamposPerfil valores={estado.valores} erros={estado.erros} />
       {estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erroGeral}
         </p>
       ) : null}

@@ -118,7 +118,7 @@ function Comentario({
             <form action={excluirComentario.bind(null, comentario.id, postId)}>
               <button
                 type="submit"
-                className="inline-flex min-h-11 items-center rounded-lg px-2 text-texto-secundario hover:text-red-300"
+                className="inline-flex min-h-11 items-center rounded-lg px-2 text-texto-secundario hover:text-erro"
               >
                 Apagar
               </button>

@@ -55,7 +55,7 @@ export function ListaItens({
               <button
                 type="submit"
                 aria-label={`Remover ${item.descricao}`}
-                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-sm text-red-300 hover:bg-red-400/10 focus-visible:outline-2 focus-visible:outline-destaque"
+                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-sm text-erro hover:bg-erro/10 focus-visible:outline-2 focus-visible:outline-destaque"
               >
                 Remover
               </button>

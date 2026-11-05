@@ -1,25 +1,26 @@
-// Paleta da identidade visual: névoa ao entardecer (azul-esverdeado escuro)
-// com o vermelho da lanterna como destaque. Os tokens do Tailwind ficam em
-// globals.css (@theme); estes valores servem onde CSS não chega: imagens
-// geradas (next/og), 3D e SVG. Um teste confere que os dois batem e que os
-// contrastes seguem a regra de acessibilidade do projeto.
+// Paleta da identidade visual: de dia, campo de flores sob céu com nuvens
+// (fundo claro levemente lavanda, texto grafite, destaque violeta). Os
+// tokens do Tailwind ficam em globals.css (@theme); estes valores servem
+// onde CSS não chega: imagens geradas (next/og), 3D e SVG. Um teste confere
+// que os dois batem e que os contrastes seguem a regra de acessibilidade.
 
 export const PALETA = {
-  fundo: "#0a0f10",
-  superficie: "#111a1c",
-  superficie2: "#182326",
-  borda: "#26353a",
-  bordaCampo: "#64777c",
-  texto: "#e6ecec",
-  textoSecundario: "#a2b1b3",
-  textoApagado: "#86979a",
-  destaque: "#ff5a4a",
-  condicao: "#4ade80",
-  /** Cor da névoa do cenário (não é usada para texto). */
-  nevoa: "#5f7477",
+  fundo: "#f6f5fb",
+  superficie: "#ffffff",
+  superficie2: "#eeecf7",
+  borda: "#dedaee",
+  bordaCampo: "#837e98",
+  texto: "#1c1a26",
+  textoSecundario: "#4c485c",
+  textoApagado: "#625e74",
+  destaque: "#5b3fd0",
+  condicao: "#167a3d",
+  erro: "#b42318",
+  /** Azul do céu (só fundos, nunca texto). */
+  ceu: "#9dbbe0",
 } as const;
 
-/** "#ff5a4a" + 0.3 → "rgba(255, 90, 74, 0.3)" (next/og não lê color-mix). */
+/** "#5b3fd0" + 0.3 → "rgba(91, 63, 208, 0.3)" (next/og não lê color-mix). */
 export function comAlfa(hex: string, alfa: number): string {
   const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
   return `rgba(${r}, ${g}, ${b}, ${alfa})`;

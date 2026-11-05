@@ -52,13 +52,13 @@ export function FormularioPerfil() {
           </span>
         </label>
         {estado.erros.aceite ? (
-          <p id="aceite-erro" className="text-sm text-red-300">
+          <p id="aceite-erro" className="text-sm text-erro">
             {estado.erros.aceite}
           </p>
         ) : null}
       </div>
       {estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erroGeral}
         </p>
       ) : null}

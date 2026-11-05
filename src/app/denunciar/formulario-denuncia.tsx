@@ -45,7 +45,7 @@ export function FormularioDenuncia({ acao }: { acao: Acao }) {
         dica="Não precisa colar dados pessoais aqui: só diga onde está o problema."
       />
       {estado.erros.alvo || estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erros.alvo ?? estado.erroGeral}
         </p>
       ) : null}

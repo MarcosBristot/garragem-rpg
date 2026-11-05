@@ -31,7 +31,7 @@ export function FormularioComentario({ postId }: { postId: string }) {
         className="rounded-lg border border-borda-campo bg-fundo px-3 py-2 text-texto"
       />
       {estado.erro ? (
-        <p id={idErro} role="alert" className="text-sm text-red-300">
+        <p id={idErro} role="alert" className="text-sm text-erro">
           {estado.erro}
         </p>
       ) : null}

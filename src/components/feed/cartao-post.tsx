@@ -83,7 +83,7 @@ export function CartaoPost({
                 <form action={bloquear.bind(null, post.dono_id)}>
                   <button
                     type="submit"
-                    className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm text-red-300 hover:bg-borda/50"
+                    className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm text-erro hover:bg-borda/50"
                   >
                     Bloquear @{autor.nome_usuario}
                   </button>

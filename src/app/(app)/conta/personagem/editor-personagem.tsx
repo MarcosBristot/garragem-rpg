@@ -89,7 +89,7 @@ export function EditorPersonagem({
                       <>
                         <span
                           aria-hidden="true"
-                          className="size-6 rounded-full border border-white/20"
+                          className="size-6 rounded-full border border-texto/25"
                           style={{ backgroundColor: cor }}
                         />
                         <span className="sr-only">{opcao.rotulo}</span>
@@ -105,7 +105,7 @@ export function EditorPersonagem({
         ))}
 
         {estado.erro ? (
-          <p role="alert" className="text-sm text-red-300">
+          <p role="alert" className="text-sm text-erro">
             {estado.erro}
           </p>
         ) : null}

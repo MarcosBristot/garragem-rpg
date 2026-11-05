@@ -6,6 +6,8 @@ import {
   EIXO_DIANTEIRO,
   pontoCarroceria,
   RODA_RAIO,
+  uDoX,
+  vNaAltura,
   xDianteiroEm,
   xTraseiroEm,
 } from "./carroceria";
@@ -40,12 +42,12 @@ describe("carroceria", () => {
   const max = (i: number) => Math.max(...pontos.map((p) => p[i]));
   const min = (i: number) => Math.min(...pontos.map((p) => p[i]));
 
-  it("tem medidas de um esportivo (4,5 m × 1,9 m × 1,26 m)", () => {
+  it("tem medidas de um cupê GT (4,9 m × 1,9 m × 1,38 m)", () => {
     expect(max(0) - min(0)).toBeCloseTo(COMPRIMENTO, 1);
     expect(max(2) - min(2)).toBeGreaterThan(1.85);
     expect(max(2) - min(2)).toBeLessThan(2.0);
-    expect(max(1)).toBeGreaterThan(1.2);
-    expect(max(1)).toBeLessThan(1.32);
+    expect(max(1)).toBeGreaterThan(1.34);
+    expect(max(1)).toBeLessThan(1.42);
   });
 
   it("fica acima do chão (vão livre de ~18 cm)", () => {
@@ -63,7 +65,8 @@ describe("carroceria", () => {
 
   it("no arco a lateral recolhe para trás do pneu: a roda fica à mostra", () => {
     const u = (EIXO_DIANTEIRO + COMPRIMENTO / 2) / COMPRIMENTO;
-    // Face interna do pneu: centro em z = 0,8, largura 0,27.
+    // Face interna do pneu: centro em z = 0,8, largura 0,27 (no Blender
+    // o pneu é posto no mesmo lugar).
     const faceInterna = 0.8 - 0.135;
     for (const v of [0.2, 0.22, 0.25]) {
       const [, y, z] = pontoCarroceria(u, v);
@@ -90,17 +93,26 @@ describe("carroceria", () => {
   it("a lanterna pousa na traseira e acompanha a curva", () => {
     const centro = xTraseiroEm(0.78, 0);
     const canto = xTraseiroEm(0.78, 0.78);
-    expect(centro).toBeLessThan(-2.15);
+    expect(centro).toBeLessThan(-2.3);
     expect(canto).toBeGreaterThan(centro); // os cantos ficam mais à frente
     // O ponto achado está mesmo na lataria (dentro da seção).
-    expect(canto).toBeLessThan(-1.9);
+    expect(canto).toBeLessThan(-2.0);
   });
 
   it("os faróis pousam na frente, recuando nos cantos", () => {
     const centro = xDianteiroEm(0.66, 0);
     const canto = xDianteiroEm(0.66, 0.62);
-    expect(centro).toBeGreaterThan(2.1);
+    expect(centro).toBeGreaterThan(2.3);
     expect(canto).toBeLessThan(centro);
+  });
+
+  it("acha v pela altura (para recortar as janelas)", () => {
+    for (const u of [0.3, 0.5, 0.9]) {
+      for (const y of [0.3, 0.6, 0.85]) {
+        expect(pontoCarroceria(u, vNaAltura(u, y))[1]).toBeCloseTo(y, 4);
+      }
+    }
+    expect(uDoX(0)).toBeCloseTo(0.5);
   });
 
   it("o teto é mais estreito que a lataria (cintura do teto)", () => {

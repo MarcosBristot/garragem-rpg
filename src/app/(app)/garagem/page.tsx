@@ -53,7 +53,7 @@ async function Conteudo() {
       <section aria-labelledby="titulo-perfil" className="flex flex-col">
         <div
           aria-hidden="true"
-          className="-mx-4 h-36 fundo-nevoa sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
+          className="-mx-4 h-36 fundo-ceu sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
         />
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">

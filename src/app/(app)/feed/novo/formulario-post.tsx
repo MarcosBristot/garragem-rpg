@@ -196,7 +196,7 @@ export function FormularioPost({ carros }: { carros: Record<string, string> }) {
       />
 
       {erro ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {erro}
         </p>
       ) : null}

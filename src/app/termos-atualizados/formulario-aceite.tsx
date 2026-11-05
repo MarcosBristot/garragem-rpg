@@ -24,7 +24,7 @@ export function FormularioAceite() {
         Privacidade.
       </label>
       {estado.erro ? (
-        <p id="aceite-erro" role="alert" className="text-sm text-red-300">
+        <p id="aceite-erro" role="alert" className="text-sm text-erro">
           {estado.erro}
         </p>
       ) : null}

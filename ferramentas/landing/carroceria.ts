@@ -1,15 +1,20 @@
-// Forma da carroceria do esportivo genérico da landing: esculpida por
-// seções transversais ao longo do comprimento (um "loft"), em vez de um
-// perfil esticado. Funções puras (sem three.js) para poder testar medidas.
-// Design próprio, sem copiar um carro real (regra de propriedade intelectual).
+// Forma do carro da landing (cupê GT): esculpida por seções transversais
+// ao longo do comprimento (um "loft"). Funções puras, testadas; a mesma
+// forma é exportada para o Blender, onde a cena é renderizada.
+// Design próprio: proporções de cupê GT, sem copiar um carro real (regra 6).
 // Eixos: X = comprimento (frente em +X), Y = altura, Z = largura. Metros.
 
-export const COMPRIMENTO = 4.5;
-export const RODA_RAIO = 0.34;
-export const EIXO_TRASEIRO = -1.38;
-export const EIXO_DIANTEIRO = 1.36;
+export const COMPRIMENTO = 4.9;
+export const RODA_RAIO = 0.355;
+export const EIXO_TRASEIRO = -1.47;
+export const EIXO_DIANTEIRO = 1.43;
 /** Raio da caixa de roda (um pouco maior que a roda). */
-export const ARCO_RAIO = 0.44;
+export const ARCO_RAIO = 0.45;
+/**
+ * Expoente da seção "superelipse": 2 seria uma elipse (lateral inflada);
+ * valores maiores deixam a lateral reta e os cantos arredondados.
+ */
+const EXPOENTE = 4.5;
 /** Dentro do arco, a lateral recolhe para esta fração da largura. */
 const RECOLHIDO = 0.5;
 
@@ -65,55 +70,61 @@ export function curva(pontos: readonly Ponto[], x: number): number {
   );
 }
 
-// Perfis (x → valor). Traseira em x = -2.25, frente em x = +2.25.
-/** Linha de cima: tampa traseira, caimento fastback, teto, para-brisa, capô. */
+// Perfis (x → valor). Traseira em x = -2.45, frente em x = +2.45.
+/**
+ * Linha de cima: para-choque, tampa do porta-malas, vidro traseiro, teto,
+ * para-brisa, capô longo e bico. A cabine fica recuada, como num GT.
+ */
 const TOPO: Ponto[] = [
-  [-2.25, 0.52],
-  [-2.2, 0.84],
-  [-1.98, 0.95],
-  [-1.25, 1.1],
-  [-0.45, 1.26],
-  [0.15, 1.24],
-  [0.78, 0.99],
-  [1.45, 0.88],
-  [1.98, 0.77],
-  [2.2, 0.62],
-  [2.25, 0.46],
+  [-2.45, 0.6],
+  [-2.38, 0.92],
+  [-2.2, 1.0],
+  [-1.75, 1.04],
+  [-1.45, 1.1],
+  [-0.75, 1.36],
+  [-0.15, 1.38],
+  [0.35, 1.3],
+  [0.95, 1.02],
+  [1.6, 0.93],
+  [2.2, 0.83],
+  [2.4, 0.71],
+  [2.45, 0.56],
 ];
-/** Linha de baixo (assoalho, ~18 cm do chão). */
+/** Linha de baixo (assoalho, ~16 cm do chão; pontas sobem nos para-choques). */
 const BASE: Ponto[] = [
-  [-2.25, 0.36],
-  [-2.16, 0.23],
-  [-1.85, 0.19],
-  [1.85, 0.19],
-  [2.14, 0.27],
-  [2.25, 0.4],
+  [-2.45, 0.38],
+  [-2.33, 0.24],
+  [-2.05, 0.17],
+  [2.05, 0.17],
+  [2.33, 0.24],
+  [2.45, 0.36],
 ];
-/** Meia largura: traseira larga ("ombros"), para-lamas sobre as rodas. */
+/** Meia largura: quase constante (planta "retangular"), ombro traseiro largo. */
 const LARGURA: Ponto[] = [
-  [-2.25, 0.5],
-  [-2.17, 0.84],
-  [-1.85, 0.95],
-  [-1.38, 0.97],
-  [-0.7, 0.91],
-  [0.4, 0.89],
-  [1.36, 0.93],
-  [1.95, 0.87],
-  [2.18, 0.7],
-  [2.25, 0.46],
+  [-2.45, 0.66],
+  [-2.38, 0.88],
+  [-2.1, 0.95],
+  [-1.47, 0.97],
+  [-0.6, 0.94],
+  [0.6, 0.93],
+  [1.43, 0.95],
+  [2.15, 0.92],
+  [2.38, 0.8],
+  [2.45, 0.62],
 ];
 /** Quanto o teto estreita em relação à lataria (1 = sem cabine). */
 const CABINE: Ponto[] = [
-  [-2.25, 1],
-  [-2.0, 0.92],
-  [-1.4, 0.68],
-  [0.55, 0.68],
-  [0.95, 0.95],
-  [1.2, 1],
-  [2.25, 1],
+  [-2.45, 1],
+  [-1.85, 1],
+  [-1.45, 0.78],
+  [-1.0, 0.7],
+  [0.5, 0.7],
+  [0.95, 0.84],
+  [1.15, 1],
+  [2.45, 1],
 ];
-/** Altura da linha de cintura (base das janelas). */
-const CINTURA = 0.93;
+/** Altura da linha de cintura (base das janelas, onde começa o ombro). */
+const CINTURA = 0.95;
 
 export type Secao = {
   x: number;
@@ -162,7 +173,7 @@ export function pontoCarroceria(
 ): [number, number, number] {
   const s = secaoEm(u);
   const theta = -Math.PI / 2 + v * Math.PI * 2;
-  const expoente = 2 / 3.2;
+  const expoente = 2 / EXPOENTE;
   const seno = Math.sin(theta);
   const cosseno = Math.cos(theta);
   const centro = (s.topo + s.base) / 2;
@@ -171,7 +182,12 @@ export function pontoCarroceria(
   let z = s.meiaLargura * Math.sign(cosseno) * Math.abs(cosseno) ** expoente;
 
   // Acima da cintura a lateral "entra" até a largura do teto (tumblehome).
-  const subida = suave((y - CINTURA) / Math.max(0.05, s.topo - CINTURA));
+  // Começa já na cintura (sem rampa suave): é o que marca a linha de ombro.
+  const subida =
+    Math.min(
+      1,
+      Math.max(0, (y - CINTURA) / Math.max(0.05, s.topo - CINTURA)),
+    ) ** 0.85;
   z *= 1 - (1 - s.cabine) * subida;
 
   // Caixas de roda: abaixo da linha do arco, a lateral recolhe para dentro
@@ -183,14 +199,14 @@ export function pontoCarroceria(
   return [s.x, y, z];
 }
 
-/** A seção em u contém o ponto (y, z)? (Superelipse: (z/w)^3,2 + (dy/h)^3,2 ≤ 1.) */
+/** A seção em u contém o ponto (y, z)? (Superelipse: (z/w)^n + (dy/h)^n ≤ 1.) */
 function contem(u: number, y: number, z: number): boolean {
   const s = secaoEm(u);
   const centro = (s.topo + s.base) / 2;
   const meiaAltura = (s.topo - s.base) / 2;
   const dy = Math.abs(y - centro) / meiaAltura;
   if (dy >= 1) return false;
-  return Math.abs(z) <= s.meiaLargura * (1 - dy ** 3.2) ** (1 / 3.2);
+  return Math.abs(z) <= s.meiaLargura * (1 - dy ** EXPOENTE) ** (1 / EXPOENTE);
 }
 
 /**
@@ -213,12 +229,36 @@ export function xDianteiroEm(y: number, z: number): number {
   return COMPRIMENTO / 2;
 }
 
+// ------------------------------------------------------------------
+// Coordenadas da superfície (lado direito, z ≥ 0; o esquerdo é o espelho,
+// v → 1 - v). Usadas para recortar as janelas na lataria.
+
+/** u do ponto da lataria no comprimento x. */
+export function uDoX(x: number): number {
+  return (x + COMPRIMENTO / 2) / COMPRIMENTO;
+}
+
+/** v (lado direito) onde a lataria passa pela altura y na seção u. */
+export function vNaAltura(u: number, y: number): number {
+  // Em v de 0 (embaixo) a 0,5 (em cima) a altura só sobe: bisseção.
+  let a = 0;
+  let b = 0.5;
+  for (let k = 0; k < 40; k++) {
+    const m = (a + b) / 2;
+    if (pontoCarroceria(u, m)[1] < y) a = m;
+    else b = m;
+  }
+  return (a + b) / 2;
+}
+
 /** Faixas (em u e v) dos vidros, usadas para gerar as peças de vidro. */
+// u = (x + 2,45) / 4,9. Em v, a cintura (y ≈ 1,0) cai perto de 0,27 e o
+// alto da janela (y ≈ 1,3) perto de 0,38 (seção superelipse, expoente 4,5).
 export const VIDROS = {
-  /** Janelas laterais, entre as colunas. */
-  lateral: { u: [0.17, 0.66], v: [0.29, 0.37] },
-  /** Para-brisa. */
-  frente: { u: [0.53, 0.68], v: [0.38, 0.62] },
-  /** Vidro traseiro, no caimento. */
-  tras: { u: [0.16, 0.3], v: [0.41, 0.59] },
+  /** Janelas laterais (cupê sem coluna central): x de -1,40 a 0,85. */
+  lateral: { u: [0.214, 0.673], v: [0.274, 0.376] },
+  /** Para-brisa: x de 0,35 a 0,95. */
+  frente: { u: [0.571, 0.694], v: [0.388, 0.612] },
+  /** Vidro traseiro: x de -1,45 a -0,75. */
+  tras: { u: [0.204, 0.347], v: [0.392, 0.608] },
 } as const;

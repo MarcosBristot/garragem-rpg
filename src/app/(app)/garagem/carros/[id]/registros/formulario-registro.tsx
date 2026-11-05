@@ -107,7 +107,7 @@ export function FormularioRegistro({
         erro={estado.erros.visibilidade}
       />
       {estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erroGeral}
         </p>
       ) : null}

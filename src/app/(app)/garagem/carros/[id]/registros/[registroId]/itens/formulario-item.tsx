@@ -80,7 +80,7 @@ export function FormularioItem({ acao }: { acao: Acao }) {
         dica="Garimpada, de desmanche ou reaproveitada de outro carro. Conta para a Engenhosidade."
       />
       {estado.erroGeral ? (
-        <p role="alert" className="text-sm text-red-300">
+        <p role="alert" className="text-sm text-erro">
           {estado.erroGeral}
         </p>
       ) : null}

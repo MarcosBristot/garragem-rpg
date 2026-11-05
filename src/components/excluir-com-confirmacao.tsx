@@ -30,7 +30,7 @@ export function ExcluirComConfirmacao({
   return (
     <form
       action={acao}
-      className="flex flex-col gap-3 rounded-lg border border-red-400/60 p-4"
+      className="flex flex-col gap-3 rounded-lg border border-erro/50 p-4"
     >
       <p role="alert" className="text-sm">
         {aviso} Não dá para desfazer.

@@ -1,33 +1,35 @@
 @import "tailwindcss";
 
 /*
- * Identidade visual (CLAUDE.md). Tema escuro único: névoa ao entardecer
- * (azul-esverdeado quase preto) com o vermelho da lanterna como destaque.
- * Títulos em serifada fina, rótulos em caixa alta espaçada. Os mesmos
- * valores estão em src/lib/paleta.ts (um teste confere que batem e que os
- * contrastes passam). Contrastes (WCAG AA, sobre o fundo):
- *   texto 16,1:1 · secundário 8,7:1 · apagado 6,3:1 · destaque 6,3:1
- *   borda-campo 4,1:1 (contorno de componente exige 3:1)
+ * Identidade visual (CLAUDE.md). Tema claro, de dia: campo de flores sob
+ * céu com nuvens. Fundo branco-lavanda, texto grafite, destaque violeta
+ * (das flores) e azul do céu só em fundos. Títulos em serifada fina,
+ * rótulos em caixa alta espaçada. Os mesmos valores estão em
+ * src/lib/paleta.ts (um teste confere que batem e que os contrastes
+ * passam). Contrastes (WCAG AA, sobre o fundo):
+ *   texto 15,8:1 · secundário 8,1:1 · apagado 5,7:1 · destaque 6,3:1
+ *   condição 5,0:1 · erro 6,1:1 · borda-campo 3,6:1 (contorno exige 3:1)
  */
 @theme {
-  --color-fundo: #0a0f10;
-  --color-superficie: #111a1c;
-  --color-superficie-2: #182326;
-  --color-borda: #26353a; /* decorativa: cartões e divisórias */
-  --color-borda-campo: #64777c; /* campos de formulário */
-  --color-texto: #e6ecec;
-  --color-texto-secundario: #a2b1b3;
-  --color-texto-apagado: #86979a;
-  --color-destaque: #ff5a4a;
-  --color-condicao: #4ade80;
-  --color-nevoa: #5f7477; /* só fundos e cenário, nunca texto */
+  --color-fundo: #f6f5fb;
+  --color-superficie: #ffffff;
+  --color-superficie-2: #eeecf7;
+  --color-borda: #dedaee; /* decorativa: cartões e divisórias */
+  --color-borda-campo: #837e98; /* campos de formulário */
+  --color-texto: #1c1a26;
+  --color-texto-secundario: #4c485c;
+  --color-texto-apagado: #625e74;
+  --color-destaque: #5b3fd0;
+  --color-condicao: #167a3d;
+  --color-erro: #b42318;
+  --color-ceu: #9dbbe0; /* só fundos, nunca texto */
 
   --font-sans: var(--font-geist);
   --font-titulo: var(--font-instrument-serif);
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -69,39 +71,37 @@ html {
 }
 
 /*
- * Fundos da identidade (névoa ao entardecer + luz da lanterna). Ficam aqui,
- * e não espalhados em classes bg-[...], para mudar a paleta num lugar só.
+ * Fundos da identidade (céu de dia + flores). Ficam aqui, e não espalhados
+ * em classes bg-[...], para mudar a paleta num lugar só.
  */
-/* Faixa de topo (capa de perfil): névoa vindo do alto, lanterna embaixo. */
-@utility fundo-nevoa {
+/* Faixa de topo (capa de perfil): céu claro em cima, flores embaixo. */
+@utility fundo-ceu {
   background:
     radial-gradient(
-      ellipse at 72% 118%,
-      color-mix(in srgb, var(--color-destaque) 30%, transparent),
+      ellipse at 70% 120%,
+      color-mix(in srgb, var(--color-destaque) 28%, transparent),
       transparent 55%
     ),
-    radial-gradient(
-      ellipse at 25% -10%,
-      color-mix(in srgb, var(--color-nevoa) 45%, transparent),
-      transparent 65%
-    ),
-    linear-gradient(to bottom, var(--color-superficie-2), var(--color-fundo));
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-ceu) 70%, white),
+      var(--color-superficie-2)
+    );
 }
 
-/* Vitrine (carro sem foto, boneco): névoa rente ao chão e um brilho leve. */
+/* Vitrine (carro sem foto, boneco): céu suave e um toque lavanda no chão. */
 @utility fundo-vitrine {
   background:
     radial-gradient(
-      ellipse at 50% 105%,
-      color-mix(in srgb, var(--color-destaque) 16%, transparent),
+      ellipse at 50% 110%,
+      color-mix(in srgb, var(--color-destaque) 18%, transparent),
       transparent 55%
     ),
-    radial-gradient(
-      ellipse at 50% 100%,
-      color-mix(in srgb, var(--color-nevoa) 35%, transparent),
-      transparent 70%
-    ),
-    var(--color-superficie);
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-ceu) 45%, white),
+      var(--color-superficie)
+    );
 }
 
 /* Quem pede menos movimento ao sistema não recebe animações. */

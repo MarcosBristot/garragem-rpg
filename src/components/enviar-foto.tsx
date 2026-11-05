@@ -109,7 +109,7 @@ export function EnviarFoto({
       ) : null}
 
       {erro ? (
-        <p id={`${id}-erro`} role="alert" className="text-sm text-red-300">
+        <p id={`${id}-erro`} role="alert" className="text-sm text-erro">
           {erro}
         </p>
       ) : null}

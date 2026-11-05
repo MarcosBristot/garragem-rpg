@@ -24,7 +24,7 @@ export function ExcluirConta({ nomeUsuario }: { nomeUsuario: string }) {
   return (
     <form
       action={acao}
-      className="flex flex-col gap-4 rounded-2xl border border-red-400/60 p-5"
+      className="flex flex-col gap-4 rounded-2xl border border-erro/50 p-5"
     >
       <p role="alert" className="text-sm">
         Isso apaga <strong>na hora e para sempre</strong> seu perfil, carros,
