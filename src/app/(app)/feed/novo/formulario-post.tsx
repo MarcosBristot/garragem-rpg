@@ -141,7 +141,7 @@ export function FormularioPost({ carros }: { carros: Record<string, string> }) {
                   className="aspect-square w-full rounded-xl object-cover"
                 />
                 <label className="flex flex-col gap-1 text-sm">
-                  <span>Descrição (opcional)</span>
+                  <span>Legenda desta foto (opcional)</span>
                   <input
                     value={foto.descricao}
                     maxLength={MAX_DESCRICAO_FOTO}
@@ -190,7 +190,7 @@ export function FormularioPost({ carros }: { carros: Record<string, string> }) {
       <AreaTexto
         id={`${id}-legenda`}
         name="legenda"
-        rotulo="Legenda (opcional)"
+        rotulo="Texto do post (opcional)"
         maxLength={MAX_LEGENDA}
         erro={erros.legenda}
       />

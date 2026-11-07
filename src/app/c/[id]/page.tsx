@@ -153,14 +153,19 @@ async function Conteudo({ id }: { id: string }) {
                       {r.fotos.map((f, i) => (
                         <li key={f.id}>
                           {f.chave ? (
-                            <FotoAssinada
-                              chave={f.chave}
-                              alt={
-                                f.descricao ?? `Foto ${i + 1} de ${r.titulo}`
-                              }
-                              sizes="(min-width: 768px) 230px, 30vw"
-                              className="aspect-square w-full rounded-xl object-cover"
-                            />
+                            <figure className="flex flex-col gap-1">
+                              <FotoAssinada
+                                chave={f.chave}
+                                alt={`Foto ${i + 1} de ${r.titulo}`}
+                                sizes="(min-width: 768px) 230px, 30vw"
+                                className="aspect-square w-full rounded-xl object-cover"
+                              />
+                              {f.descricao ? (
+                                <figcaption className="text-xs text-texto-secundario">
+                                  {f.descricao}
+                                </figcaption>
+                              ) : null}
+                            </figure>
                           ) : null}
                         </li>
                       ))}

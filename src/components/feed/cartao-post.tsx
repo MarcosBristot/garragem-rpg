@@ -106,16 +106,22 @@ export function CartaoPost({
           : {})}
       >
         {post.fotos_post.map((foto, i) => (
-          <FotoAssinada
-            key={foto.id}
-            chave={foto.chave}
-            alt={
-              foto.descricao ??
-              `Foto ${i + 1} de ${nomeDoCarro(carro)}, publicada por ${nome}`
-            }
-            sizes="(min-width: 640px) 576px, 100vw"
-            className="aspect-square w-full shrink-0 snap-center object-cover"
-          />
+          // A descrição de cada foto aparece embaixo dela (antes só ia no
+          // alt e ninguém via). Com legenda visível, o alt fica genérico para
+          // o leitor de tela não ler o mesmo texto duas vezes.
+          <figure key={foto.id} className="w-full shrink-0 snap-center">
+            <FotoAssinada
+              chave={foto.chave}
+              alt={`Foto ${i + 1} de ${nomeDoCarro(carro)}, publicada por ${nome}`}
+              sizes="(min-width: 640px) 576px, 100vw"
+              className="aspect-square w-full object-cover"
+            />
+            {foto.descricao ? (
+              <figcaption className="px-4 pt-2 text-sm whitespace-pre-line text-texto-secundario">
+                {foto.descricao}
+              </figcaption>
+            ) : null}
+          </figure>
         ))}
       </div>
       {post.fotos_post.length > 1 ? (

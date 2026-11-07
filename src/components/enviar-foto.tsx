@@ -84,9 +84,9 @@ export function EnviarFoto({
             <Campo
               id={`${id}-descricao`}
               name="descricao"
-              rotulo="Descrição da foto (opcional)"
+              rotulo="Legenda da foto (opcional)"
               maxLength={200}
-              dica="Ajuda quem usa leitor de tela. Ex.: Filtro de óleo novo ao lado do velho."
+              dica="Aparece embaixo da foto. Ex.: Filtro de óleo novo ao lado do velho."
             />
           ) : null}
           <div className="flex gap-3">

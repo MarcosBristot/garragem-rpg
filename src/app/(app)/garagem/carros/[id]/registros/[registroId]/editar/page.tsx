@@ -95,12 +95,19 @@ async function Conteudo({
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {registro.fotos_registro.map((foto, i) => (
               <li key={foto.id} className="flex flex-col gap-2">
-                <FotoAssinada
-                  chave={foto.chave}
-                  alt={foto.descricao ?? `Foto ${i + 1} de ${registro.titulo}`}
-                  sizes="(min-width: 640px) 140px, 45vw"
-                  className="aspect-square w-full rounded-xl object-cover"
-                />
+                <figure className="flex flex-col gap-1">
+                  <FotoAssinada
+                    chave={foto.chave}
+                    alt={`Foto ${i + 1} de ${registro.titulo}`}
+                    sizes="(min-width: 640px) 140px, 45vw"
+                    className="aspect-square w-full rounded-xl object-cover"
+                  />
+                  {foto.descricao ? (
+                    <figcaption className="text-sm text-texto-secundario">
+                      {foto.descricao}
+                    </figcaption>
+                  ) : null}
+                </figure>
                 <form
                   action={removerFotoRegistro.bind(
                     null,
