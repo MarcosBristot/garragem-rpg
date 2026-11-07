@@ -21,7 +21,7 @@ import { exigirPerfil } from "@/lib/sessao";
 export const metadata: Metadata = { title: "Diário do carro · Garagem RPG" };
 
 const estiloLinkPrimario =
-  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-fundo hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 const estiloLinkSecundario =
   "inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg border border-borda px-4 text-sm font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 

@@ -15,7 +15,7 @@ export default function NaoEncontrado() {
       </p>
       <Link
         href="/garagem"
-        className="inline-flex min-h-11 items-center rounded-lg bg-destaque px-6 font-semibold text-fundo hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+        className="inline-flex min-h-11 items-center rounded-lg bg-destaque px-6 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
       >
         Ir para minha garagem
       </Link>

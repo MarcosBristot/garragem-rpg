@@ -11,7 +11,7 @@ import { exigirPerfil } from "@/lib/sessao";
 export const metadata: Metadata = { title: "Minha garagem · Garagem RPG" };
 
 const estiloLinkPrimario =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-destaque px-5 text-sm font-semibold text-fundo hover:bg-destaque/90";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-destaque px-5 text-sm font-semibold text-white hover:bg-destaque/90";
 
 export default function PaginaGaragem() {
   return (

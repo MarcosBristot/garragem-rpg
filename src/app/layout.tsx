@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* Primeiro item do Tab: pula o menu direto para o conteúdo. */}
         <a
           href="#conteudo"
-          className="sr-only z-50 rounded-lg bg-destaque px-4 py-3 font-semibold text-fundo focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-50 rounded-lg bg-destaque px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Pular para o conteúdo
         </a>

@@ -235,7 +235,7 @@ export function CaixaMarcacao({
 }
 
 const ESTILOS_BOTAO = {
-  primario: "bg-destaque text-fundo hover:bg-destaque/90",
+  primario: "bg-destaque text-white hover:bg-destaque/90",
   secundario: "border border-borda text-texto hover:bg-borda/50",
   perigo: "border border-erro/50 text-erro hover:bg-erro/10",
 };

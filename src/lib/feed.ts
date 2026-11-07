@@ -40,8 +40,28 @@ async function curtidosPor(
   return new Set((data ?? []).map((c) => c.post_id));
 }
 
-function montar<T extends { id: string }>(posts: T[], curtidos: Set<string>) {
-  return posts.map((post) => ({ ...post, curtiu: curtidos.has(post.id) }));
+/** Quem a pessoa segue (para o botão "Seguir" no post). */
+async function seguidosPor(
+  supabase: Supabase,
+  usuarioId: string,
+): Promise<Set<string>> {
+  const { data } = await supabase
+    .from("seguidores")
+    .select("seguido_id")
+    .eq("seguidor_id", usuarioId);
+  return new Set((data ?? []).map((s) => s.seguido_id));
+}
+
+function montar<T extends { id: string; dono_id: string }>(
+  posts: T[],
+  curtidos: Set<string>,
+  seguidos: Set<string>,
+) {
+  return posts.map((post) => ({
+    ...post,
+    curtiu: curtidos.has(post.id),
+    sigoAutor: seguidos.has(post.dono_id),
+  }));
 }
 
 export async function carregarFeed(
@@ -58,13 +78,9 @@ export async function carregarFeed(
     .limit(TAMANHO_PAGINA + 1);
   if (antes) consulta = consulta.lt("criado_em", antes);
 
+  const seguidos = await seguidosPor(supabase, usuarioId);
   if (aba === "seguindo") {
-    const { data: seguidos } = await supabase
-      .from("seguidores")
-      .select("seguido_id")
-      .eq("seguidor_id", usuarioId);
-    const ids = [usuarioId, ...(seguidos ?? []).map((s) => s.seguido_id)];
-    consulta = consulta.in("dono_id", ids);
+    consulta = consulta.in("dono_id", [usuarioId, ...seguidos]);
   }
 
   // Erro de consulta não pode virar "ainda não há posts": deixa estourar.
@@ -80,7 +96,7 @@ export async function carregarFeed(
     usuarioId,
     pagina.map((p) => p.id),
   );
-  return { posts: montar(pagina, curtidos), proximo };
+  return { posts: montar(pagina, curtidos, seguidos), proximo };
 }
 
 /** Um post e os comentários dele; null se não existe ou não é visível. */
@@ -98,8 +114,9 @@ export async function carregarPost(
   if (error) throw new Error(`Post: ${error.code} ${error.message}`);
   if (!post) return null;
 
-  const [curtidos, { data: comentarios }] = await Promise.all([
+  const [curtidos, seguidos, { data: comentarios }] = await Promise.all([
     curtidosPor(supabase, usuarioId, [post.id]),
+    seguidosPor(supabase, usuarioId),
     supabase
       .from("comentarios")
       .select(
@@ -110,7 +127,7 @@ export async function carregarPost(
       .limit(200),
   ]);
   return {
-    post: montar([post], curtidos)[0],
+    post: montar([post], curtidos, seguidos)[0],
     comentarios: comentarios ?? [],
   };
 }

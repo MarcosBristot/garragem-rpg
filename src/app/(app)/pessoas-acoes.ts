@@ -9,6 +9,7 @@ import { ehUuid } from "@/lib/uuid";
 
 async function revalidar(nomeUsuario: string) {
   revalidatePath("/feed");
+  revalidatePath("/pessoas");
   revalidatePath("/conta");
   revalidatePath(`/u/${nomeUsuario}`);
 }

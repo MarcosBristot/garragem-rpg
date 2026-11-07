@@ -13,7 +13,7 @@ const ABAS: Record<Aba, string> = {
 };
 
 const estiloPublicar =
-  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-fundo hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaFeed({ searchParams }: PageProps<"/feed">) {
   return (
@@ -24,9 +24,17 @@ export default function PaginaFeed({ searchParams }: PageProps<"/feed">) {
     >
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-5xl">Feed</h1>
-        <Link href="/feed/novo" className={estiloPublicar}>
-          Publicar
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/pessoas"
+            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-borda px-4 font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+          >
+            Pessoas
+          </Link>
+          <Link href="/feed/novo" className={estiloPublicar}>
+            Publicar
+          </Link>
+        </div>
       </div>
       <Suspense fallback={<p className="text-texto-secundario">Carregando…</p>}>
         {searchParams.then((p) => (
@@ -89,7 +97,7 @@ async function Conteudo({
             {aba === "seguindo"
               ? antes
                 ? "Não há posts mais antigos."
-                : "Ninguém que você segue publicou ainda. Encontre pessoas em Descobrir e toque em Seguir no perfil delas."
+                : "Ninguém que você segue publicou ainda. Toque em Seguir nos posts de Descobrir ou procure amigos em Pessoas."
               : antes
                 ? "Não há posts mais antigos."
                 : "Ainda não há posts. Que tal ser o primeiro?"}

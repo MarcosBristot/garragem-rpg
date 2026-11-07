@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { bloquear } from "@/app/(app)/pessoas-acoes";
+import { bloquear, seguir } from "@/app/(app)/pessoas-acoes";
 import { excluirPost } from "@/app/(app)/feed/acoes";
 import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
 import { BotaoCurtir } from "@/components/feed/botao-curtir";
@@ -54,6 +54,18 @@ export function CartaoPost({
             <time dateTime={post.criado_em}>{tempoDesde(post.criado_em)}</time>
           </p>
         </div>
+        {/* Seguir sem sair do feed (antes só dava pelo perfil). */}
+        {!meu && !post.sigoAutor ? (
+          <form action={seguir.bind(null, autor.id)}>
+            <button
+              type="submit"
+              aria-label={`Seguir ${nome}`}
+              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-destaque hover:bg-destaque/10 focus-visible:outline-2 focus-visible:outline-destaque"
+            >
+              Seguir
+            </button>
+          </form>
+        ) : null}
         <details className="relative">
           <summary
             aria-label="Mais opções do post"
