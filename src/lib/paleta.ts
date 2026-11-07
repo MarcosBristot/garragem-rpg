@@ -1,4 +1,4 @@
-// Paleta da identidade visual: de dia, campo de flores sob céu com nuvens
+// Paleta da identidade LifeInGears (roxo do logo #6D27DA): de dia, campo de flores sob céu com nuvens
 // (fundo claro levemente lavanda, texto grafite, destaque violeta). Os
 // tokens do Tailwind ficam em globals.css (@theme); estes valores servem
 // onde CSS não chega: imagens geradas (next/og), 3D e SVG. Um teste confere
@@ -13,7 +13,7 @@ export const PALETA = {
   texto: "#1c1a26",
   textoSecundario: "#4c485c",
   textoApagado: "#625e74",
-  destaque: "#5b3fd0",
+  destaque: "#6d27da",
   condicao: "#167a3d",
   erro: "#b42318",
   /** Azul do céu (só fundos, nunca texto). */

@@ -6,13 +6,22 @@ O que é de terceiros entra no site **só como imagem renderizada** (o arquivo
 
 | Arquivo no site           | O que aparece                    | Origem                                                                                                                                                        | Autor                               | Licença                      |
 | ------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ---------------------------- |
-| `public/landing/campo/**` | O carro                          | Desenho próprio, gerado em código (`ferramentas/landing/carroceria.ts`). Inspirado no formato de um cupê GT, sem copiar carro nem marca reais.                | Garagem RPG                         | Nosso                        |
+| `public/landing/campo/**` | O carro                          | Desenho próprio, gerado em código (`ferramentas/landing/carroceria.ts`). Inspirado no formato de um cupê GT, sem copiar carro nem marca reais.                | LifeInGears                         | Nosso                        |
 | `public/landing/campo/**` | As flores do campo (recoloridas) | [XfrogPlants Anemone Hybrida (CGTrader, #2921926)](https://www.cgtrader.com/free-3d-models/plant/flower/xfrogplants-anemone-hybrida), gratuito                | xfrog (modelado por Konstantin Kim) | Royalty Free License (no AI) |
 | `public/landing/campo/**` | Árvores no horizonte             | Renders do [American Elm01 tree (CGTrader, #3478609)](https://www.cgtrader.com/free-3d-models/plant/conifer/american-elm01-tree), usados como recortes planos | PANDORA-Land                        | Royalty Free License (no AI) |
 | `public/landing/campo/**` | Céu e luz                        | HDRI [Kloofendal 48d Partly Cloudy (Pure Sky)](https://polyhaven.com/a/kloofendal_48d_partly_cloudy_puresky), Poly Haven                                      | Greg Zaal, Jarod Guest              | CC0                          |
 
 Os quadros são renderizados no Blender (passo a passo em
 `ferramentas/landing/README.md`).
+
+## Marca e fontes
+
+- Logo LifeInGears: enviado pelo dono do produto; traçado em SVG a partir das
+  imagens originais (`src/components/logo.tsx`, `public/logo-*.svg`).
+- Fontes: [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) e
+  [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch), licença SIL
+  Open Font License (OFL), servidas pelo próprio site (next/font e
+  @fontsource).
 
 ## Mapa
 

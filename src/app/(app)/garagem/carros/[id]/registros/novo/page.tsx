@@ -8,7 +8,7 @@ import { exigirPerfil } from "@/lib/sessao";
 import { salvarRegistro } from "../acoes";
 import { FormularioRegistro } from "../formulario-registro";
 
-export const metadata: Metadata = { title: "Novo registro · Garagem RPG" };
+export const metadata: Metadata = { title: "Novo registro · LifeInGears" };
 
 export default function PaginaNovoRegistro({
   params,

@@ -22,7 +22,7 @@ export function CabecalhoPublico() {
 }
 
 const estilo =
-  "inline-flex min-h-11 items-center rounded-full bg-destaque px-5 text-sm font-semibold text-white hover:bg-destaque/90";
+  "inline-flex min-h-11 items-center rounded-md border-2 border-texto bg-destaque sombra-botao px-5 text-sm font-semibold text-white hover:bg-destaque/90";
 
 function Convite() {
   return (

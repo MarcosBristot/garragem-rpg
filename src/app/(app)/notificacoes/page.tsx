@@ -13,7 +13,7 @@ import { tempoDesde } from "@/lib/datas";
 import { exigirPerfil } from "@/lib/sessao";
 import { MarcarVistas } from "./marcar-vistas";
 
-export const metadata: Metadata = { title: "Notificações · Garagem RPG" };
+export const metadata: Metadata = { title: "Notificações · LifeInGears" };
 
 // Curtidas e comentários nos seus posts e novos seguidores. Quem pode
 // aparecer aqui é decidido no banco (RLS + bloqueios); a página só agrupa.
@@ -86,13 +86,13 @@ async function Conteudo() {
         <div className="flex flex-wrap justify-center gap-2">
           <Link
             href="/feed/novo"
-            className="inline-flex min-h-11 items-center rounded-full bg-destaque px-5 text-sm font-semibold text-white hover:bg-destaque/90"
+            className="inline-flex min-h-11 items-center rounded-md border-2 border-texto bg-destaque sombra-botao px-5 text-sm font-semibold text-white hover:bg-destaque/90"
           >
             Publicar
           </Link>
           <Link
             href="/pessoas"
-            className="inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+            className="inline-flex min-h-11 items-center rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
           >
             Encontrar pessoas
           </Link>
@@ -148,7 +148,7 @@ async function Conteudo() {
                 {g.novo ? (
                   <span
                     aria-hidden="true"
-                    className="size-2.5 shrink-0 rounded-full bg-destaque"
+                    className="size-2.5 shrink-0 rounded-md bg-destaque"
                   />
                 ) : null}
               </Link>

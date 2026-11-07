@@ -5,7 +5,7 @@ import { personagemDoPerfil } from "@/dominio/personagem";
 import { exigirPerfil } from "@/lib/sessao";
 import { EditorPersonagem } from "./editor-personagem";
 
-export const metadata: Metadata = { title: "Seu personagem · Garagem RPG" };
+export const metadata: Metadata = { title: "Seu personagem · LifeInGears" };
 
 export default function PaginaPersonagem() {
   return (

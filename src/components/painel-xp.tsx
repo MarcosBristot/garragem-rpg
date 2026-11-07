@@ -24,10 +24,10 @@ export function PainelXp({ progresso }: { progresso: Progresso }) {
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuetext={`${progresso.noNivel} de ${progresso.doNivel} XP no nível ${progresso.nivel}`}
-        className="h-2 overflow-hidden rounded-full bg-borda"
+        className="h-2 overflow-hidden rounded-md bg-borda"
       >
         <div
-          className="h-full rounded-full bg-destaque"
+          className="h-full rounded-md bg-destaque"
           style={{ width: `${progresso.porcento}%` }}
         />
       </div>

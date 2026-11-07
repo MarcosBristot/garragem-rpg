@@ -23,7 +23,7 @@ import { SecaoOS } from "../os/secao-os";
 import { FormularioItem } from "../itens/formulario-item";
 import { ListaItens } from "../itens/lista-itens";
 
-export const metadata: Metadata = { title: "Editar registro · Garagem RPG" };
+export const metadata: Metadata = { title: "Editar registro · LifeInGears" };
 
 export default function PaginaEditarRegistro({
   params,

@@ -58,7 +58,7 @@ export function AvisoCookies() {
       <button
         type="button"
         onClick={marcarVisto}
-        className="min-h-11 shrink-0 rounded-full bg-destaque px-5 font-semibold text-white hover:bg-destaque/90"
+        className="min-h-11 shrink-0 rounded-md border-2 border-texto bg-destaque sombra-botao px-5 font-semibold text-white hover:bg-destaque/90"
       >
         Entendi
       </button>

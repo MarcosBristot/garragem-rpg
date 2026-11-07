@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { VIGENCIA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
-  title: "Política de Cookies · Garagem RPG",
-  description: "Quais cookies e armazenamentos locais o Garagem RPG usa.",
+  title: "Política de Cookies · LifeInGears",
+  description: "Quais cookies e armazenamentos locais o LifeInGears usa.",
 };
 
 // Mantenha a tabela igual ao que o site grava de verdade. Antes de incluir

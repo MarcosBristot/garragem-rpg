@@ -43,7 +43,7 @@ type Props =
 function alfinete(): HTMLElement {
   const el = document.createElement("div");
   el.className =
-    "size-5 rounded-full border-[3px] border-white bg-destaque shadow-lg shadow-destaque/40 cursor-pointer";
+    "size-5 rounded-md border-[3px] border-white bg-destaque shadow-lg shadow-destaque/40 cursor-pointer";
   return el;
 }
 

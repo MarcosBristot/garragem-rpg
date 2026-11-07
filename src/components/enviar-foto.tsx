@@ -67,7 +67,7 @@ export function EnviarFoto({
       />
       <label
         htmlFor={`${id}-arquivo`}
-        className="inline-flex min-h-11 w-fit cursor-pointer items-center rounded-full border border-borda px-5 text-sm font-semibold peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-destaque hover:bg-borda/50"
+        className="inline-flex min-h-11 w-fit cursor-pointer items-center rounded-md border border-borda px-5 text-sm font-semibold peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-destaque hover:bg-borda/50"
       >
         {foto ? "Trocar foto" : rotulo}
       </label>

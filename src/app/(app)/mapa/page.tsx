@@ -5,13 +5,13 @@ import { MapaVer } from "@/components/mapa/mapa-ver";
 import { jaComecou, quandoEncontro, TIPOS_ENCONTRO } from "@/dominio/encontro";
 import { exigirPerfil } from "@/lib/sessao";
 
-export const metadata: Metadata = { title: "Mapa · Garagem RPG" };
+export const metadata: Metadata = { title: "Mapa · LifeInGears" };
 
 // Encontros que ainda não terminaram. Quem pode ver (conta, bloqueios) é a
 // RLS que decide; de quem vai, só o total (resumo_encontros).
 
 const botao =
-  "inline-flex min-h-11 items-center justify-center rounded-full bg-destaque px-5 text-sm font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-md border-2 border-texto bg-destaque sombra-botao px-5 text-sm font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaMapa() {
   return (

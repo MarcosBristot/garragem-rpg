@@ -50,7 +50,7 @@ export function BotaoCurtir({
           await alternarCurtida(postId, curtir);
         })
       }
-      className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque aria-pressed:text-destaque"
+      className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque aria-pressed:text-destaque"
     >
       {/* key: ao curtir, o coração é recriado e a animação "pulo" roda. */}
       <Coracao key={String(estado.curtido)} cheio={estado.curtido} pular />

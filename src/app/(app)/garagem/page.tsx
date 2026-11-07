@@ -8,10 +8,10 @@ import { formatarData } from "@/lib/datas";
 import { AvatarPerfil } from "@/components/avatar-perfil";
 import { exigirPerfil } from "@/lib/sessao";
 
-export const metadata: Metadata = { title: "Minha garagem · Garagem RPG" };
+export const metadata: Metadata = { title: "Minha garagem · LifeInGears" };
 
 const estiloLinkPrimario =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-destaque px-5 text-sm font-semibold text-white hover:bg-destaque/90";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border-2 border-texto bg-destaque sombra-botao px-5 text-sm font-semibold text-white hover:bg-destaque/90";
 
 export default function PaginaGaragem() {
   return (
@@ -52,14 +52,14 @@ async function Conteudo() {
       <section aria-labelledby="titulo-perfil" className="flex flex-col">
         <div
           aria-hidden="true"
-          className="-mx-4 h-36 fundo-ceu sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
+          className="-mx-4 h-36 fundo-capa sm:mx-0 sm:mt-6 sm:h-44 sm:rounded-3xl"
         />
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">
             <Link
               href="/conta/configuracoes"
               aria-label="Trocar sua foto de perfil"
-              className="shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+              className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
             >
               <AvatarPerfil
                 perfil={perfil}
@@ -128,7 +128,7 @@ async function Conteudo() {
                       ) : (
                         <SilhuetaCarro className="w-4/5 text-destaque transition-transform duration-500 group-hover:translate-x-2" />
                       )}
-                      <span className="rotulo absolute top-4 left-4 z-10 rounded-full bg-fundo/80 px-3 py-1 text-[0.65rem]">
+                      <span className="rotulo absolute top-4 left-4 z-10 rounded-md bg-fundo/80 px-3 py-1 text-[0.65rem]">
                         {carro.publico ? "Público" : "Privado"}
                       </span>
                     </div>

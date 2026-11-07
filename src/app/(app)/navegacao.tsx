@@ -62,7 +62,7 @@ export function NavegacaoTopo({ caminho = "" }: { caminho?: string }) {
             <Link
               href={item.href}
               aria-current={ativo(caminho, item.href) ? "page" : undefined}
-              className="inline-flex min-h-11 items-center rounded-full px-4 text-sm text-texto-secundario hover:text-texto aria-[current=page]:bg-superficie-2 aria-[current=page]:text-texto"
+              className="inline-flex min-h-11 items-center rounded-md px-4 text-sm text-texto-secundario hover:text-texto aria-[current=page]:bg-superficie-2 aria-[current=page]:text-texto"
             >
               {item.rotulo}
             </Link>

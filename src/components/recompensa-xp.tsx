@@ -97,10 +97,10 @@ export function RecompensaXp({
         aria-valuenow={progresso.porcento}
         aria-valuemin={0}
         aria-valuemax={100}
-        className="mt-4 h-2 overflow-hidden rounded-full bg-borda"
+        className="mt-4 h-2 overflow-hidden rounded-md bg-borda"
       >
         <div
-          className="h-full rounded-full bg-destaque motion-safe:animate-encher"
+          className="h-full rounded-md bg-destaque motion-safe:animate-encher"
           style={
             {
               width: `${progresso.porcento}%`,

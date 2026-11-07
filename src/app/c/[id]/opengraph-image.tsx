@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { DESENHO_LOGO } from "@/components/logo";
 import { nomeDoCarro } from "@/lib/carros";
 import { fontesOg } from "@/lib/og/fontes";
 import { fotoParaImagem } from "@/lib/og/foto";
@@ -8,7 +9,7 @@ import { carroPublico } from "@/lib/publico";
 // Imagem de prévia quando o link do carro é compartilhado (WhatsApp,
 // Instagram, X...). Só usa dados públicos: carro público e a capa.
 
-export const alt = "Carro no Garagem RPG";
+export const alt = "Carro no LifeInGears";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -21,7 +22,7 @@ export default async function Imagem({
   const dados = await carroPublico(id);
   const fontes = await fontesOg();
 
-  const nome = dados ? nomeDoCarro(dados.carro) : "Garagem RPG";
+  const nome = dados ? nomeDoCarro(dados.carro) : "LifeInGears";
   const detalhe = dados
     ? [dados.carro.marca, dados.carro.modelo, dados.carro.ano]
         .filter(Boolean)
@@ -39,7 +40,7 @@ export default async function Imagem({
         display: "flex",
         background: PALETA.fundo,
         color: PALETA.texto,
-        fontFamily: "Geist",
+        fontFamily: "Chakra Petch",
       }}
     >
       <div
@@ -61,15 +62,7 @@ export default async function Imagem({
             letterSpacing: 6,
           }}
         >
-          <div
-            style={{
-              width: 16,
-              height: 16,
-              background: PALETA.destaque,
-              transform: "rotate(45deg)",
-            }}
-          />
-          GARAGEM RPG
+          <Logo desenho={DESENHO_LOGO.horizontal} largura={240} />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div
@@ -85,7 +78,7 @@ export default async function Imagem({
           </div>
           <div
             style={{
-              fontFamily: "Instrument Serif",
+              fontFamily: "Pixelify Sans",
               fontSize: 104,
               lineHeight: 1,
             }}
@@ -105,7 +98,7 @@ export default async function Imagem({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: `radial-gradient(ellipse at 50% 100%, ${comAlfa(PALETA.destaque, 0.35)}, ${PALETA.fundo} 70%)`,
+          background: comAlfa(PALETA.destaque, 0.1),
         }}
       >
         {capa ? (
@@ -118,18 +111,29 @@ export default async function Imagem({
             style={{ width: 640, height: 630, objectFit: "cover" }}
           />
         ) : (
-          <div
-            style={{
-              fontFamily: "Instrument Serif",
-              fontSize: 64,
-              color: PALETA.destaque,
-            }}
-          >
-            ◆
-          </div>
+          <Logo desenho={DESENHO_LOGO.empilhado} largura={360} />
         )}
       </div>
     </div>,
     { ...size, fonts: fontes },
+  );
+}
+
+/** Logo em SVG dentro da imagem gerada (o satori desenha <svg> direto). */
+function Logo({
+  desenho,
+  largura,
+}: {
+  desenho: { w: number; h: number; d: string };
+  largura: number;
+}) {
+  return (
+    <svg
+      width={largura}
+      height={Math.round((largura * desenho.h) / desenho.w)}
+      viewBox={`0 0 ${desenho.w} ${desenho.h}`}
+    >
+      <path d={desenho.d} fill={PALETA.destaque} />
+    </svg>
   );
 }

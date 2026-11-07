@@ -5,7 +5,7 @@ import { exigirPerfil } from "@/lib/sessao";
 import { salvarEncontro } from "../acoes";
 import { FormularioEncontro } from "../formulario-encontro";
 
-export const metadata: Metadata = { title: "Criar encontro · Garagem RPG" };
+export const metadata: Metadata = { title: "Criar encontro · LifeInGears" };
 
 export default function PaginaNovoEncontro() {
   return (

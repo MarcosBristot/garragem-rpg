@@ -23,7 +23,7 @@ export async function AcoesPerfil({ perfilId }: { perfilId: string }) {
     return (
       <Link
         href="/conta/configuracoes"
-        className="inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+        className="inline-flex min-h-11 items-center rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
       >
         Editar perfil
       </Link>

@@ -7,7 +7,7 @@ import { exigirPerfil } from "@/lib/sessao";
 import { FormularioAceite } from "./formulario-aceite";
 
 export const metadata: Metadata = {
-  title: "Termos atualizados · Garagem RPG",
+  title: "Termos atualizados · LifeInGears",
   robots: { index: false },
 };
 

@@ -14,7 +14,7 @@ import { enviarFotoPerfil, removerFotoPerfil } from "../foto-acoes";
 import { ExcluirConta } from "../excluir-conta";
 
 export const metadata: Metadata = {
-  title: "Configurações · Garagem RPG",
+  title: "Configurações · LifeInGears",
 };
 
 export default function PaginaConfiguracoes() {
@@ -126,7 +126,7 @@ async function Conteudo() {
           </p>
           <Link
             href="/conta/personagem"
-            className="inline-flex min-h-11 items-center self-start rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+            className="inline-flex min-h-11 items-center self-start rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
           >
             Editar personagem
           </Link>
@@ -188,7 +188,7 @@ async function Conteudo() {
         <a
           href="/conta/dados"
           download
-          className="inline-flex min-h-11 items-center self-start rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+          className="inline-flex min-h-11 items-center self-start rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
         >
           Baixar meus dados
         </a>

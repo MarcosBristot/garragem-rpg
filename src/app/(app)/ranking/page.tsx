@@ -7,7 +7,7 @@ import { lerFiltros, rotuloPosicao, type Onde } from "@/dominio/ranking";
 import { nomeDoCarro } from "@/lib/carros";
 import { exigirPerfil } from "@/lib/sessao";
 
-export const metadata: Metadata = { title: "Ranking · Garagem RPG" };
+export const metadata: Metadata = { title: "Ranking · LifeInGears" };
 
 // Liga = classe do carro; pontuação = XP ganho no mês (zera todo dia 1º).
 // Quem entra, quem vê e os bloqueios são decididos no banco
@@ -19,7 +19,7 @@ const ONDE: Record<Onde, string> = {
 };
 
 const estiloBotao =
-  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-lg border-2 border-texto bg-destaque sombra-botao px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaRanking({ searchParams }: PageProps<"/ranking">) {
   return (

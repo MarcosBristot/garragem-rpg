@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { TIPOS } from "@/dominio/registro";
+import { DESENHO_LOGO } from "@/components/logo";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
 import { fontesOg } from "@/lib/og/fontes";
@@ -39,7 +40,7 @@ export async function GET(
         flexDirection: "column",
         background: PALETA.fundo,
         color: PALETA.texto,
-        fontFamily: "Geist",
+        fontFamily: "Chakra Petch",
       }}
     >
       <div
@@ -53,15 +54,7 @@ export async function GET(
           letterSpacing: 8,
         }}
       >
-        <div
-          style={{
-            width: 22,
-            height: 22,
-            background: PALETA.destaque,
-            transform: "rotate(45deg)",
-          }}
-        />
-        GARAGEM RPG
+        <Logo desenho={DESENHO_LOGO.horizontal} largura={360} />
       </div>
 
       <div
@@ -71,14 +64,14 @@ export async function GET(
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: `radial-gradient(ellipse at 50% 100%, ${comAlfa(PALETA.destaque, 0.35)}, ${PALETA.fundo} 70%)`,
+          background: comAlfa(PALETA.destaque, 0.1),
         }}
       >
         {capa ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={capa} alt="" width={1080} height={1080} />
         ) : (
-          <div style={{ fontSize: 200, color: PALETA.destaque }}>◆</div>
+          <Logo desenho={DESENHO_LOGO.empilhado} largura={700} />
         )}
       </div>
 
@@ -103,7 +96,7 @@ export async function GET(
         </div>
         <div
           style={{
-            fontFamily: "Instrument Serif",
+            fontFamily: "Pixelify Sans",
             fontSize: 150,
             lineHeight: 1,
           }}
@@ -132,8 +125,27 @@ export async function GET(
   // privado, nenhum CDN pode continuar servindo o card.
   imagem.headers.set(
     "Content-Disposition",
-    `attachment; filename="garagem-rpg-${carro.id.slice(0, 8)}-stories.png"`,
+    `attachment; filename="lifeingears-${carro.id.slice(0, 8)}-stories.png"`,
   );
   imagem.headers.set("Cache-Control", "no-store");
   return imagem;
+}
+
+/** Logo em SVG dentro da imagem gerada (o satori desenha <svg> direto). */
+function Logo({
+  desenho,
+  largura,
+}: {
+  desenho: { w: number; h: number; d: string };
+  largura: number;
+}) {
+  return (
+    <svg
+      width={largura}
+      height={Math.round((largura * desenho.h) / desenho.w)}
+      viewBox={`0 0 ${desenho.w} ${desenho.h}`}
+    >
+      <path d={desenho.d} fill={PALETA.destaque} />
+    </svg>
+  );
 }

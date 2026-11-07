@@ -22,7 +22,7 @@ function Icone() {
 }
 
 const estilo =
-  "relative grid size-11 shrink-0 place-items-center rounded-full text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque";
+  "relative grid size-11 shrink-0 place-items-center rounded-md text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque";
 
 export function SinoSemNumero() {
   return (
@@ -51,7 +51,7 @@ export async function SinoNotificacoes() {
       {novas > 0 ? (
         <span
           aria-hidden="true"
-          className="absolute top-1 right-1 grid min-w-5 place-items-center rounded-full bg-destaque px-1 text-[0.65rem] leading-5 font-bold text-white"
+          className="absolute top-1 right-1 grid min-w-5 place-items-center rounded-md border-2 border-texto bg-destaque sombra-botao px-1 text-[0.65rem] leading-5 font-bold text-white"
         >
           {novas > 9 ? "9+" : novas}
         </span>

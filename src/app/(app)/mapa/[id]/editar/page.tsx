@@ -9,7 +9,7 @@ import { ehUuid } from "@/lib/uuid";
 import { apagarEncontro, salvarEncontro } from "../../acoes";
 import { FormularioEncontro } from "../../formulario-encontro";
 
-export const metadata: Metadata = { title: "Editar encontro · Garagem RPG" };
+export const metadata: Metadata = { title: "Editar encontro · LifeInGears" };
 
 export default function PaginaEditarEncontro({
   params,

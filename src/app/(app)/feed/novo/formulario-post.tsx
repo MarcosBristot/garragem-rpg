@@ -175,7 +175,7 @@ export function FormularioPost({ carros }: { carros: Record<string, string> }) {
             />
             <label
               htmlFor={`${id}-arquivos`}
-              className="inline-flex min-h-11 w-fit cursor-pointer items-center rounded-full border border-borda px-5 text-sm font-semibold peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-destaque hover:bg-borda/50"
+              className="inline-flex min-h-11 w-fit cursor-pointer items-center rounded-md border border-borda px-5 text-sm font-semibold peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-destaque hover:bg-borda/50"
             >
               {fotos.length === 0 ? "Escolher fotos" : "Adicionar mais fotos"}
             </label>

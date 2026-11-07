@@ -8,7 +8,7 @@ export function Rodape() {
       <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:justify-between">
         <div className="flex flex-col gap-1">
           <p className="font-semibold tracking-[0.25em] text-texto uppercase">
-            Garagem RPG
+            LifeInGears
           </p>
           <p>
             {EMPRESA.nome} · CNPJ {EMPRESA.cnpj}
@@ -17,7 +17,7 @@ export function Rodape() {
             {EMPRESA.cidade} · {EMPRESA.email}
           </p>
           {/* Ano fixo: ler a data aqui quebraria a página estática. */}
-          <p className="text-texto-apagado">© 2026 Garagem RPG</p>
+          <p className="text-texto-apagado">© 2026 LifeInGears</p>
         </div>
         <nav aria-label="Documentos legais">
           <ul className="grid grid-cols-2 gap-x-6">

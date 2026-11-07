@@ -93,10 +93,10 @@ export function PainelAtributos({
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuetext={valor === null ? "Sem dados ainda" : undefined}
-                className="h-1.5 overflow-hidden rounded-full bg-borda"
+                className="h-1.5 overflow-hidden rounded-md bg-borda"
               >
                 <div
-                  className={`h-full rounded-full ${chave === "condicao" ? "bg-condicao" : "bg-destaque"}`}
+                  className={`h-full rounded-md ${chave === "condicao" ? "bg-condicao" : "bg-destaque"}`}
                   style={{ width: `${valor ?? 0}%` }}
                 />
               </div>
@@ -108,7 +108,7 @@ export function PainelAtributos({
         })}
       </ul>
       <p className="text-xs text-texto-apagado">
-        Calculados pelo Garagem RPG a partir do diário. Valor gasto nunca conta.
+        Calculados pelo LifeInGears a partir do diário. Valor gasto nunca conta.
       </p>
     </section>
   );

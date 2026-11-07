@@ -24,11 +24,11 @@ export async function generateMetadata({
 }: PageProps<"/c/[id]">): Promise<Metadata> {
   const { id } = await params;
   const dados = await carroPublico(id);
-  if (!dados) return { title: "Página não encontrada · Garagem RPG" };
+  if (!dados) return { title: "Página não encontrada · LifeInGears" };
   const nome = nomeDoCarro(dados.carro);
-  const descricao = `${[dados.carro.marca, dados.carro.modelo, dados.carro.ano].filter(Boolean).join(" · ")} — garagem de @${dados.dono.nome_usuario} no Garagem RPG.`;
+  const descricao = `${[dados.carro.marca, dados.carro.modelo, dados.carro.ano].filter(Boolean).join(" · ")} — garagem de @${dados.dono.nome_usuario} no LifeInGears.`;
   return {
-    title: `${nome} · Garagem RPG`,
+    title: `${nome} · LifeInGears`,
     description: descricao,
     openGraph: { title: nome, description: descricao, type: "website" },
   };
@@ -99,7 +99,7 @@ async function Conteudo({ id }: { id: string }) {
           <a
             href={`/c/${carro.id}/card`}
             download
-            className="mt-4 inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+            className="mt-4 inline-flex min-h-11 items-center rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
           >
             Baixar card para stories
           </a>

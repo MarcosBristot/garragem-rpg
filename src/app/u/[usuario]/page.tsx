@@ -19,11 +19,11 @@ export async function generateMetadata({
 }: PageProps<"/u/[usuario]">): Promise<Metadata> {
   const { usuario } = await params;
   const dados = await perfilPublico(usuario);
-  if (!dados) return { title: "Página não encontrada · Garagem RPG" };
+  if (!dados) return { title: "Página não encontrada · LifeInGears" };
   const nome = dados.perfil.nome_exibicao ?? dados.perfil.nome_usuario;
   return {
-    title: `${nome} (@${dados.perfil.nome_usuario}) · Garagem RPG`,
-    description: `Garagem de ${nome} no Garagem RPG.`,
+    title: `${nome} (@${dados.perfil.nome_usuario}) · LifeInGears`,
+    description: `Garagem de ${nome} no LifeInGears.`,
   };
 }
 

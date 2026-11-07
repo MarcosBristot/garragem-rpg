@@ -27,10 +27,10 @@ export function PainelCondicao({ condicao }: { condicao: Condicao | null }) {
             aria-valuenow={condicao.valor}
             aria-valuemin={0}
             aria-valuemax={100}
-            className="h-2 overflow-hidden rounded-full bg-borda"
+            className="h-2 overflow-hidden rounded-md bg-borda"
           >
             <div
-              className="h-full rounded-full bg-condicao"
+              className="h-full rounded-md bg-condicao"
               style={{ width: `${condicao.valor}%` }}
             />
           </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Conta excluída · Garagem RPG",
+  title: "Conta excluída · LifeInGears",
   robots: { index: false },
 };
 
@@ -16,7 +16,7 @@ export default function PaginaContaExcluida() {
       <h1 className="text-5xl">Conta excluída</h1>
       <p className="max-w-md text-texto-secundario">
         Seu perfil, carros, registros, itens, notas e histórico foram apagados.
-        Obrigado por ter usado o Garagem RPG.
+        Obrigado por ter usado o LifeInGears.
       </p>
       <Link href="/" className="text-destaque underline">
         Voltar ao início

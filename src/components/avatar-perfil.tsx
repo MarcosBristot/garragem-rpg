@@ -24,7 +24,7 @@ export function AvatarPerfil({
         chave={perfil.foto}
         alt={rotulo ?? ""}
         sizes={tamanho}
-        className={`rounded-full bg-superficie-2 object-cover ${className}`}
+        className={`rounded-md bg-superficie-2 object-cover ${className}`}
       />
     );
   }
@@ -32,7 +32,7 @@ export function AvatarPerfil({
     <AvatarPersonagem
       personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
       rotulo={rotulo}
-      className={`rounded-full bg-superficie-2 ${className}`}
+      className={`rounded-md bg-superficie-2 ${className}`}
     />
   );
 }

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Cartao } from "@/components/formulario";
 import { FormularioEntrar } from "./formulario-entrar";
 
-export const metadata: Metadata = { title: "Entrar · Garagem RPG" };
+export const metadata: Metadata = { title: "Entrar · LifeInGears" };
 
 // Página estática: não lê a sessão, então carrega instantaneamente.
 export default function PaginaEntrar() {

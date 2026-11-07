@@ -1,17 +1,15 @@
 import Link from "next/link";
+import { LogoHorizontal } from "@/components/logo";
 
-// Marca própria (nome provisório). Nada de logotipos de terceiros.
+// Marca LifeInGears: o logo (traçado do original) na cor de destaque.
 export function Marca({ href = "/" }: { href?: string }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold tracking-[0.25em] uppercase"
+      aria-label="LifeInGears, página inicial"
+      className="inline-flex min-h-11 items-center text-destaque"
     >
-      <span
-        aria-hidden="true"
-        className="inline-block size-2.5 rotate-45 bg-destaque"
-      />
-      Garagem RPG
+      <LogoHorizontal className="h-5 w-auto sm:h-6" />
     </Link>
   );
 }

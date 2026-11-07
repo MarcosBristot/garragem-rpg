@@ -14,7 +14,7 @@ import {
 import { exigirPerfil } from "@/lib/sessao";
 import { deixarDeSeguir, seguir } from "../pessoas-acoes";
 
-export const metadata: Metadata = { title: "Pessoas · Garagem RPG" };
+export const metadata: Metadata = { title: "Pessoas · LifeInGears" };
 
 // Encontrar e seguir pessoas. Quem você segue só você vê; seguir alguém
 // faz os posts dela aparecerem na aba "Seguindo" do feed.

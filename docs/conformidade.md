@@ -29,7 +29,7 @@ Estado em 29/10/2026. Legenda: ✅ feito e testado · ⚠️ feito, com pendênc
 ## Riscos jurídicos (priorizados)
 
 1. **Operar sem CNPJ.** Políticas e rodapé precisam identificar o fornecedor (CDC e Decreto 7.962/2013). MEI costuma resolver para começar; confirme com um contador.
-2. **Nome "Garagem RPG".** Antes de investir na marca, pesquise no INPI (classes 9, 41 e 42) e registre se estiver livre.
+2. **Nome "LifeInGears".** Antes de investir na marca, pesquise no INPI (classes 9, 41 e 42) e registre se estiver livre.
 3. **Conteúdo de usuários (fase 3).** Pelo Marco Civil (art. 19), a plataforma responde se não remover conteúdo após ordem judicial; boas práticas pedem denúncia e bloqueio **antes** do feed (regra 5 do projeto).
 4. **Marcas de veículos.** Usar nomes de fabricantes para identificar o carro do usuário é uso nominativo, permitido. Não usar logotipos na interface nem em materiais de divulgação (regra 6).
 5. **Menores de idade.** O serviço é 18+. Dados de crianças e adolescentes exigem regras próprias (art. 14).

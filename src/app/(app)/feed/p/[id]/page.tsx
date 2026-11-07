@@ -11,7 +11,7 @@ import { ehUuid } from "@/lib/uuid";
 import { excluirComentario } from "../../acoes";
 import { FormularioComentario } from "./formulario-comentario";
 
-export const metadata: Metadata = { title: "Post · Garagem RPG" };
+export const metadata: Metadata = { title: "Post · LifeInGears" };
 
 export default function PaginaPost({ params }: PageProps<"/feed/p/[id]">) {
   return (

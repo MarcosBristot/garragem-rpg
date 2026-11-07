@@ -10,7 +10,7 @@ import { apagarCarro, salvarCarro } from "../../acoes";
 import { FormularioCarro } from "../../formulario-carro";
 import { enviarCapa, removerCapa } from "../fotos-acoes";
 
-export const metadata: Metadata = { title: "Editar carro · Garagem RPG" };
+export const metadata: Metadata = { title: "Editar carro · LifeInGears" };
 
 // O [id] da URL só é conhecido na requisição: com cacheComponents,
 // ele é lido dentro do <Suspense>, e o título fica na casca estática.

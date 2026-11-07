@@ -6,7 +6,7 @@ import { Marca } from "@/components/marca";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 
 export const metadata: Metadata = {
-  title: "Garagem RPG · O diário do seu carro vira ficha de RPG",
+  title: "LifeInGears · O diário do seu carro vira ficha de RPG",
   description:
     "Registre manutenções e modificações, acompanhe a história do carro e transforme o diário em uma ficha de RPG para compartilhar.",
 };
@@ -18,17 +18,16 @@ export const metadata: Metadata = {
 // - o que ainda não existe aparece marcado como "em breve" / "exemplo".
 
 const ctaPrimario =
-  "inline-flex min-h-12 items-center justify-center rounded-full bg-destaque px-7 text-sm font-semibold tracking-[0.15em] text-white uppercase shadow-lg shadow-destaque/25 hover:bg-destaque/90";
+  "inline-flex min-h-12 items-center justify-center rounded-md border-2 border-texto bg-destaque sombra-botao px-7 text-sm font-semibold tracking-[0.15em] text-white uppercase hover:bg-destaque/90 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none";
 const ctaSecundario =
-  "inline-flex min-h-12 items-center justify-center rounded-full border border-texto/20 bg-superficie/70 px-7 text-sm font-semibold tracking-[0.15em] uppercase backdrop-blur hover:bg-superficie";
-// Cartão claro e translúcido: o campo aparece por trás e o texto grafite
-// mantém o contraste (fundo quase branco).
+  "inline-flex min-h-12 items-center justify-center rounded-md border-2 border-texto bg-superficie px-7 text-sm font-semibold tracking-[0.15em] uppercase hover:bg-superficie-2";
+// Bloco sólido com contorno e sombra dura, como os pixels do logo.
 const painel =
-  "rounded-3xl border border-white/70 bg-superficie/85 p-6 shadow-xl shadow-texto/5 backdrop-blur-md sm:p-8";
+  "rounded-md border-2 border-texto bg-superficie p-6 sombra-pixel sm:p-8";
 
 function Selo({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rotulo inline-block rounded-full border border-destaque/40 bg-superficie px-3 py-1 text-[0.65rem] !text-destaque">
+    <span className="rotulo inline-block rounded-md border border-destaque/40 bg-superficie px-3 py-1 text-[0.65rem] !text-destaque">
       {children}
     </span>
   );
@@ -63,10 +62,10 @@ function Barra({
         aria-valuenow={valor}
         aria-valuemin={0}
         aria-valuemax={100}
-        className="h-1.5 overflow-hidden rounded-full bg-borda"
+        className="h-1.5 overflow-hidden rounded-md bg-borda"
       >
         <div
-          className={`h-full rounded-full ${cor}`}
+          className={`h-full rounded-md ${cor}`}
           style={{ width: `${valor}%` }}
         />
       </div>
@@ -79,7 +78,7 @@ export default function PaginaInicial() {
     <>
       <SequenciaCarro />
 
-      <header className="fixed inset-x-0 top-0 z-30 bg-gradient-to-b from-white/70 to-transparent">
+      <header className="fixed inset-x-0 top-0 z-30 border-b-2 border-texto bg-superficie">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-2">
           <Marca />
           <nav aria-label="Conta">
@@ -98,14 +97,14 @@ export default function PaginaInicial() {
             pé da tela (os quadros são renderizados com espaço para isso). */}
         <section className="flex min-h-svh flex-col items-center px-4 pt-24 pb-10 text-center sm:pt-28">
           <p className="rotulo">Diário · Ficha de RPG · Comunidade</p>
-          <h1 className="mt-4 text-5xl sm:text-7xl">
+          <h1 className="mt-4 text-4xl sm:text-6xl">
             Seu carro tem história.
             <br />
             <em className="text-destaque">Conte cada capítulo.</em>
           </h1>
           <div className="mt-auto flex flex-col items-center">
-            <p className="max-w-xl rounded-2xl bg-superficie/75 px-4 py-2 text-texto-secundario backdrop-blur-md">
-              Garagem RPG é a rede social de quem vive o próprio carro: um
+            <p className="max-w-xl rounded-md border-2 border-texto bg-superficie px-4 py-2 text-texto-secundario">
+              LifeInGears é a rede social de quem vive o próprio carro: um
               diário de manutenção e modificações que dá vida à ficha do seu
               carro.
             </p>
@@ -222,7 +221,7 @@ export default function PaginaInicial() {
               className="flex aspect-[9/16] w-44 -rotate-6 flex-col justify-between rounded-3xl border border-white/80 fundo-vitrine p-4 shadow-2xl shadow-destaque/20 sm:w-52"
             >
               <span className="text-[0.6rem] font-semibold tracking-[0.25em] uppercase">
-                ◆ Garagem RPG
+                ◆ LifeInGears
               </span>
               <SilhuetaCarro className="w-full text-texto-secundario" />
               <div>
@@ -283,7 +282,7 @@ export default function PaginaInicial() {
           <Revelar className="mx-auto grid w-full max-w-6xl gap-4 sm:grid-cols-2">
             <h2
               id="titulo-status"
-              className="w-fit rounded-2xl bg-superficie/85 px-4 py-2 text-5xl backdrop-blur-md sm:col-span-2"
+              className="w-fit rounded-md border-2 border-texto bg-superficie px-4 py-2 text-5xl sm:col-span-2"
             >
               O que já funciona, e o que vem aí
             </h2>

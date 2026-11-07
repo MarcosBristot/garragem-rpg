@@ -19,13 +19,21 @@
   --color-texto: #1c1a26;
   --color-texto-secundario: #4c485c;
   --color-texto-apagado: #625e74;
-  --color-destaque: #5b3fd0;
+  --color-destaque: #6d27da; /* roxo do logo */
   --color-condicao: #167a3d;
   --color-erro: #b42318;
   --color-ceu: #9dbbe0; /* só fundos, nunca texto */
 
-  --font-sans: var(--font-geist);
-  --font-titulo: var(--font-instrument-serif);
+  --font-sans: var(--font-chakra);
+  --font-titulo: var(--font-pixelify);
+
+  /* Cantos quase retos, como os pixels do logo. */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 5px;
+  --radius-2xl: 6px;
+  --radius-3xl: 8px;
 
   /* Recompensas (XP, nível): use sempre com motion-safe: quem pede menos
      movimento no sistema vê tudo parado. */
@@ -77,13 +85,18 @@ html {
     font-family: var(--font-sans), system-ui, sans-serif;
   }
 
-  /* Títulos de destaque em serifada; títulos menores ficam na Geist. */
+  /* Títulos em pixel (Pixelify Sans), como o logo. */
   h1,
   h2 {
-    font-family: var(--font-titulo), Georgia, serif;
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-family: var(--font-titulo), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0;
     line-height: 1.05;
+  }
+  /* Fonte de pixel não tem itálico de verdade: destaque é só pela cor. */
+  h1 em,
+  h2 em {
+    font-style: normal;
   }
 }
 
@@ -103,37 +116,44 @@ html {
 }
 
 /*
- * Fundos da identidade (céu de dia + flores). Ficam aqui, e não espalhados
- * em classes bg-[...], para mudar a paleta num lugar só.
+ * Fundos da identidade LifeInGears: padrão xadrez de pixels em tons do roxo
+ * do logo (nada de degradê suave). Ficam aqui, e não espalhados em classes
+ * bg-[...], para mudar a identidade num lugar só.
  */
-/* Faixa de topo (capa de perfil): céu claro em cima, flores embaixo. */
-@utility fundo-ceu {
-  background:
-    radial-gradient(
-      ellipse at 70% 120%,
-      color-mix(in srgb, var(--color-destaque) 28%, transparent),
-      transparent 55%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-ceu) 70%, white),
-      var(--color-superficie-2)
-    );
+/* Capa (perfil, garagem): xadrez de 24 px. */
+@utility fundo-capa {
+  background-color: color-mix(in srgb, var(--color-destaque) 10%, white);
+  background-image: conic-gradient(
+    color-mix(in srgb, var(--color-destaque) 17%, white) 25%,
+    transparent 0 50%,
+    color-mix(in srgb, var(--color-destaque) 17%, white) 0 75%,
+    transparent 0
+  );
+  background-size: 24px 24px;
 }
 
-/* Vitrine (carro sem foto, boneco): céu suave e um toque lavanda no chão. */
+/* Vitrine (carro sem foto, boneco): xadrez mais discreto e miúdo. */
 @utility fundo-vitrine {
-  background:
-    radial-gradient(
-      ellipse at 50% 110%,
-      color-mix(in srgb, var(--color-destaque) 18%, transparent),
-      transparent 55%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-ceu) 45%, white),
-      var(--color-superficie)
-    );
+  background-color: var(--color-superficie-2);
+  background-image: conic-gradient(
+    color-mix(in srgb, var(--color-destaque) 8%, var(--color-superficie-2)) 25%,
+    transparent 0 50%,
+    color-mix(in srgb, var(--color-destaque) 8%, var(--color-superficie-2)) 0
+      75%,
+    transparent 0
+  );
+  background-size: 16px 16px;
+}
+
+/* Sombra dura, deslocada, como um bloco de pixel (cartões e botões). */
+@utility sombra-pixel {
+  box-shadow: 4px 4px 0 0 var(--color-texto);
+}
+@utility sombra-pixel-roxa {
+  box-shadow: 4px 4px 0 0 var(--color-destaque);
+}
+@utility sombra-botao {
+  box-shadow: 3px 3px 0 0 var(--color-texto);
 }
 
 /* Quem pede menos movimento ao sistema não recebe animações. */

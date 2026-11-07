@@ -60,7 +60,7 @@ export function CartaoPost({
             <button
               type="submit"
               aria-label={`Seguir ${nome}`}
-              className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-semibold text-destaque hover:bg-destaque/10 focus-visible:outline-2 focus-visible:outline-destaque"
+              className="inline-flex min-h-11 items-center rounded-md px-3 text-sm font-semibold text-destaque hover:bg-destaque/10 focus-visible:outline-2 focus-visible:outline-destaque"
             >
               Seguir
             </button>
@@ -69,7 +69,7 @@ export function CartaoPost({
         <details className="relative">
           <summary
             aria-label="Mais opções do post"
-            className="grid size-11 cursor-pointer list-none place-items-center rounded-full text-xl text-texto-secundario hover:bg-superficie-2 focus-visible:outline-2 focus-visible:outline-destaque [&::-webkit-details-marker]:hidden"
+            className="grid size-11 cursor-pointer list-none place-items-center rounded-md text-xl text-texto-secundario hover:bg-superficie-2 focus-visible:outline-2 focus-visible:outline-destaque [&::-webkit-details-marker]:hidden"
           >
             ⋯
           </summary>
@@ -147,7 +147,7 @@ export function CartaoPost({
         />
         <Link
           href={`/feed/p/${post.id}#comentarios`}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque"
         >
           <svg
             viewBox="0 0 24 24"

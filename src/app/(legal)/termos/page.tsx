@@ -3,8 +3,8 @@ import Link from "next/link";
 import { EMPRESA, VIGENCIA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
-  title: "Termos de Serviço · Garagem RPG",
-  description: "Regras de uso do Garagem RPG.",
+  title: "Termos de Serviço · LifeInGears",
+  description: "Regras de uso do LifeInGears.",
 };
 
 export default function PaginaTermos() {
@@ -14,7 +14,7 @@ export default function PaginaTermos() {
       <h1 className="mt-2 mb-6 text-5xl text-texto">Termos de Serviço</h1>
 
       <p>
-        Estes termos regem o uso do Garagem RPG, oferecido por{" "}
+        Estes termos regem o uso do LifeInGears, oferecido por{" "}
         <strong>{EMPRESA.nome}</strong> (CNPJ {EMPRESA.cnpj}). Ao criar o
         perfil, você declara que leu e aceita estes termos e a{" "}
         <Link href="/privacidade">Política de Privacidade</Link>.
@@ -22,7 +22,7 @@ export default function PaginaTermos() {
 
       <h2>1. O serviço</h2>
       <p>
-        O Garagem RPG é um diário de manutenção e modificações de veículos, com
+        O LifeInGears é um diário de manutenção e modificações de veículos, com
         recursos sociais. Funções marcadas como “em breve” ainda não existem e
         podem mudar ou não ser lançadas.
       </p>
@@ -69,7 +69,7 @@ export default function PaginaTermos() {
 
       <h2>6. Propriedade intelectual</h2>
       <p>
-        A marca, o visual e o código do Garagem RPG são nossos. Nomes e marcas
+        A marca, o visual e o código do LifeInGears são nossos. Nomes e marcas
         de fabricantes de veículos pertencem aos seus titulares e aparecem
         apenas para identificar o carro do usuário.
       </p>
@@ -78,8 +78,9 @@ export default function PaginaTermos() {
       <p>
         Trabalhamos para manter o serviço no ar e os dados seguros, mas podem
         ocorrer interrupções. Recomendamos baixar seus dados de vez em quando,
-        na página <Link href="/conta/configuracoes">Configurações da conta</Link>. Nossa responsabilidade segue
-        o Código de Defesa do Consumidor.
+        na página{" "}
+        <Link href="/conta/configuracoes">Configurações da conta</Link>. Nossa
+        responsabilidade segue o Código de Defesa do Consumidor.
       </p>
 
       <h2>8. Encerramento</h2>

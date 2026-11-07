@@ -5,7 +5,7 @@ import { nomeDoCarro } from "@/lib/carros";
 import { exigirPerfil } from "@/lib/sessao";
 import { FormularioPost } from "./formulario-post";
 
-export const metadata: Metadata = { title: "Novo post · Garagem RPG" };
+export const metadata: Metadata = { title: "Novo post · LifeInGears" };
 
 export default function PaginaNovoPost() {
   return (
@@ -23,7 +23,7 @@ export default function PaginaNovoPost() {
       <div>
         <h1 className="text-5xl">Novo post</h1>
         <p className="text-texto-secundario">
-          Até 4 fotos de um carro seu. Quem tem conta no Garagem RPG vê.
+          Até 4 fotos de um carro seu. Quem tem conta no LifeInGears vê.
         </p>
       </div>
       <Suspense fallback={<p className="text-texto-secundario">Carregando…</p>}>

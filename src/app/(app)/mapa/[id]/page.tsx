@@ -15,10 +15,10 @@ import { exigirPerfil } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
 import { alternarPresenca } from "../acoes";
 
-export const metadata: Metadata = { title: "Encontro · Garagem RPG" };
+export const metadata: Metadata = { title: "Encontro · LifeInGears" };
 
 const estiloLink =
-  "inline-flex min-h-11 items-center justify-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaEncontro({
   params,

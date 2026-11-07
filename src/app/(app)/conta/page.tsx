@@ -7,7 +7,7 @@ import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { nomeDoCarro } from "@/lib/carros";
 import { exigirPerfil } from "@/lib/sessao";
 
-export const metadata: Metadata = { title: "Seu perfil · Garagem RPG" };
+export const metadata: Metadata = { title: "Seu perfil · LifeInGears" };
 
 // Seu perfil como os outros veem, mais os números que só você vê (quantos
 // te seguem). Editar fica em Configurações. aceiteOpcional: quem ainda não
@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "Seu perfil · Garagem RPG" };
 // excluir a conta).
 
 const botao =
-  "inline-flex min-h-11 items-center justify-center rounded-full px-5 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-md px-5 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaPerfil() {
   return (
@@ -39,7 +39,7 @@ function EsqueletoPerfil() {
       className="animate-pulse"
     >
       <div className="-mx-4 h-36 bg-superficie-2 sm:mx-0 sm:mt-6 sm:rounded-3xl" />
-      <div className="-mt-12 ml-2 size-28 rounded-full border-4 border-fundo bg-borda" />
+      <div className="-mt-12 ml-2 size-28 rounded-md border-4 border-fundo bg-borda" />
       <div className="mt-4 h-8 w-48 rounded bg-borda" />
     </div>
   );
@@ -111,7 +111,7 @@ async function Conteudo() {
       <section aria-labelledby="titulo-perfil">
         <div
           aria-hidden="true"
-          className="-mx-4 h-36 fundo-ceu sm:mx-0 sm:mt-6 sm:rounded-3xl"
+          className="-mx-4 h-36 fundo-capa sm:mx-0 sm:mt-6 sm:rounded-3xl"
         />
         <div className="-mt-14 flex flex-col gap-4 px-2 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-end gap-4">

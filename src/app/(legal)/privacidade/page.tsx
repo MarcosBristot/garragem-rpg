@@ -3,8 +3,8 @@ import Link from "next/link";
 import { EMPRESA, PROVEDORES, VIGENCIA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidade · Garagem RPG",
-  description: "Como o Garagem RPG trata seus dados pessoais, conforme a LGPD.",
+  title: "Política de Privacidade · LifeInGears",
+  description: "Como o LifeInGears trata seus dados pessoais, conforme a LGPD.",
 };
 
 // Escrita para descrever o que o sistema FAZ hoje. Mudou o tratamento de
@@ -17,7 +17,7 @@ export default function PaginaPrivacidade() {
 
       <p>
         Esta política explica, em linguagem simples, quais dados pessoais o
-        Garagem RPG trata, para quê e quais são os seus direitos, conforme a Lei
+        LifeInGears trata, para quê e quais são os seus direitos, conforme a Lei
         Geral de Proteção de Dados (Lei nº 13.709/2018, a LGPD).
       </p>
 
@@ -263,7 +263,7 @@ export default function PaginaPrivacidade() {
 
       <h2>9. Menores de idade</h2>
       <p>
-        O Garagem RPG é destinado a pessoas com 18 anos ou mais. Se soubermos
+        O LifeInGears é destinado a pessoas com 18 anos ou mais. Se soubermos
         que uma conta é de menor de idade, ela será excluída.
       </p>
 

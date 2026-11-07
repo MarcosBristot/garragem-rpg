@@ -5,7 +5,7 @@ import { exigirPerfil } from "@/lib/sessao";
 import { salvarCarro } from "../acoes";
 import { FormularioCarro } from "../formulario-carro";
 
-export const metadata: Metadata = { title: "Novo carro · Garagem RPG" };
+export const metadata: Metadata = { title: "Novo carro · LifeInGears" };
 
 export default function PaginaNovoCarro() {
   return (

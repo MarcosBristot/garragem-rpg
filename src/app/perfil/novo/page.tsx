@@ -5,7 +5,7 @@ import { Cartao } from "@/components/formulario";
 import { usuarioLogado } from "@/lib/sessao";
 import { FormularioPerfil } from "./formulario-perfil";
 
-export const metadata: Metadata = { title: "Criar perfil · Garagem RPG" };
+export const metadata: Metadata = { title: "Criar perfil · LifeInGears" };
 
 // Com Cache Components, o que lê cookies fica dentro de <Suspense>:
 // o título sai na hora (casca estática) e o resto chega por streaming.

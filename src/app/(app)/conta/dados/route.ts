@@ -92,7 +92,7 @@ export async function GET() {
   const arquivo = {
     exportado_em: new Date().toISOString(),
     aviso:
-      "Cópia dos seus dados no Garagem RPG. Contém notas e valores privados: guarde com cuidado.",
+      "Cópia dos seus dados no LifeInGears. Contém notas e valores privados: guarde com cuidado.",
     conta: { email: sessao?.claims.email ?? null },
     perfil: perfil.data,
     foto_perfil: fotoPerfil,
@@ -117,7 +117,7 @@ export async function GET() {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
       "Content-Disposition":
-        'attachment; filename="garagem-rpg-meus-dados.json"',
+        'attachment; filename="lifeingears-meus-dados.json"',
       // Dados pessoais: nunca em cache de CDN ou proxy.
       "Cache-Control": "private, no-store",
     },

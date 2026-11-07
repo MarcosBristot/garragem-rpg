@@ -5,7 +5,7 @@ import { CartaoPost } from "@/components/feed/cartao-post";
 import { carregarFeed, lerCursor, type Aba } from "@/lib/feed";
 import { exigirPerfil } from "@/lib/sessao";
 
-export const metadata: Metadata = { title: "Feed · Garagem RPG" };
+export const metadata: Metadata = { title: "Feed · LifeInGears" };
 
 const ABAS: Record<Aba, string> = {
   descobrir: "Descobrir",
@@ -13,7 +13,7 @@ const ABAS: Record<Aba, string> = {
 };
 
 const estiloPublicar =
-  "inline-flex min-h-11 items-center justify-center rounded-lg bg-destaque px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
+  "inline-flex min-h-11 items-center justify-center rounded-lg border-2 border-texto bg-destaque sombra-botao px-4 font-semibold text-white hover:bg-destaque/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque";
 
 export default function PaginaFeed({ searchParams }: PageProps<"/feed">) {
   return (
@@ -75,7 +75,7 @@ async function Conteudo({
               <Link
                 href={chave === "descobrir" ? "/feed" : "/feed?aba=seguindo"}
                 aria-current={chave === aba ? "page" : undefined}
-                className="inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm text-texto-secundario hover:text-texto aria-[current=page]:border-destaque aria-[current=page]:text-texto"
+                className="inline-flex min-h-11 items-center rounded-md border border-borda px-5 text-sm text-texto-secundario hover:text-texto aria-[current=page]:border-destaque aria-[current=page]:text-texto"
               >
                 {ABAS[chave]}
               </Link>
@@ -122,7 +122,7 @@ async function Conteudo({
             ...(aba === "seguindo" ? { aba } : {}),
             antes: proximo,
           })}`}
-          className="inline-flex min-h-11 items-center justify-center self-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
+          className="inline-flex min-h-11 items-center justify-center self-center rounded-md border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
         >
           Ver posts mais antigos
         </Link>
@@ -145,7 +145,7 @@ function EsqueletoFeed() {
           className="overflow-hidden rounded-3xl border border-borda bg-superficie motion-safe:animate-pulse"
         >
           <div className="flex items-center gap-3 p-4">
-            <div className="size-11 rounded-full bg-borda" />
+            <div className="size-11 rounded-md bg-borda" />
             <div className="flex flex-col gap-2">
               <div className="h-3 w-32 rounded bg-borda" />
               <div className="h-3 w-20 rounded bg-borda" />

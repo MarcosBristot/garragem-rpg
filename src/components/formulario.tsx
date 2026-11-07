@@ -235,8 +235,9 @@ export function CaixaMarcacao({
 }
 
 const ESTILOS_BOTAO = {
-  primario: "bg-destaque text-white hover:bg-destaque/90",
-  secundario: "border border-borda text-texto hover:bg-borda/50",
+  primario:
+    "border-2 border-texto bg-destaque text-white sombra-botao hover:bg-destaque/90 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none",
+  secundario: "border-2 border-texto text-texto hover:bg-borda/50",
   perigo: "border border-erro/50 text-erro hover:bg-erro/10",
 };
 
@@ -261,7 +262,7 @@ export function Cartao({ children }: { children: React.ReactNode }) {
       tabIndex={-1}
       className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10"
     >
-      <div className="rounded-xl border border-borda bg-superficie p-6">
+      <div className="rounded-xl border-2 border-texto bg-superficie p-6 sombra-pixel">
         {children}
       </div>
     </main>

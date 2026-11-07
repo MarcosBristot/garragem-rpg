@@ -30,7 +30,7 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 3. No painel, **Authentication → URL Configuration**:
    - Site URL: a URL da Vercel (passo 3), ex. `https://garagem-rpg-staging.vercel.app`
    - Redirect URLs: `https://garagem-rpg-staging.vercel.app/**`
-4. **Authentication → Emails → Templates**: nos modelos _Confirm signup_ e _Magic link_, cole o conteúdo de `supabase/templates/codigo.html` (o login é por código de 6 dígitos, `{{ .Token }}`). Assunto: "Seu código da Garagem RPG".
+4. **Authentication → Emails → Templates**: nos modelos _Confirm signup_ e _Magic link_, cole o conteúdo de `supabase/templates/codigo.html` (o login é por código de 6 dígitos, `{{ .Token }}`). Assunto: "Seu código do LifeInGears".
 5. **Storage → S3** (configurações do Storage): copie o _Endpoint_ e a _Region_ e crie uma _Access key_. A chave secreta aparece uma vez só: vai direto para a Vercel, nunca para o Git nem para o chat.
 6. **Project Settings → API Keys**: copie a URL do projeto e a _publishable key_ (a `secret`/`service_role` não é usada pelo app).
 
@@ -66,7 +66,7 @@ Trocar as fotos para o Cloudflare R2 depois = só mudar as variáveis
 1. Crie uma conta Gmail só do projeto (ex.: `garagemrpg.teste@gmail.com`). Não use o seu e-mail pessoal: ele apareceria como remetente.
 2. Nessa conta: **Gerenciar conta → Segurança → Verificação em duas etapas** (ligar) e depois **Senhas de app** → crie uma chamada "Supabase". Copie a senha de 16 letras direto para o passo 3 (nunca para o Git nem para o chat).
 3. No Supabase, **Authentication → Emails → SMTP Settings** (onde hoje está o Resend), troque:
-   - Sender email: o Gmail do projeto · Sender name: `Garagem RPG`
+   - Sender email: o Gmail do projeto · Sender name: `LifeInGears`
    - Host: `smtp.gmail.com` · Port: `465` · Username: o Gmail do projeto · Password: a senha de app
 4. **Authentication → Rate Limits**: "Rate limit for sending emails" para `30` por hora (o Gmail aceita ~500 por dia).
 5. Teste: peça o código com um e-mail que não seja o seu. Se não chegar, olhe a caixa de spam e **Authentication → Logs**.

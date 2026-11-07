@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { EMPRESA, VIGENCIA } from "@/lib/empresa";
 
 export const metadata: Metadata = {
-  title: "Política de Reembolso · Garagem RPG",
-  description: "Cancelamento e reembolso de planos pagos do Garagem RPG.",
+  title: "Política de Reembolso · LifeInGears",
+  description: "Cancelamento e reembolso de planos pagos do LifeInGears.",
 };
 
 export default function PaginaReembolso() {
@@ -13,7 +13,7 @@ export default function PaginaReembolso() {
       <h1 className="mt-2 mb-6 text-5xl text-texto">Política de Reembolso</h1>
 
       <p>
-        <strong>Hoje o Garagem RPG não cobra nada</strong>, então não há o que
+        <strong>Hoje o LifeInGears não cobra nada</strong>, então não há o que
         reembolsar. Esta política já deixa claro como será quando existirem
         planos pagos.
       </p>

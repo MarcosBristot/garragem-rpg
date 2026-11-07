@@ -7,7 +7,7 @@ import { enviarDenuncia } from "./acoes";
 import { FormularioDenuncia } from "./formulario-denuncia";
 
 export const metadata: Metadata = {
-  title: "Denunciar · Garagem RPG",
+  title: "Denunciar · LifeInGears",
   robots: { index: false },
 };
 

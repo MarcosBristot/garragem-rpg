@@ -72,7 +72,7 @@ export function EditorPersonagem({
                     key={valor}
                     htmlFor={id}
                     title={opcao.rotulo}
-                    className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-borda-campo px-3 text-sm has-checked:border-destaque has-checked:bg-destaque/10 has-focus-visible:ring-2 has-focus-visible:ring-destaque ${cor ? "min-w-11 justify-center px-2" : ""}`}
+                    className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-md border border-borda-campo px-3 text-sm has-checked:border-destaque has-checked:bg-destaque/10 has-focus-visible:ring-2 has-focus-visible:ring-destaque ${cor ? "min-w-11 justify-center px-2" : ""}`}
                   >
                     <input
                       id={id}
@@ -89,7 +89,7 @@ export function EditorPersonagem({
                       <>
                         <span
                           aria-hidden="true"
-                          className="size-6 rounded-full border border-texto/25"
+                          className="size-6 rounded-md border border-texto/25"
                           style={{ backgroundColor: cor }}
                         />
                         <span className="sr-only">{opcao.rotulo}</span>
