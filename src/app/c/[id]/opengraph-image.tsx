@@ -40,7 +40,7 @@ export default async function Imagem({
         display: "flex",
         background: PALETA.fundo,
         color: PALETA.texto,
-        fontFamily: "Chakra Petch",
+        fontFamily: "Barlow",
       }}
     >
       <div
@@ -78,7 +78,7 @@ export default async function Imagem({
           </div>
           <div
             style={{
-              fontFamily: "Pixelify Sans",
+              fontFamily: "Barlow Semi Condensed",
               fontSize: 104,
               lineHeight: 1,
             }}

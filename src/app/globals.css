@@ -24,8 +24,8 @@
   --color-erro: #b42318;
   --color-ceu: #9dbbe0; /* só fundos, nunca texto */
 
-  --font-sans: var(--font-chakra);
-  --font-titulo: var(--font-pixelify);
+  --font-sans: var(--font-barlow);
+  --font-titulo: var(--font-barlow-condensada);
 
   /* Cantos quase retos, como os pixels do logo. */
   --radius-sm: 2px;
@@ -85,15 +85,15 @@ html {
     font-family: var(--font-sans), system-ui, sans-serif;
   }
 
-  /* Títulos em pixel (Pixelify Sans), como o logo. */
+  /* Títulos em Barlow Semi Condensed, fortes e fáceis de ler. */
   h1,
   h2 {
     font-family: var(--font-titulo), system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     line-height: 1.05;
   }
-  /* Fonte de pixel não tem itálico de verdade: destaque é só pela cor. */
+  /* Destaque em título é só pela cor (sem itálico). */
   h1 em,
   h2 em {
     font-style: normal;

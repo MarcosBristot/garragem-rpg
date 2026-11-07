@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 // Fontes para imagens geradas (Open Graph e card de stories). O gerador
 // (satori) não lê WOFF2, só TTF/OTF/WOFF; os pacotes @fontsource trazem
-// WOFF. Mesmas fontes do site (Pixelify Sans e Chakra Petch), licença OFL.
+// WOFF. Mesmas fontes do site (Barlow e Barlow Semi Condensed), licença OFL.
 const pasta = (pacote: string) =>
   join(process.cwd(), "node_modules", "@fontsource", pacote, "files");
 
@@ -15,14 +15,22 @@ let carregadas: Promise<
 export function fontesOg() {
   carregadas ??= Promise.all([
     readFile(
-      join(pasta("pixelify-sans"), "pixelify-sans-latin-600-normal.woff"),
+      join(
+        pasta("barlow-semi-condensed"),
+        "barlow-semi-condensed-latin-700-normal.woff",
+      ),
     ),
-    readFile(join(pasta("chakra-petch"), "chakra-petch-latin-400-normal.woff")),
-    readFile(join(pasta("chakra-petch"), "chakra-petch-latin-600-normal.woff")),
-  ]).then(([pixel, texto, textoForte]) => [
-    { name: "Pixelify Sans", data: pixel, weight: 600, style: "normal" },
-    { name: "Chakra Petch", data: texto, weight: 400, style: "normal" },
-    { name: "Chakra Petch", data: textoForte, weight: 600, style: "normal" },
+    readFile(join(pasta("barlow"), "barlow-latin-400-normal.woff")),
+    readFile(join(pasta("barlow"), "barlow-latin-600-normal.woff")),
+  ]).then(([titulo, texto, textoForte]) => [
+    {
+      name: "Barlow Semi Condensed",
+      data: titulo,
+      weight: 600,
+      style: "normal",
+    },
+    { name: "Barlow", data: texto, weight: 400, style: "normal" },
+    { name: "Barlow", data: textoForte, weight: 600, style: "normal" },
   ]);
   return carregadas;
 }

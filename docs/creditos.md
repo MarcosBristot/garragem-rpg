@@ -18,8 +18,8 @@ Os quadros são renderizados no Blender (passo a passo em
 
 - Logo LifeInGears: enviado pelo dono do produto; traçado em SVG a partir das
   imagens originais (`src/components/logo.tsx`, `public/logo-*.svg`).
-- Fontes: [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) e
-  [Chakra Petch](https://fonts.google.com/specimen/Chakra+Petch), licença SIL
+- Fontes: [Barlow](https://fonts.google.com/specimen/Barlow) e
+  [Barlow Semi Condensed](https://fonts.google.com/specimen/Barlow+Semi+Condensed), licença SIL
   Open Font License (OFL), servidas pelo próprio site (next/font e
   @fontsource).
 

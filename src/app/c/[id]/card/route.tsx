@@ -40,7 +40,7 @@ export async function GET(
         flexDirection: "column",
         background: PALETA.fundo,
         color: PALETA.texto,
-        fontFamily: "Chakra Petch",
+        fontFamily: "Barlow",
       }}
     >
       <div
@@ -96,7 +96,7 @@ export async function GET(
         </div>
         <div
           style={{
-            fontFamily: "Pixelify Sans",
+            fontFamily: "Barlow Semi Condensed",
             fontSize: 150,
             lineHeight: 1,
           }}
