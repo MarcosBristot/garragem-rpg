@@ -14,6 +14,14 @@ O que é de terceiros entra no site **só como imagem renderizada** (o arquivo
 Os quadros são renderizados no Blender (passo a passo em
 `ferramentas/landing/README.md`).
 
+## Mapa
+
+O mapa de encontros usa [MapLibre GL JS](https://maplibre.org) (licença BSD-3;
+cópia do worker em `public/mapa/` com o cabeçalho da licença) e as imagens do
+[OpenFreeMap](https://openfreemap.org) (estilo Positron, © OpenMapTiles),
+com dados do [OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL).
+A atribuição aparece no canto do mapa.
+
 ## Por que só imagem
 
 A licença Royalty Free do CGTrader permite o uso enquanto o modelo estiver

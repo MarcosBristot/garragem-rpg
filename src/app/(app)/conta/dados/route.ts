@@ -28,6 +28,8 @@ export async function GET() {
     bloqueios,
     curtidas,
     comentarios,
+    encontros,
+    presencas,
   ] = await Promise.all([
     supabase.from("perfis").select("*").eq("id", usuarioId).maybeSingle(),
     supabase.from("carros").select("*").eq("dono_id", usuarioId),
@@ -41,6 +43,8 @@ export async function GET() {
     supabase.from("bloqueios").select("*").eq("bloqueador_id", usuarioId),
     supabase.from("curtidas").select("*").eq("perfil_id", usuarioId),
     supabase.from("comentarios").select("*").eq("autor_id", usuarioId),
+    supabase.from("encontros").select("*").eq("organizador_id", usuarioId),
+    supabase.from("presencas").select("*").eq("perfil_id", usuarioId),
   ]);
   // Itens não têm dono_id: filtra pelos registros da pessoa (a RLS também
   // libera itens de registros públicos de outras pessoas).
@@ -83,12 +87,15 @@ export async function GET() {
     })),
   );
 
+  const fotoPerfil = perfil.data?.foto ? await comLink(perfil.data.foto) : null;
+
   const arquivo = {
     exportado_em: new Date().toISOString(),
     aviso:
       "Cópia dos seus dados no Garagem RPG. Contém notas e valores privados: guarde com cuidado.",
     conta: { email: sessao?.claims.email ?? null },
     perfil: perfil.data,
+    foto_perfil: fotoPerfil,
     carros: carros.data ?? [],
     registros: registros.data ?? [],
     itens_registro: itens.data ?? [],
@@ -102,6 +109,8 @@ export async function GET() {
     bloqueios: bloqueios.data ?? [],
     curtidas: curtidas.data ?? [],
     comentarios: comentarios.data ?? [],
+    encontros_organizados: encontros.data ?? [],
+    presencas_em_encontros: presencas.data ?? [],
   };
 
   return new Response(JSON.stringify(arquivo, null, 2), {

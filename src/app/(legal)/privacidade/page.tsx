@@ -82,6 +82,14 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>
+              Encontros que você cria (ponto público no mapa, dia e hora) e
+              presenças que você confirma
+            </td>
+            <td>Mostrar os encontros no mapa e contar quem vai</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
             <td>Curtidas e comentários que você faz</td>
             <td>Interagir com os posts e mostrar essas interações neles</td>
             <td>Execução de contrato (V)</td>
@@ -160,6 +168,13 @@ export default function PaginaPrivacidade() {
           você bloquear (ou que bloquearem você) não veem os posts de vocês.
         </li>
         <li>
+          Encontros que você cria (nome, tipo, dia, hora, ponto no mapa e
+          detalhes): só quem tem conta vê, e quem você bloquear não vê. De quem
+          confirma presença, só o número aparece. Escolha sempre um lugar
+          público: nunca mostramos nem guardamos onde o carro fica, e o site não
+          pede sua localização.
+        </li>
+        <li>
           Ranking do mês: carros públicos com classe aparecem para quem tem
           conta, com o nome de usuário, a cidade do perfil e o total de XP ganho
           no mês (inclusive de registros privados; só o número). Quem você
@@ -191,6 +206,7 @@ export default function PaginaPrivacidade() {
         <li>{PROVEDORES.infraestrutura}.</li>
         <li>{PROVEDORES.fotos}.</li>
         <li>{PROVEDORES.email}.</li>
+        <li>{PROVEDORES.mapa}.</li>
       </ul>
       <p>
         Se algum desses fornecedores guardar dados fora do Brasil, a
@@ -204,10 +220,10 @@ export default function PaginaPrivacidade() {
         Enquanto sua conta existir. Ao excluir a conta, apagamos na hora perfil,
         foto de perfil, personagem, carros, registros, itens, notas, fotos,
         posts, curtidas, comentários (inclusive em posts de outras pessoas),
-        quem você segue, bloqueios e histórico. Denúncias que você enviou ficam
-        para a moderação, mas sem identificar você. Cópias de segurança do
-        provedor de infraestrutura são sobrescritas em até [preencher: prazo de
-        retenção dos backups].
+        encontros e presenças, quem você segue, bloqueios e histórico. Denúncias
+        que você enviou ficam para a moderação, mas sem identificar você. Cópias
+        de segurança do provedor de infraestrutura são sobrescritas em até
+        [preencher: prazo de retenção dos backups].
       </p>
 
       <h2>6. Seus direitos</h2>

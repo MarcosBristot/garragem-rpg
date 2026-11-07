@@ -232,6 +232,60 @@ export type Database = {
           },
         ];
       };
+      encontros: {
+        Row: {
+          cidade: string | null;
+          criado_em: string;
+          descricao: string | null;
+          fim: string;
+          id: string;
+          inicio: string;
+          lat: number;
+          lng: number;
+          local_nome: string;
+          organizador_id: string;
+          tipo: string;
+          titulo: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          cidade?: string | null;
+          criado_em?: string;
+          descricao?: string | null;
+          fim: string;
+          id?: string;
+          inicio: string;
+          lat: number;
+          lng: number;
+          local_nome: string;
+          organizador_id?: string;
+          tipo: string;
+          titulo: string;
+        };
+        Update: {
+          cidade?: string | null;
+          criado_em?: string;
+          descricao?: string | null;
+          fim?: string;
+          id?: string;
+          inicio?: string;
+          lat?: number;
+          lng?: number;
+          local_nome?: string;
+          organizador_id?: string;
+          tipo?: string;
+          titulo?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "encontros_organizador_id_fkey";
+            columns: ["organizador_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       eventos_xp: {
         Row: {
           acao: Database["public"]["Enums"]["acao_xp"];
@@ -650,6 +704,40 @@ export type Database = {
           },
         ];
       };
+      presencas: {
+        Row: {
+          criado_em: string;
+          encontro_id: string;
+          perfil_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          criado_em?: string;
+          encontro_id: string;
+          perfil_id?: string;
+        };
+        Update: {
+          criado_em?: string;
+          encontro_id?: string;
+          perfil_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "presencas_encontro_id_fkey";
+            columns: ["encontro_id"];
+            isOneToOne: false;
+            referencedRelation: "encontros";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "presencas_perfil_id_fkey";
+            columns: ["perfil_id"];
+            isOneToOne: false;
+            referencedRelation: "perfis";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       registros: {
         Row: {
           atualizado_em: string;
@@ -856,10 +944,19 @@ export type Database = {
           xp_mes: number;
         }[];
       };
+      resumo_encontros: {
+        Args: { p_ids: string[] };
+        Returns: {
+          encontro_id: string;
+          eu_vou: boolean;
+          vao: number;
+        }[];
+      };
     };
     Enums: {
       acao_xp: "manutencao" | "modificacao" | "item" | "foto" | "ordem_servico";
-      alvo_denuncia: "carro" | "perfil" | "registro" | "post" | "comentario";
+      alvo_denuncia:
+        "carro" | "perfil" | "registro" | "post" | "comentario" | "encontro";
       espaco_equipamento:
         "motor" | "suspensao" | "rodas" | "freios" | "estetica" | "som";
       motivo_denuncia:
@@ -997,7 +1094,14 @@ export const Constants = {
   public: {
     Enums: {
       acao_xp: ["manutencao", "modificacao", "item", "foto", "ordem_servico"],
-      alvo_denuncia: ["carro", "perfil", "registro", "post", "comentario"],
+      alvo_denuncia: [
+        "carro",
+        "perfil",
+        "registro",
+        "post",
+        "comentario",
+        "encontro",
+      ],
       espaco_equipamento: [
         "motor",
         "suspensao",

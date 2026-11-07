@@ -9,7 +9,7 @@ const ICONES = {
   feed: "M4 5h16v14H4zM4 15l4.5-4.5 4 4 3-3L20 16",
   ranking:
     "M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4",
-  adicionar: "M12 5v14M5 12h14",
+  mapa: "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
   conta: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4.4 3.6-7 8-7s8 2.6 8 7",
 };
 
@@ -17,18 +17,12 @@ const ITENS = [
   { href: "/feed", rotulo: "Feed", icone: ICONES.feed },
   { href: "/garagem", rotulo: "Garagem", icone: ICONES.garagem },
   { href: "/ranking", rotulo: "Ranking", icone: ICONES.ranking },
-  {
-    href: "/garagem/carros/novo",
-    rotulo: "Novo carro",
-    icone: ICONES.adicionar,
-  },
+  { href: "/mapa", rotulo: "Mapa", icone: ICONES.mapa },
   { href: "/conta", rotulo: "Perfil", icone: ICONES.conta },
 ];
 
 function ativo(caminho: string, href: string) {
-  return href === "/garagem"
-    ? caminho === "/garagem" || /^\/garagem\/carros\/(?!novo)/.test(caminho)
-    : caminho.startsWith(href);
+  return caminho.startsWith(href);
 }
 
 function Icone({ d }: { d: string }) {

@@ -13,11 +13,12 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-11-07.2";
+export const VERSAO_TERMOS = "2026-11-07.3";
 export const VIGENCIA = "07/11/2026";
 
 /** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
 export const MUDANCAS_TERMOS = [
+  "Mapa de encontros: você pode criar encontros (nome, tipo, dia, hora e um ponto público no mapa) e confirmar presença. Só quem tem conta vê os encontros; de quem vai, só o número aparece. As imagens do mapa vêm do OpenFreeMap, que recebe o endereço IP de quem abre o mapa (sem cookies). O site nunca pede sua localização.",
   "Notificações: quem curte ou comenta seu post e quem começa a seguir você aparece nas suas notificações (com nome e foto de perfil). Do mesmo jeito, quando você curte, comenta ou segue alguém, essa pessoa fica sabendo. Bloqueios valem também aqui.",
   "Foto de perfil: você pode pôr uma foto (opcional). Ela fica pública como o resto do perfil e aparece nos seus posts e comentários. A localização (GPS) e outros dados escondidos são removidos antes de salvar.",
   "Ranking do mês: carros públicos com classe (hatch, sedã, SUV…) aparecem num ranking para quem tem conta, com seu nome de usuário, sua cidade e o XP ganho no mês. O XP conta registros privados, mas só o total aparece.",
@@ -35,6 +36,7 @@ export const PROVEDORES = {
     "Supabase (banco de dados, autenticação e armazenamento) — região de hospedagem: [preencher]",
   fotos:
     "Cloudflare R2 (armazenamento das fotos) — jurisdição dos dados: [preencher]",
+  mapa: "OpenFreeMap (imagens do mapa, com dados do OpenStreetMap): recebe o endereço IP de quem abre o mapa, sem cookies",
   email:
     "Google (Gmail), para enviar o e-mail com o código de acesso — servidores fora do Brasil",
 };
