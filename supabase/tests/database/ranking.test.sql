@@ -1,8 +1,10 @@
 -- Ranking mensal: liga = classe; XP só do mês; só carros públicos; cidade
 -- comparada sem acento e sem UF; bloqueios somem; só para quem tem conta.
+-- O banco local pode ter outros carros: as consultas filtram pelos dados
+-- deste teste (ids cb10…, cidade fictícia "Vila Fictícia").
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(11);
+select plan(12);
 
 insert into auth.users (id, email) values
   ('b1000000-0000-0000-0000-00000000000a', 'ana@exemplo.test'),
@@ -10,10 +12,10 @@ insert into auth.users (id, email) values
   ('b1000000-0000-0000-0000-00000000000c', 'caio@exemplo.test'),
   ('b1000000-0000-0000-0000-00000000000d', 'duda@exemplo.test');
 insert into public.perfis (id, nome_usuario, cidade, termos_aceitos_em, versao_termos) values
-  ('b1000000-0000-0000-0000-00000000000a', 'ana_rank', 'São Paulo', now(), 'v1'),
-  ('b1000000-0000-0000-0000-00000000000b', 'beto_rank', 'sao paulo - SP', now(), 'v1'),
-  ('b1000000-0000-0000-0000-00000000000c', 'caio_rank', 'Rio de Janeiro', now(), 'v1'),
-  ('b1000000-0000-0000-0000-00000000000d', 'duda_rank', 'São Paulo', now(), 'v1');
+  ('b1000000-0000-0000-0000-00000000000a', 'ana_rank', 'Vila Fictícia', now(), 'v1'),
+  ('b1000000-0000-0000-0000-00000000000b', 'beto_rank', 'vila ficticia - XX', now(), 'v1'),
+  ('b1000000-0000-0000-0000-00000000000c', 'caio_rank', 'Vila Fictícia/XX', now(), 'v1'),
+  ('b1000000-0000-0000-0000-00000000000d', 'duda_rank', 'Vila Fictícia', now(), 'v1');
 insert into public.carros (id, dono_id, marca, modelo, publico, classe) values
   ('cb100000-0000-0000-0000-0000000000a1', 'b1000000-0000-0000-0000-00000000000a', 'Marca', 'Hatch da Ana', true, 'hatch'),
   ('cb100000-0000-0000-0000-0000000000a2', 'b1000000-0000-0000-0000-00000000000a', 'Marca', 'Sedã da Ana', true, 'seda'),
@@ -56,12 +58,13 @@ select is(private.chave_cidade('  São   Paulo/SP '), 'sao paulo', 'cidade: sem 
 set local role authenticated;
 select set_config('request.jwt.claims', '{"sub":"b1000000-0000-0000-0000-00000000000a","role":"authenticated"}', true);
 select results_eq(
-  $$select modelo from public.ranking_mensal('hatch') order by posicao, modelo$$,
+  $$select modelo from public.ranking_mensal('hatch')
+     where carro_id::text like 'cb100000%' order by posicao, modelo$$,
   array['Hatch da Ana', 'Hatch do Caio', 'Hatch do Beto'],
   'liga hatch no Brasil: só carros públicos com XP no mês'
 );
 select results_eq(
-  $$select posicao from public.ranking_mensal('hatch') order by posicao, modelo$$,
+  $$select posicao from public.ranking_mensal('hatch', 'Vila Fictícia') order by posicao, modelo$$,
   array[1, 1, 3],
   'empate divide a posição (60 e 60), o próximo é o 3º'
 );
@@ -74,17 +77,21 @@ select is(
   0::bigint, 'carro privado não entra'
 );
 select results_eq(
-  $$select modelo from public.ranking_mensal('hatch', 'Sao Paulo/SP') order by modelo$$,
-  array['Hatch da Ana', 'Hatch do Beto'],
-  'cidade: "São Paulo" e "sao paulo - SP" são a mesma'
+  $$select modelo from public.ranking_mensal('hatch', 'VILA FICTICIA - XX') order by modelo$$,
+  array['Hatch da Ana', 'Hatch do Beto', 'Hatch do Caio'],
+  'cidade: acento, maiúsculas e UF no fim não importam'
+);
+select is(
+  (select count(*) from public.ranking_mensal('hatch', 'Outra Vila Fictícia')),
+  0::bigint, 'outra cidade: ninguém do teste'
 );
 select results_eq(
-  $$select modelo from public.ranking_mensal('seda')$$,
+  $$select modelo from public.ranking_mensal('seda') where carro_id::text like 'cb100000%'$$,
   array['Sedã da Ana'],
   'cada classe é uma liga'
 );
 select is(
-  (select count(*) from public.ranking_mensal('esportivo')), 0::bigint,
+  (select count(*) from public.ranking_mensal('esportivo') where carro_id::text like 'cb100000%'), 0::bigint,
   'liga sem carros: lista vazia'
 );
 reset role;
