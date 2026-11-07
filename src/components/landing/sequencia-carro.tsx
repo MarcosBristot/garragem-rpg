@@ -5,8 +5,8 @@ import { useMenosMovimento } from "@/lib/use-menos-movimento";
 import {
   caminhoQuadro,
   cobrir,
-  quadroDaRolagem,
-  quadrosParaBaixar,
+  misturaDaRolagem,
+  ordemDeCarga,
   TOTAL_QUADROS,
 } from "./sequencia";
 
@@ -15,8 +15,13 @@ import {
 // O 1º quadro vem como <picture> (rápido e funciona sem JavaScript); os
 // demais chegam depois e entram num <canvas>. Quem pede menos movimento
 // fica só com o 1º quadro.
+//
+// Fluidez: entre dois quadros, o segundo é desenhado por cima com
+// transparência proporcional (a volta fica contínua em vez de "pular"), e
+// os quadros baixam do grosso para o fino (a volta inteira cobre cedo).
 
 const PARALELOS = 4; // downloads ao mesmo tempo
+const SUAVIDADE = 0.2; // quanto o carro "alcança" a rolagem por quadro de tela
 
 export function SequenciaCarro() {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -34,11 +39,11 @@ export function SequenciaCarro() {
     ).connection;
     // Celular baixa metade dos quadros; com economia de dados, um terço.
     const passo = conexao?.saveData ? 3 : retrato ? 2 : 1;
-    const fila = quadrosParaBaixar(TOTAL_QUADROS, passo);
+    const fila = ordemDeCarga(TOTAL_QUADROS, passo);
     const prontas = new Map<number, HTMLImageElement>();
     let cancelado = false;
-    let ultimo = -1;
     let atual = 0;
+    let desenhado = "";
     let quadroPedido = 0;
 
     function baixarProximo() {
@@ -50,14 +55,15 @@ export function SequenciaCarro() {
       img
         .decode()
         .then(() => {
-          if (!cancelado) prontas.set(i, img);
+          if (cancelado) return;
+          prontas.set(i, img);
+          desenhado = ""; // um quadro novo pode mudar o que aparece
         })
         .catch(() => undefined)
         .finally(baixarProximo);
     }
-    // Os outros quadros só começam a baixar depois que a página carregou
-    // (a abertura fica com uma imagem só) ou na primeira rolagem, o que
-    // vier antes.
+    // Os outros quadros começam a baixar logo depois que a página carregou
+    // (a abertura fica com uma imagem só) ou na primeira rolagem.
     let comecou = false;
     function comecar() {
       if (comecou || cancelado) return;
@@ -66,46 +72,62 @@ export function SequenciaCarro() {
     }
     function quandoOcioso() {
       if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(comecar, { timeout: 2000 });
+        window.requestIdleCallback(comecar, { timeout: 500 });
       } else {
-        setTimeout(comecar, 300);
+        setTimeout(comecar, 200);
       }
     }
     if (document.readyState === "complete") quandoOcioso();
     else window.addEventListener("load", quandoOcioso, { once: true });
     window.addEventListener("scroll", comecar, { once: true, passive: true });
 
-    function ajustarTamanho() {
+    // Medidas guardadas: ler scrollHeight a cada quadro forçaria o
+    // navegador a recalcular o layout (é isso que dá "engasgos").
+    let maxRolagem = 1;
+    function medir() {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       tela!.width = Math.round(window.innerWidth * dpr);
       tela!.height = Math.round(window.innerHeight * dpr);
-      ultimo = -1; // redesenha
+      maxRolagem = Math.max(
+        1,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+      desenhado = "";
     }
-    ajustarTamanho();
-    window.addEventListener("resize", ajustarTamanho);
+    medir();
+    window.addEventListener("resize", medir);
+    const observador = new ResizeObserver(medir);
+    observador.observe(document.body);
 
-    function progressoRolagem() {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      return max > 0 ? window.scrollY / max : 0;
+    function desenhar(img: HTMLImageElement, alfa: number) {
+      const r = cobrir(
+        img.naturalWidth,
+        img.naturalHeight,
+        tela!.width,
+        tela!.height,
+        retrato ? 0.55 : 0.5,
+      );
+      ctx!.globalAlpha = alfa;
+      ctx!.drawImage(img, r.x, r.y, r.l, r.a);
     }
 
     function quadro() {
       if (cancelado) return;
-      // Persegue a rolagem com suavidade (sem "pulos" de quadro).
-      atual += (progressoRolagem() - atual) * 0.18;
-      const i = quadroDaRolagem(atual, TOTAL_QUADROS, (k) => prontas.has(k));
-      if (i >= 0 && i !== ultimo) {
-        const img = prontas.get(i)!;
-        const r = cobrir(
-          img.naturalWidth,
-          img.naturalHeight,
-          tela!.width,
-          tela!.height,
-          retrato ? 0.55 : 0.5,
-        );
-        ctx!.drawImage(img, r.x, r.y, r.l, r.a);
-        ultimo = i;
-        tela!.dataset.pronto = "1"; // esconde o <picture> embaixo
+      const alvo = Math.min(1, Math.max(0, window.scrollY / maxRolagem));
+      atual += (alvo - atual) * SUAVIDADE;
+      if (Math.abs(alvo - atual) < 0.0002) atual = alvo;
+
+      const m = misturaDaRolagem(atual, TOTAL_QUADROS, (k) => prontas.has(k));
+      if (m) {
+        // Só redesenha quando muda algo visível (economiza bateria).
+        const chave = `${m.a}:${m.b}:${m.mistura.toFixed(3)}`;
+        if (chave !== desenhado) {
+          desenhar(prontas.get(m.a)!, 1);
+          if (m.mistura > 0.002) desenhar(prontas.get(m.b)!, m.mistura);
+          ctx!.globalAlpha = 1;
+          desenhado = chave;
+          tela!.dataset.pronto = "1"; // esconde o <picture> embaixo
+        }
       }
       quadroPedido = requestAnimationFrame(quadro);
     }
@@ -114,7 +136,8 @@ export function SequenciaCarro() {
     return () => {
       cancelado = true;
       cancelAnimationFrame(quadroPedido);
-      window.removeEventListener("resize", ajustarTamanho);
+      observador.disconnect();
+      window.removeEventListener("resize", medir);
       window.removeEventListener("load", quandoOcioso);
       window.removeEventListener("scroll", comecar);
     };

@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   caminhoQuadro,
   cobrir,
-  quadroDaRolagem,
+  misturaDaRolagem,
+  ordemDeCarga,
   quadrosParaBaixar,
 } from "./sequencia";
 
@@ -33,29 +34,6 @@ describe("quadrosParaBaixar", () => {
   });
 });
 
-describe("quadroDaRolagem", () => {
-  const todos = () => true;
-
-  it("vai do primeiro ao último conforme a rolagem", () => {
-    expect(quadroDaRolagem(0, 48, todos)).toBe(0);
-    expect(quadroDaRolagem(0.5, 48, todos)).toBe(24);
-    expect(quadroDaRolagem(1, 48, todos)).toBe(47);
-  });
-
-  it("trava fora de 0–1 e trata valores inválidos", () => {
-    expect(quadroDaRolagem(-2, 48, todos)).toBe(0);
-    expect(quadroDaRolagem(3, 48, todos)).toBe(47);
-    expect(quadroDaRolagem(Number.NaN, 48, todos)).toBe(0);
-  });
-
-  it("usa o quadro carregado mais próximo enquanto o ideal não chega", () => {
-    const so = (lista: number[]) => (i: number) => lista.includes(i);
-    expect(quadroDaRolagem(0.5, 48, so([0, 20, 47]))).toBe(20);
-    expect(quadroDaRolagem(0.5, 48, so([0, 30, 47]))).toBe(30);
-    expect(quadroDaRolagem(0.5, 48, so([]))).toBe(-1);
-  });
-});
-
 describe("cobrir", () => {
   it("cobre uma tela mais larga cortando em cima e embaixo", () => {
     expect(cobrir(1280, 720, 1920, 720)).toEqual({
@@ -76,5 +54,56 @@ describe("cobrir", () => {
   it("o foco vertical decide o que é cortado", () => {
     expect(cobrir(1280, 720, 1920, 720, 0).y).toBe(0);
     expect(cobrir(1280, 720, 1920, 720, 1).y).toBe(-360);
+  });
+});
+
+describe("ordemDeCarga", () => {
+  it("baixa primeiro 1 a cada 8, depois preenche, sem repetir nenhum", () => {
+    const ordem = ordemDeCarga(48, 1);
+    expect(ordem.slice(0, 7)).toEqual([0, 8, 16, 24, 32, 40, 47]);
+    expect(new Set(ordem).size).toBe(48);
+    expect([...ordem].sort((x, y) => x - y)).toEqual(
+      Array.from({ length: 48 }, (_, i) => i),
+    );
+  });
+
+  it("respeita o passo do celular (só os quadros que ele baixa)", () => {
+    const ordem = ordemDeCarga(48, 2);
+    expect(ordem).toHaveLength(25);
+    expect(ordem.every((q) => q % 2 === 0 || q === 47)).toBe(true);
+  });
+});
+
+describe("misturaDaRolagem", () => {
+  const todos = () => true;
+
+  it("entre dois quadros, mistura na proporção da rolagem", () => {
+    // 47 intervalos; progresso no meio do intervalo 10→11.
+    const r = misturaDaRolagem(10.5 / 47, 48, todos)!;
+    expect(r.a).toBe(10);
+    expect(r.b).toBe(11);
+    expect(r.mistura).toBeCloseTo(0.5);
+  });
+
+  it("em cima de um quadro, não mistura", () => {
+    expect(misturaDaRolagem(0, 48, todos)).toEqual({ a: 0, b: 0, mistura: 0 });
+    expect(misturaDaRolagem(1, 48, todos)).toEqual({
+      a: 47,
+      b: 47,
+      mistura: 0,
+    });
+  });
+
+  it("com quadros faltando, mistura os carregados mais próximos", () => {
+    const so = (l: number[]) => (i: number) => l.includes(i);
+    const r = misturaDaRolagem(12 / 47, 48, so([8, 16]))!;
+    expect([r.a, r.b]).toEqual([8, 16]);
+    expect(r.mistura).toBeCloseTo(0.5);
+    expect(misturaDaRolagem(0.5, 48, so([]))).toBeNull();
+    expect(misturaDaRolagem(0.9, 48, so([0]))).toEqual({
+      a: 0,
+      b: 0,
+      mistura: 0,
+    });
   });
 });
