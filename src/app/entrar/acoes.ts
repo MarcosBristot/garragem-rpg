@@ -59,6 +59,6 @@ export async function entrar(
   });
   if (error) return { ...estado, erro: "Código inválido ou expirado." };
 
-  // /garagem manda para /perfil/novo se o perfil ainda não existe.
-  redirect("/garagem");
+  // O feed é a tela principal; sem perfil, ele manda para /perfil/novo.
+  redirect("/feed");
 }

@@ -13,11 +13,12 @@ export const EMPRESA = {
 };
 
 /** Versão dos Termos e da Política. Mudou o texto? Mude a data. */
-export const VERSAO_TERMOS = "2026-11-07.1";
+export const VERSAO_TERMOS = "2026-11-07.2";
 export const VIGENCIA = "07/11/2026";
 
 /** O que mudou nesta versão (mostrado a quem precisa aceitar de novo). */
 export const MUDANCAS_TERMOS = [
+  "Notificações: quem curte ou comenta seu post e quem começa a seguir você aparece nas suas notificações (com nome e foto de perfil). Do mesmo jeito, quando você curte, comenta ou segue alguém, essa pessoa fica sabendo. Bloqueios valem também aqui.",
   "Foto de perfil: você pode pôr uma foto (opcional). Ela fica pública como o resto do perfil e aparece nos seus posts e comentários. A localização (GPS) e outros dados escondidos são removidos antes de salvar.",
   "Ranking do mês: carros públicos com classe (hatch, sedã, SUV…) aparecem num ranking para quem tem conta, com seu nome de usuário, sua cidade e o XP ganho no mês. O XP conta registros privados, mas só o total aparece.",
   "E-mail: o código de acesso agora é enviado pelo Gmail (Google). Para isso, seu endereço de e-mail passa pelos servidores do Google, que podem ficar fora do Brasil.",

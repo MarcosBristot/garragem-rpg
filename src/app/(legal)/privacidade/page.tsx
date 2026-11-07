@@ -167,8 +167,14 @@ export default function PaginaPrivacidade() {
         </li>
       </ul>
       <p>
-        Quem você segue e quem você bloqueou não aparece para outras pessoas. A
-        pessoa bloqueada não é avisada.
+        Quem você segue não aparece para outras pessoas; só a pessoa seguida
+        fica sabendo, por uma notificação. Quem você bloqueou não aparece para
+        ninguém, e a pessoa bloqueada não é avisada.
+      </p>
+      <p>
+        <strong>Notificações:</strong> quando você curte ou comenta um post, o
+        dono do post é avisado com o seu nome e a sua foto de perfil (no caso do
+        comentário, com o começo do texto). Bloqueios valem também aqui.
       </p>
       <p>
         Notas e histórico de edições <strong>nunca</strong> são públicos.
@@ -215,12 +221,14 @@ export default function PaginaPrivacidade() {
         <li>revogar consentimentos, quando houver.</li>
       </ul>
       <p>
-        Na página <Link href="/conta/configuracoes">Configurações da conta</Link> você mesmo{" "}
-        <strong>corrige seu perfil</strong>, <strong>baixa seus dados</strong>{" "}
-        (arquivo JSON) e <strong>exclui a conta</strong>. Para os demais
-        pedidos, escreva para o encarregado ({EMPRESA.emailEncarregado});
-        respondemos em até 15 dias. Você também pode reclamar à Autoridade
-        Nacional de Proteção de Dados (ANPD).
+        Na página{" "}
+        <Link href="/conta/configuracoes">Configurações da conta</Link> você
+        mesmo <strong>corrige seu perfil</strong>,{" "}
+        <strong>baixa seus dados</strong> (arquivo JSON) e{" "}
+        <strong>exclui a conta</strong>. Para os demais pedidos, escreva para o
+        encarregado ({EMPRESA.emailEncarregado}); respondemos em até 15 dias.
+        Você também pode reclamar à Autoridade Nacional de Proteção de Dados
+        (ANPD).
       </p>
 
       <h2>7. Segurança</h2>

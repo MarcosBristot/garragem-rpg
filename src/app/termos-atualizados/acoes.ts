@@ -20,5 +20,5 @@ export async function aceitarTermos(
     p_versao: VERSAO_TERMOS,
   });
   if (error) return { erro: "Não foi possível salvar. Tente de novo." };
-  redirect("/garagem");
+  redirect("/feed");
 }

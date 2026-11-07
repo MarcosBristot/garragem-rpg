@@ -578,6 +578,7 @@ export type Database = {
           id: string;
           nome_exibicao: string | null;
           nome_usuario: string;
+          notificacoes_vistas_em: string;
           personagem: Json | null;
           termos_aceitos_em: string | null;
           versao_termos: string | null;
@@ -590,6 +591,7 @@ export type Database = {
           id: string;
           nome_exibicao?: string | null;
           nome_usuario: string;
+          notificacoes_vistas_em?: string;
           personagem?: Json | null;
           termos_aceitos_em?: string | null;
           versao_termos?: string | null;
@@ -601,6 +603,7 @@ export type Database = {
           id?: string;
           nome_exibicao?: string | null;
           nome_usuario?: string;
+          notificacoes_vistas_em?: string;
           personagem?: Json | null;
           termos_aceitos_em?: string | null;
           versao_termos?: string | null;
@@ -824,6 +827,21 @@ export type Database = {
         Returns: undefined;
       };
       ficha_do_carro: { Args: { p_carro: string }; Returns: Json };
+      marcar_notificacoes_vistas: {
+        Args: Record<PropertyKey, never>;
+        Returns: undefined;
+      };
+      minhas_notificacoes: {
+        Args: { p_limite?: number };
+        Returns: {
+          ator_id: string;
+          criado_em: string;
+          post_id: string;
+          tipo: string;
+          trecho: string;
+        }[];
+      };
+      notificacoes_novas: { Args: Record<PropertyKey, never>; Returns: number };
       ranking_mensal: {
         Args: { p_cidade?: string; p_classe: string; p_limite?: number };
         Returns: {

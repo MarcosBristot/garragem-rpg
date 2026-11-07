@@ -1,6 +1,10 @@
 import { Suspense } from "react";
 import { Marca } from "@/components/marca";
 import {
+  SinoNotificacoes,
+  SinoSemNumero,
+} from "@/components/sino-notificacoes";
+import {
   NavegacaoInferior,
   NavegacaoInferiorAtiva,
   NavegacaoTopo,
@@ -14,10 +18,15 @@ export default function LayoutApp({ children }: { children: React.ReactNode }) {
     <div className="flex flex-1 flex-col pb-16 sm:pb-0">
       <header className="sticky top-0 z-30 border-b border-borda bg-fundo/85 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4">
-          <Marca href="/garagem" />
-          <Suspense fallback={<NavegacaoTopo />}>
-            <NavegacaoTopoAtiva />
-          </Suspense>
+          <Marca href="/feed" />
+          <div className="flex items-center gap-1">
+            <Suspense fallback={<NavegacaoTopo />}>
+              <NavegacaoTopoAtiva />
+            </Suspense>
+            <Suspense fallback={<SinoSemNumero />}>
+              <SinoNotificacoes />
+            </Suspense>
+          </div>
         </div>
       </header>
       {children}
