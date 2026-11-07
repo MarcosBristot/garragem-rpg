@@ -13,7 +13,7 @@ type Supabase = Awaited<ReturnType<typeof exigirPerfil>>["supabase"];
 // conta só o que pode ver (bloqueios ficam de fora). O autor vem pela FK
 // nomeada: `curtidas` liga posts a perfis e deixaria "perfis" ambíguo.
 const CAMPOS = `id, legenda, criado_em, dono_id,
-  perfis!posts_dono_id_fkey (id, nome_usuario, nome_exibicao, personagem),
+  perfis!posts_dono_id_fkey (id, nome_usuario, nome_exibicao, personagem, foto),
   carros (id, apelido, marca, modelo, ano),
   fotos_post!inner (id, chave, descricao, largura, altura, criado_em),
   curtidas (count),
@@ -103,7 +103,7 @@ export async function carregarPost(
     supabase
       .from("comentarios")
       .select(
-        "id, texto, criado_em, autor_id, perfis (id, nome_usuario, nome_exibicao, personagem)",
+        "id, texto, criado_em, autor_id, perfis (id, nome_usuario, nome_exibicao, personagem, foto)",
       )
       .eq("post_id", post.id)
       .order("criado_em")

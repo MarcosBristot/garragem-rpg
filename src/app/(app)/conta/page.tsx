@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { AvatarPerfil } from "@/components/avatar-perfil";
+import { EnviarFoto } from "@/components/enviar-foto";
 import { Botao } from "@/components/formulario";
 import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
 import { personagemDoPerfil } from "@/dominio/personagem";
@@ -8,6 +10,7 @@ import { exigirPerfil } from "@/lib/sessao";
 import { desbloquear } from "../pessoas-acoes";
 import { sair } from "./acoes";
 import { EditarPerfil } from "./editar-perfil";
+import { enviarFotoPerfil, removerFotoPerfil } from "./foto-acoes";
 import { ExcluirConta } from "./excluir-conta";
 
 export const metadata: Metadata = { title: "Conta · Garagem RPG" };
@@ -63,6 +66,39 @@ async function Conteudo() {
       </section>
 
       <section
+        aria-labelledby="titulo-foto"
+        className="flex flex-col gap-4 rounded-2xl border border-borda bg-superficie p-6 sm:flex-row sm:items-center sm:gap-6"
+      >
+        <AvatarPerfil
+          perfil={perfil}
+          rotulo="Sua foto de perfil"
+          tamanho="112px"
+          className="size-28 shrink-0"
+        />
+        <div className="flex flex-col gap-3">
+          <h2 id="titulo-foto" className="rotulo font-sans">
+            Foto de perfil
+          </h2>
+          <p className="text-sm text-texto-secundario">
+            Aparece no seu perfil, nos seus posts e comentários, para todos. A
+            localização (GPS) e outros dados escondidos da foto são removidos
+            antes de salvar.
+          </p>
+          <EnviarFoto
+            acao={enviarFotoPerfil}
+            rotulo={perfil.foto ? "Trocar foto" : "Escolher foto"}
+          />
+          {perfil.foto ? (
+            <form action={removerFotoPerfil}>
+              <Botao type="submit" variante="secundario">
+                Remover foto
+              </Botao>
+            </form>
+          ) : null}
+        </div>
+      </section>
+
+      <section
         aria-labelledby="titulo-personagem"
         className="flex items-center gap-5 rounded-2xl border border-borda bg-superficie p-6"
       >
@@ -72,10 +108,11 @@ async function Conteudo() {
         />
         <div className="flex flex-col gap-2">
           <h2 id="titulo-personagem" className="rotulo font-sans">
-            Seu personagem
+            Personagem (opcional)
           </h2>
           <p className="text-sm text-texto-secundario">
-            Boneco 3D do seu perfil público.
+            Um boneco 3D que aparece no seu perfil público. Sem foto, o rosto
+            dele vira o seu avatar.
           </p>
           <Link
             href="/conta/personagem"

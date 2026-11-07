@@ -5,8 +5,7 @@ import { FotoAssinada } from "@/components/foto-assinada";
 import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
-import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
-import { personagemDoPerfil } from "@/dominio/personagem";
+import { AvatarPerfil } from "@/components/avatar-perfil";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Minha garagem · Garagem RPG" };
@@ -58,13 +57,14 @@ async function Conteudo() {
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">
             <Link
-              href="/conta/personagem"
-              aria-label="Editar seu personagem"
-              className="shrink-0 rounded-3xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
+              href="/conta"
+              aria-label="Trocar sua foto de perfil"
+              className="shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
             >
-              <AvatarPersonagem
-                personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
-                className="size-24 rounded-3xl border-4 border-fundo bg-superficie-2 p-1"
+              <AvatarPerfil
+                perfil={perfil}
+                tamanho="96px"
+                className="size-24 border-4 border-fundo"
               />
             </Link>
             <div className="pb-1">

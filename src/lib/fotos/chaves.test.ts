@@ -3,6 +3,7 @@ import {
   arquivoDaChave,
   chaveCapa,
   chaveFotoOS,
+  chaveFotoPerfil,
   chaveFotoPost,
   chaveFotoRegistro,
   prefixoCarro,
@@ -21,6 +22,12 @@ describe("chaves das fotos", () => {
     expect(arquivoDaChave(chaveCapa(U, C, F), "mini")).toBe(
       `u/${U}/c/${C}/capa/${F}-mini.webp`,
     );
+  });
+
+  it("foto de perfil fica na pasta da pessoa, como o CHECK do banco pede", () => {
+    expect(chaveFotoPerfil(U, F)).toBe(`u/${U}/perfil/${F}`);
+    expect(chaveFotoPerfil(U, F).startsWith(prefixoUsuario(U))).toBe(true);
+    expect(() => chaveFotoPerfil(U, "../x")).toThrow();
   });
 
   it("foto da OS fica dentro do registro (apagar o registro leva junto)", () => {

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { AvatarPerfil } from "@/components/avatar-perfil";
 import { CabecalhoPublico } from "@/components/cabecalho-publico";
 import { FotoAssinada } from "@/components/foto-assinada";
 import { Boneco } from "@/components/personagem/boneco";
@@ -57,11 +58,12 @@ async function Conteudo({ usuario }: { usuario: string }) {
 
   return (
     <>
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        <Boneco
-          personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
-          rotulo={`Personagem de ${nome}`}
-          className="aspect-square w-full max-w-64"
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <AvatarPerfil
+          perfil={perfil}
+          rotulo={`Foto de ${nome}`}
+          tamanho="160px"
+          className="size-32 shrink-0 sm:size-40"
         />
         <div>
           <h1 className="text-5xl">{nome}</h1>
@@ -119,6 +121,23 @@ async function Conteudo({ usuario }: { usuario: string }) {
           </ul>
         )}
       </section>
+      {/* O boneco é um extra: só aparece para quem montou o seu. */}
+      {perfil.personagem ? (
+        <section
+          aria-labelledby="titulo-personagem"
+          className="flex flex-col gap-4"
+        >
+          <h2 id="titulo-personagem" className="text-3xl">
+            Personagem
+          </h2>
+          <Boneco
+            personagem={personagemDoPerfil(perfil.personagem, perfil.id)}
+            rotulo={`Personagem de ${nome}`}
+            className="aspect-square w-full max-w-64"
+          />
+        </section>
+      ) : null}
+
       <p className="border-t border-borda pt-6 text-sm">
         <Link
           href={`/denunciar?tipo=perfil&id=${perfil.id}`}

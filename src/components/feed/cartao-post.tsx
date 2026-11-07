@@ -4,8 +4,7 @@ import { excluirPost } from "@/app/(app)/feed/acoes";
 import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
 import { BotaoCurtir } from "@/components/feed/botao-curtir";
 import { FotoAssinada } from "@/components/foto-assinada";
-import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
-import { personagemDoPerfil } from "@/dominio/personagem";
+import { AvatarPerfil } from "@/components/avatar-perfil";
 import { nomeDoCarro } from "@/lib/carros";
 import { tempoDesde } from "@/lib/datas";
 import type { PostDoFeed } from "@/lib/feed";
@@ -36,10 +35,7 @@ export function CartaoPost({
           tabIndex={-1}
           aria-hidden="true"
         >
-          <AvatarPersonagem
-            personagem={personagemDoPerfil(autor.personagem, autor.id)}
-            className="size-11 rounded-xl bg-superficie-2 p-0.5"
-          />
+          <AvatarPerfil perfil={autor} tamanho="44px" className="size-11" />
         </Link>
         <div className="min-w-0 flex-1">
           <h2

@@ -3,8 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { CartaoPost } from "@/components/feed/cartao-post";
-import { AvatarPersonagem } from "@/components/personagem/avatar-personagem";
-import { personagemDoPerfil } from "@/dominio/personagem";
+import { AvatarPerfil } from "@/components/avatar-perfil";
 import { tempoDesde } from "@/lib/datas";
 import { carregarPost, type ComentarioDoPost } from "@/lib/feed";
 import { exigirPerfil } from "@/lib/sessao";
@@ -96,10 +95,7 @@ function Comentario({
 
   return (
     <article className="flex gap-3 rounded-2xl border border-borda bg-superficie p-3">
-      <AvatarPersonagem
-        personagem={personagemDoPerfil(autor.personagem, autor.id)}
-        className="size-9 shrink-0 rounded-lg bg-superficie-2 p-0.5"
-      />
+      <AvatarPerfil perfil={autor} tamanho="36px" className="size-9 shrink-0" />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <p className="text-sm">
           <Link

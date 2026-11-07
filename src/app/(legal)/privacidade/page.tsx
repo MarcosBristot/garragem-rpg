@@ -67,6 +67,11 @@ export default function PaginaPrivacidade() {
             <td>Execução de contrato (V)</td>
           </tr>
           <tr>
+            <td>Foto de perfil (opcional)</td>
+            <td>Identificar você no perfil, nos posts e nos comentários</td>
+            <td>Execução de contrato (V)</td>
+          </tr>
+          <tr>
             <td>Escolhas do seu personagem (pele, cabelo, roupa, acessório)</td>
             <td>Montar o boneco do seu perfil</td>
             <td>Execução de contrato (V)</td>
@@ -133,7 +138,8 @@ export default function PaginaPrivacidade() {
       <h2>3. O que fica público</h2>
       <ul>
         <li>
-          Nome de usuário, nome de exibição, cidade e personagem do perfil.
+          Nome de usuário, nome de exibição, cidade, foto e personagem do
+          perfil.
         </li>
         <li>Carros que você marcar como públicos.</li>
         <li>
@@ -190,12 +196,12 @@ export default function PaginaPrivacidade() {
       <h2>5. Por quanto tempo guardamos</h2>
       <p>
         Enquanto sua conta existir. Ao excluir a conta, apagamos na hora perfil,
-        personagem, carros, registros, itens, notas, fotos, posts, curtidas,
-        comentários (inclusive em posts de outras pessoas), quem você segue,
-        bloqueios e histórico. Denúncias que você enviou ficam para a moderação,
-        mas sem identificar você. Cópias de segurança do provedor de
-        infraestrutura são sobrescritas em até [preencher: prazo de retenção dos
-        backups].
+        foto de perfil, personagem, carros, registros, itens, notas, fotos,
+        posts, curtidas, comentários (inclusive em posts de outras pessoas),
+        quem você segue, bloqueios e histórico. Denúncias que você enviou ficam
+        para a moderação, mas sem identificar você. Cópias de segurança do
+        provedor de infraestrutura são sobrescritas em até [preencher: prazo de
+        retenção dos backups].
       </p>
 
       <h2>6. Seus direitos</h2>

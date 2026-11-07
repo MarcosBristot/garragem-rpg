@@ -22,10 +22,10 @@ export async function AcoesPerfil({ perfilId }: { perfilId: string }) {
   if (usuarioId === perfilId) {
     return (
       <Link
-        href="/conta/personagem"
+        href="/conta"
         className="inline-flex min-h-11 items-center rounded-full border border-borda px-5 text-sm font-semibold hover:bg-borda/50"
       >
-        Editar personagem
+        Editar perfil
       </Link>
     );
   }

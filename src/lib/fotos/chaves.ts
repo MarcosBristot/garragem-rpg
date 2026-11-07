@@ -19,6 +19,12 @@ export function prefixoUsuario(usuarioId: string): string {
   return `u/${usuarioId}/`;
 }
 
+/** Foto de perfil: na pasta da pessoa (excluir a conta leva junto). */
+export function chaveFotoPerfil(usuarioId: string, fotoId: string): string {
+  exigirUuid(fotoId);
+  return `${prefixoUsuario(usuarioId)}perfil/${fotoId}`;
+}
+
 export function prefixoCarro(usuarioId: string, carroId: string): string {
   exigirUuid(carroId);
   return `${prefixoUsuario(usuarioId)}c/${carroId}/`;

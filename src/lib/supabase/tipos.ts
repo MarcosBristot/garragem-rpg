@@ -574,6 +574,7 @@ export type Database = {
         Row: {
           cidade: string | null;
           criado_em: string;
+          foto: string | null;
           id: string;
           nome_exibicao: string | null;
           nome_usuario: string;
@@ -585,6 +586,7 @@ export type Database = {
         Insert: {
           cidade?: string | null;
           criado_em?: string;
+          foto?: string | null;
           id: string;
           nome_exibicao?: string | null;
           nome_usuario: string;
@@ -595,6 +597,7 @@ export type Database = {
         Update: {
           cidade?: string | null;
           criado_em?: string;
+          foto?: string | null;
           id?: string;
           nome_exibicao?: string | null;
           nome_usuario?: string;
