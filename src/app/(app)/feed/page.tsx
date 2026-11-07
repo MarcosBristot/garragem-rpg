@@ -36,7 +36,7 @@ export default function PaginaFeed({ searchParams }: PageProps<"/feed">) {
           </Link>
         </div>
       </div>
-      <Suspense fallback={<p className="text-texto-secundario">Carregando…</p>}>
+      <Suspense fallback={<EsqueletoFeed />}>
         {searchParams.then((p) => (
           <Conteudo
             aba={p.aba === "seguindo" ? "seguindo" : "descobrir"}
@@ -128,5 +128,33 @@ async function Conteudo({
         </Link>
       ) : null}
     </>
+  );
+}
+
+/** Enquanto o feed chega: o formato dos posts, pulsando. */
+function EsqueletoFeed() {
+  return (
+    <div
+      aria-busy="true"
+      aria-label="Carregando o feed"
+      className="flex flex-col gap-6"
+    >
+      {[0, 1].map((i) => (
+        <div
+          key={i}
+          className="overflow-hidden rounded-3xl border border-borda bg-superficie motion-safe:animate-pulse"
+        >
+          <div className="flex items-center gap-3 p-4">
+            <div className="size-11 rounded-full bg-borda" />
+            <div className="flex flex-col gap-2">
+              <div className="h-3 w-32 rounded bg-borda" />
+              <div className="h-3 w-20 rounded bg-borda" />
+            </div>
+          </div>
+          <div className="aspect-square bg-superficie-2" />
+          <div className="h-12" />
+        </div>
+      ))}
+    </div>
   );
 }

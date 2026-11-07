@@ -52,18 +52,25 @@ export function BotaoCurtir({
       }
       className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm text-texto-secundario hover:bg-superficie-2 hover:text-texto focus-visible:outline-2 focus-visible:outline-destaque aria-pressed:text-destaque"
     >
-      <Coracao cheio={estado.curtido} />
+      {/* key: ao curtir, o coração é recriado e a animação "pulo" roda. */}
+      <Coracao key={String(estado.curtido)} cheio={estado.curtido} pular />
       <span aria-hidden="true">{estado.total}</span>
     </button>
   );
 }
 
-function Coracao({ cheio }: { cheio: boolean }) {
+function Coracao({
+  cheio,
+  pular = false,
+}: {
+  cheio: boolean;
+  pular?: boolean;
+}) {
   return (
     <svg
       viewBox="0 0 24 24"
       aria-hidden="true"
-      className="size-6"
+      className={`size-6 ${cheio && pular ? "motion-safe:animate-pulo" : ""}`}
       fill={cheio ? "currentColor" : "none"}
       stroke="currentColor"
       strokeWidth={1.5}
