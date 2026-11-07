@@ -77,10 +77,11 @@ export async function salvarRegistro(
   if (data.length === 0) return naoEncontrado;
 
   revalidatePath(`/garagem/carros/${carroId}`);
-  // Registro novo: segue para a tela dele, direto na parte de itens.
+  // Registro novo: segue para a tela dele, que mostra o XP ganho (calculado
+  // lá, a partir do banco) e convida a detalhar peças e fotos.
   redirect(
     registroId === null
-      ? `/garagem/carros/${carroId}/registros/${data[0].id}/editar#itens`
+      ? `/garagem/carros/${carroId}/registros/${data[0].id}/editar?novo=1`
       : `/garagem/carros/${carroId}`,
   );
 }

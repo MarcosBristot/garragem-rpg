@@ -1,7 +1,13 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { nivelDoXp, progressoXp, REGRAS_XP, xpParaNivel } from "./xp";
+import {
+  nivelDoXp,
+  progressoXp,
+  REGRAS_XP,
+  xpParaNivel,
+  recompensaDoRegistro,
+} from "./xp";
 
 describe("xpParaNivel", () => {
   it("segue a curva combinada", () => {
@@ -88,5 +94,33 @@ describe("REGRAS_XP", () => {
     for (const regra of Object.values(REGRAS_XP)) {
       expect(Object.keys(regra)).not.toContain("valor");
     }
+  });
+});
+
+describe("recompensaDoRegistro", () => {
+  it("mostra o ganho e o progresso sem subir de nível", () => {
+    const r = recompensaDoRegistro(60, 30);
+    expect(r.ganho).toBe(30);
+    expect(r.nivelAntes).toBe(1);
+    expect(r.progresso.nivel).toBe(1);
+    expect(r.subiuDeNivel).toBe(false);
+  });
+
+  it("detecta a subida de nível (100 XP = nível 2)", () => {
+    const r = recompensaDoRegistro(110, 30);
+    expect(r.nivelAntes).toBe(1);
+    expect(r.progresso.nivel).toBe(2);
+    expect(r.subiuDeNivel).toBe(true);
+  });
+
+  it("limite do dia batido: ganho zero, nada de festa", () => {
+    const r = recompensaDoRegistro(300, 0);
+    expect(r.ganho).toBe(0);
+    expect(r.subiuDeNivel).toBe(false);
+  });
+
+  it("valores estranhos não quebram (ganho maior que o total, negativos)", () => {
+    expect(recompensaDoRegistro(20, 50).ganho).toBe(20);
+    expect(recompensaDoRegistro(-5, -1).ganho).toBe(0);
   });
 });

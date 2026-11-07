@@ -66,3 +66,32 @@ export function progressoXp(xp: number): Progresso {
     porcento: Math.floor((noNivel / doNivel) * 100),
   };
 }
+
+export type Recompensa = {
+  /** XP que este registro rendeu (0 se o limite do dia já tinha batido). */
+  ganho: number;
+  nivelAntes: number;
+  progresso: Progresso;
+  subiuDeNivel: boolean;
+};
+
+/**
+ * Recompensa mostrada logo depois de salvar um registro. Recebe o XP total
+ * do carro agora e quanto dele veio do registro (os dois lidos do banco,
+ * nunca da URL).
+ */
+export function recompensaDoRegistro(
+  totalAgora: number,
+  ganhoDoRegistro: number,
+): Recompensa {
+  const total = Math.max(0, Math.floor(totalAgora));
+  const ganho = Math.min(total, Math.max(0, Math.floor(ganhoDoRegistro)));
+  const progresso = progressoXp(total);
+  const nivelAntes = nivelDoXp(total - ganho);
+  return {
+    ganho,
+    nivelAntes,
+    progresso,
+    subiuDeNivel: progresso.nivel > nivelAntes,
+  };
+}

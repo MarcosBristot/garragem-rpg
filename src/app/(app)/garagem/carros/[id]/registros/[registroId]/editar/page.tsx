@@ -4,9 +4,11 @@ import { Suspense } from "react";
 import { ExcluirComConfirmacao } from "@/components/excluir-com-confirmacao";
 import { EnviarFoto } from "@/components/enviar-foto";
 import { FotoAssinada } from "@/components/foto-assinada";
+import { RecompensaXp } from "@/components/recompensa-xp";
 import { Cartao } from "@/components/formulario";
 import { RolarParaAncora } from "@/components/rolar-para-ancora";
 import { carroDoDonoOu404, nomeDoCarro } from "@/lib/carros";
+import { recompensaDoRegistro } from "@/dominio/xp";
 import { hojeEmSaoPaulo } from "@/lib/datas";
 import { exigirPerfil } from "@/lib/sessao";
 import { ehUuid } from "@/lib/uuid";
@@ -25,6 +27,7 @@ export const metadata: Metadata = { title: "Editar registro · Garagem RPG" };
 
 export default function PaginaEditarRegistro({
   params,
+  searchParams,
 }: PageProps<"/garagem/carros/[id]/registros/[registroId]/editar">) {
   return (
     <Cartao>
@@ -32,8 +35,12 @@ export default function PaginaEditarRegistro({
       <Suspense
         fallback={<p className="mt-6 text-texto-secundario">Carregando…</p>}
       >
-        {params.then(({ id, registroId }) => (
-          <Conteudo carroId={id} registroId={registroId} />
+        {Promise.all([params, searchParams]).then(([{ id, registroId }, p]) => (
+          <Conteudo
+            carroId={id}
+            registroId={registroId}
+            acabouDeCriar={p.novo === "1"}
+          />
         ))}
       </Suspense>
     </Cartao>
@@ -43,9 +50,11 @@ export default function PaginaEditarRegistro({
 async function Conteudo({
   carroId,
   registroId,
+  acabouDeCriar,
 }: {
   carroId: string;
   registroId: string;
+  acabouDeCriar: boolean;
 }) {
   const { supabase, perfil } = await exigirPerfil();
   const carro = await carroDoDonoOu404(supabase, perfil.id, carroId);
@@ -64,8 +73,27 @@ async function Conteudo({
     .maybeSingle();
   if (!registro) notFound();
 
+  // Logo depois de criar: quanto XP este registro rendeu e o nível do carro.
+  // Os pontos vêm dos eventos gravados pelos triggers (nunca da URL).
+  let recompensa = null;
+  if (acabouDeCriar) {
+    const { data: eventos } = await supabase
+      .from("eventos_xp")
+      .select("pontos, registro_id")
+      .eq("carro_id", carro.id)
+      .eq("dono_id", perfil.id);
+    const total = (eventos ?? []).reduce((s, e) => s + e.pontos, 0);
+    const ganho = (eventos ?? [])
+      .filter((e) => e.registro_id === registro.id)
+      .reduce((s, e) => s + e.pontos, 0);
+    recompensa = recompensaDoRegistro(total, ganho);
+  }
+
   return (
     <div className="flex flex-col gap-8">
+      {recompensa ? (
+        <RecompensaXp recompensa={recompensa} ancoraItens="itens" />
+      ) : null}
       <div>
         <p className="mb-6 text-texto-secundario">{nomeDoCarro(carro)}</p>
         <FormularioRegistro
