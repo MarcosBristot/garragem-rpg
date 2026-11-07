@@ -14,8 +14,8 @@ const ICONES = {
 };
 
 const ITENS = [
-  { href: "/garagem", rotulo: "Garagem", icone: ICONES.garagem },
   { href: "/feed", rotulo: "Feed", icone: ICONES.feed },
+  { href: "/garagem", rotulo: "Garagem", icone: ICONES.garagem },
   { href: "/ranking", rotulo: "Ranking", icone: ICONES.ranking },
   {
     href: "/garagem/carros/novo",
