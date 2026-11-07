@@ -13,7 +13,7 @@ import { exigirPerfil } from "@/lib/sessao";
 const FALHA = { erro: "Não foi possível enviar a foto. Tente de novo." };
 
 function revalidar(nomeUsuario: string) {
-  revalidatePath("/conta");
+  revalidatePath("/conta", "layout");
   revalidatePath("/feed");
   revalidatePath("/garagem");
   revalidatePath(`/u/${nomeUsuario}`);

@@ -108,7 +108,7 @@ export async function atualizarPerfil(
     };
   }
 
-  revalidatePath("/conta");
+  revalidatePath("/conta", "layout");
   revalidatePath("/garagem");
   return {
     valores: {

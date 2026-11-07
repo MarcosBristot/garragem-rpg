@@ -22,7 +22,7 @@ const ITENS = [
     rotulo: "Novo carro",
     icone: ICONES.adicionar,
   },
-  { href: "/conta", rotulo: "Conta", icone: ICONES.conta },
+  { href: "/conta", rotulo: "Perfil", icone: ICONES.conta },
 ];
 
 function ativo(caminho: string, href: string) {

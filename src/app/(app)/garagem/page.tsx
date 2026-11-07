@@ -57,7 +57,7 @@ async function Conteudo() {
         <div className="-mt-12 flex flex-wrap items-end justify-between gap-4 px-2">
           <div className="flex items-end gap-4">
             <Link
-              href="/conta"
+              href="/conta/configuracoes"
               aria-label="Trocar sua foto de perfil"
               className="shrink-0 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destaque"
             >

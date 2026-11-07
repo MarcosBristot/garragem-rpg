@@ -49,8 +49,8 @@ export default function PaginaTermosAtualizados() {
       </div>
       <p className="mt-6 border-t border-borda pt-4 text-sm text-texto-secundario">
         Não concorda? Em{" "}
-        <Link href="/conta" className="text-destaque underline">
-          Conta
+        <Link href="/conta/configuracoes" className="text-destaque underline">
+          Configurações da conta
         </Link>{" "}
         você pode baixar seus dados e excluir a conta sem aceitar.
       </p>

@@ -117,8 +117,8 @@ async function Conteudo({
             Para ver o ranking da sua cidade, informe a cidade no seu perfil. Só
             a cidade: nunca o endereço.
           </p>
-          <Link href="/conta" className={estiloBotao}>
-            Ir para Conta
+          <Link href="/conta/configuracoes" className={estiloBotao}>
+            Informar minha cidade
           </Link>
         </div>
       ) : linhas.length === 0 ? (

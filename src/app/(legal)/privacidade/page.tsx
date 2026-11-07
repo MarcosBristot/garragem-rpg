@@ -215,7 +215,7 @@ export default function PaginaPrivacidade() {
         <li>revogar consentimentos, quando houver.</li>
       </ul>
       <p>
-        Na página <Link href="/conta">Conta</Link> você mesmo{" "}
+        Na página <Link href="/conta/configuracoes">Configurações da conta</Link> você mesmo{" "}
         <strong>corrige seu perfil</strong>, <strong>baixa seus dados</strong>{" "}
         (arquivo JSON) e <strong>exclui a conta</strong>. Para os demais
         pedidos, escreva para o encarregado ({EMPRESA.emailEncarregado});

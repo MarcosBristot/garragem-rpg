@@ -78,7 +78,7 @@ export default function PaginaTermos() {
       <p>
         Trabalhamos para manter o serviço no ar e os dados seguros, mas podem
         ocorrer interrupções. Recomendamos baixar seus dados de vez em quando,
-        na página <Link href="/conta">Conta</Link>. Nossa responsabilidade segue
+        na página <Link href="/conta/configuracoes">Configurações da conta</Link>. Nossa responsabilidade segue
         o Código de Defesa do Consumidor.
       </p>
 

@@ -29,6 +29,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
+      // Rolagem suave só dentro da página (âncoras); na troca de página o
+      // Next pula direto para o topo, sem "deslizar" o conteúdo novo.
+      data-scroll-behavior="smooth"
       className={`${geist.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
