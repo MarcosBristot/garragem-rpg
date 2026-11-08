@@ -1,6 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { mensagemFalhaEnvio } from "@/dominio/login";
+import { registrarFalha } from "@/lib/log";
 import { criarClienteServidor } from "@/lib/supabase/servidor";
 
 export type EstadoEntrar = {
@@ -31,14 +33,9 @@ export async function entrar(
       options: { shouldCreateUser: true },
     });
     if (error) {
-      return {
-        etapa: "email",
-        email,
-        erro:
-          error.status === 429
-            ? "Muitas tentativas. Espere alguns minutos."
-            : "Não foi possível enviar o código. Tente de novo.",
-      };
+      // Só tipo e código do erro no log, nunca o e-mail (LGPD).
+      registrarFalha("entrar: pedir código", error);
+      return { etapa: "email", email, erro: mensagemFalhaEnvio(error.status) };
     }
     return { etapa: "codigo", email };
   }

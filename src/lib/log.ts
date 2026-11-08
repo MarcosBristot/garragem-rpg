@@ -8,11 +8,13 @@ export function registrarFalha(etapa: string, erro: unknown): void {
   const e = erro as {
     name?: unknown;
     code?: unknown;
+    status?: unknown;
     $metadata?: { httpStatusCode?: unknown };
   } | null;
   const detalhes = [
     typeof e?.name === "string" ? e.name : null,
     typeof e?.code === "string" ? `código ${e.code}` : null,
+    typeof e?.status === "number" ? `HTTP ${e.status}` : null,
     typeof e?.$metadata?.httpStatusCode === "number"
       ? `HTTP ${e.$metadata.httpStatusCode}`
       : null,
