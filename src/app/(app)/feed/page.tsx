@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { CartaoPost } from "@/components/feed/cartao-post";
+import { PainelLembretes } from "@/components/painel-lembretes";
 import { carregarFeed, lerCursor, type Aba } from "@/lib/feed";
+import { carregarLembretes } from "@/lib/lembretes";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Feed · LifeInGears" };
@@ -59,15 +61,15 @@ async function Conteudo({
   falhas: number;
 }) {
   const { supabase, perfil } = await exigirPerfil();
-  const { posts, proximo } = await carregarFeed(
-    supabase,
-    perfil.id,
-    aba,
-    antes,
-  );
+  const [{ posts, proximo }, lembretes] = await Promise.all([
+    carregarFeed(supabase, perfil.id, aba, antes),
+    // Só na primeira página: ao paginar, a pessoa já viu.
+    antes ? Promise.resolve(null) : carregarLembretes(supabase, perfil.id),
+  ]);
 
   return (
     <>
+      <PainelLembretes resumo={lembretes} />
       <nav aria-label="Abas do feed">
         <ul className="flex gap-2">
           {(Object.keys(ABAS) as Aba[]).map((chave) => (

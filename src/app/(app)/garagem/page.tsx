@@ -6,6 +6,8 @@ import { SilhuetaCarro } from "@/components/silhueta-carro";
 import { nomeDoCarro } from "@/lib/carros";
 import { formatarData } from "@/lib/datas";
 import { AvatarPerfil } from "@/components/avatar-perfil";
+import { PainelLembretes } from "@/components/painel-lembretes";
+import { carregarLembretes } from "@/lib/lembretes";
 import { exigirPerfil } from "@/lib/sessao";
 
 export const metadata: Metadata = { title: "Minha garagem · LifeInGears" };
@@ -35,13 +37,16 @@ async function Conteudo() {
 
   // Filtro por dono obrigatório: a RLS também libera carros públicos
   // de outras pessoas, que não pertencem à "minha" garagem.
-  const { data } = await supabase
-    .from("carros")
-    .select(
-      "id, marca, modelo, ano, apelido, publico, foto_capa, registros(data)",
-    )
-    .eq("dono_id", perfil.id)
-    .order("criado_em");
+  const [{ data }, lembretes] = await Promise.all([
+    supabase
+      .from("carros")
+      .select(
+        "id, marca, modelo, ano, apelido, publico, foto_capa, registros(data)",
+      )
+      .eq("dono_id", perfil.id)
+      .order("criado_em"),
+    carregarLembretes(supabase, perfil.id),
+  ]);
   const carros = data ?? [];
   const totalRegistros = carros.reduce((n, c) => n + c.registros.length, 0);
   const nome = perfil.nome_exibicao ?? perfil.nome_usuario;
@@ -97,6 +102,8 @@ async function Conteudo() {
           </div>
         </dl>
       </section>
+
+      <PainelLembretes resumo={lembretes} />
 
       <section aria-labelledby="titulo-carros" className="flex flex-col gap-4">
         <h2 id="titulo-carros" className="text-3xl">
